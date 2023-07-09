@@ -1,22 +1,16 @@
+import { useState } from 'react';
 import './App.css';
+import Payment from './components/Payment';
 
 function App() {
+
+  const [completed, setCompleted] = useState(0)
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => setCompleted(prev => prev < 100 ? prev + 20 : prev)}>Increament</button>
+      <Payment></Payment>
     </div>
   );
 }

@@ -10,8 +10,9 @@
     "electron-is-dev": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1",
+    "serialport": "^9.0.7",
+    "tp-rs232": "0.0.5"
   },
   "scripts": {
     "start": "electron .",
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "electron": "^25.2.0"
+    "electron": "^25.2.0",
+    "electron-rebuild": "^3.2.9"
   }
 }

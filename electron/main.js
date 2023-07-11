@@ -1,16 +1,20 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
-const BillAcceptor = require('../src/helpers/helper')
+const initBillAcceptor = require('../helpers/initBillAcceptor')
 
 let mainWindow;
+let money = 0;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false,
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -21,13 +25,49 @@ function createWindow() {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+
+  mainWindow.webContents.openDevTools();
+
+  var menu = Menu.buildFromTemplate([
+    {
+        label: 'Menu',
+        submenu: [
+            {
+              label:'Add money',
+              click(){
+                money += 100000;
+                mainWindow.webContents.send('detectMoneyIn', money);
+              }
+            },
+        ]
+    }
+])
+Menu.setApplicationMenu(menu); 
 }
 
-app.on('ready', () => {
+function readBill(result){
+  const moneyValueChannel = {
+    1 : 10000,
+    2 : 20000,
+    3 : 50000,
+    4: 100000,
+    5: 200000,
+    6: 500000
+  }
+  money += moneyValueChannel[result.channel]
+
+  mainWindow.webContents.send('detectMoneyIn', "detect money in bill acceptor");
+}
+
+
+app.whenReady().then(() => {
   createWindow()
-  let acceptor = new BillAcceptor.BillAcceptor()
-  console.log(acceptor)
-  console.log(acceptor.getMoney())
+  initBillAcceptor(readBill)
+  ipcMain.handle("getMoney", () => money)
+  ipcMain.on("error", (event, data) => {
+    console.log('error', data)
+  })
 });
 
 app.on('window-all-closed', function () {

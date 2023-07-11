@@ -4,12 +4,14 @@ import background from '../images/background.jpg'
 import white from '../images/white.jpg'
 import black from '../images/black.jpg'
 import PhotoStrip from '../helpers/PhotoStip'
+import ReactHtmlParser from 'react-html-parser';
 
 export default function Step1_SelectBackground(props) {
   const imagesUrl = [background, white, black]
 
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(props.currentNumberPhoto)
   const [currentBackgroundUrl, setCurrentBackgroundUrl] = useState(props.currentBackgroundUrl)
+  const [stripElem, setStripElem] = useState('')
 
   const handleClickNumberPhoto = (item) => {
     props.onSetNumberPhoto(item)
@@ -17,14 +19,23 @@ export default function Step1_SelectBackground(props) {
   }
 
   const handleClickBackgroundImage = (url) =>{
-    console.log('click')
     props.onSetBackgroundUrl(url)
     setCurrentBackgroundUrl(url)
-
   }
 
   useEffect(() => {
-  }, [])
+    const images = [
+      'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
+      'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
+      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
+      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
+    ];
+
+    const photoStrip = new PhotoStrip(images, currentBackgroundUrl);
+    setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
+    console.log(stripElem)
+
+  }, [currentBackgroundUrl])
 
   return (
     <div className='step1-container d-flex align-items-start flex-column'>
@@ -44,7 +55,8 @@ export default function Step1_SelectBackground(props) {
         <legend>2. Lựa chọn phông nền</legend>
         <div style={{width: 500}} className='d-flex justify-content-around w-100'>
           <div className='demo'>
-           <h1>Demo shown here</h1>
+          <h1></h1>
+          {stripElem}
           </div>
           <div className='selection'>
             {

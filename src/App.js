@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Progress from './components/Progress';
+import MyComponent from '../src/components/MyComponent'
+
+
+const {mergeImages} = window.require('merge-images')
 const {ipcRenderer} = window.require('electron')
 
 function App() {
 
   const [money, setMoney] = useState(0)
+  const [imageUrls, setImages] = useState([])
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
@@ -13,15 +18,18 @@ function App() {
       setMoney(data)
       
     });
+    
+    // mergeImages([black, white, demo])
+    //   .then(b64 => console.log(b64));
+   
+
   }, [])
 
-  const onHandleError = (err) => {
-    ipcRenderer.send('error', err);
-  }
-
+ 
   return (
     <div className="App">
-      <Progress money={money} onHandleError={err => onHandleError(err)}></Progress>
+      <MyComponent></MyComponent>
+      {/* <Progress money={money}></Progress> */}
     </div>
   );
 }

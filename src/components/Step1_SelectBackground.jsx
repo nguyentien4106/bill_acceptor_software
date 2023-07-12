@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import '../css/Step1_SelectBackground.css'
-import background from '../images/background.jpg'
-import white from '../images/white.jpg'
-import black from '../images/black.jpg'
-import PhotoStrip from '../helpers/PhotoStip'
-import ReactHtmlParser from 'react-html-parser';
+import createPhotoStrip from '../helpers/createPhotoStrip'
+// const {ipcRenderer} = window.require('electron')
 
 export default function Step1_SelectBackground(props) {
-  const imagesUrl = [background, white, black]
-
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(props.currentNumberPhoto)
   const [currentBackgroundUrl, setCurrentBackgroundUrl] = useState(props.currentBackgroundUrl)
   const [stripElem, setStripElem] = useState('')
@@ -23,17 +18,8 @@ export default function Step1_SelectBackground(props) {
     setCurrentBackgroundUrl(url)
   }
 
-  useEffect(() => {
-    const images = [
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
-    ];
 
-    const photoStrip = new PhotoStrip(images, currentBackgroundUrl);
-    setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
-    console.log(stripElem)
+  useEffect(() => {
 
   }, [currentBackgroundUrl])
 
@@ -55,16 +41,17 @@ export default function Step1_SelectBackground(props) {
         <legend>2. Lựa chọn phông nền</legend>
         <div style={{width: 500}} className='d-flex justify-content-around w-100'>
           <div className='demo'>
-          <h1></h1>
-          {stripElem}
+            <img src={stripElem}></img>
           </div>
           <div className='selection'>
             {
-              imagesUrl.map(item => <img key={item}
-                src={item} onClick={() => handleClickBackgroundImage(item)} 
-                className={currentBackgroundUrl === item ? "image-background-demo-selected" : "image-background-demo"}/>)
+              props.backgroundUrls.map(item => <img key={item}
+                                                  src={item} onClick={() => handleClickBackgroundImage(item)} 
+                                                  className={currentBackgroundUrl === item ? "image-background-demo-selected" : "image-background-demo"}
+                                                />)
             }
           </div>
+        
         </div>
       </div>
       <div className='test'></div>

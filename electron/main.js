@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const initBillAcceptor = require('../helpers/initBillAcceptor')
-
+ 
 let mainWindow;
 let money = 0;
 
@@ -41,8 +41,8 @@ function createWindow() {
               }
             },
         ]
-    }
-])
+    }])
+
 Menu.setApplicationMenu(menu); 
 }
 
@@ -60,14 +60,10 @@ function readBill(result){
   mainWindow.webContents.send('detectMoneyIn', "detect money in bill acceptor");
 }
 
-
 app.whenReady().then(() => {
   createWindow()
   initBillAcceptor(readBill)
-  ipcMain.handle("getMoney", () => money)
-  ipcMain.on("error", (event, data) => {
-    console.log('error', data)
-  })
+
 });
 
 app.on('window-all-closed', function () {

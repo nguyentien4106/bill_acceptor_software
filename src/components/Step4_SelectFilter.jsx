@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react'
 import PhotoStrip from '../helpers/PhotoStip';
 import ReactHtmlParser from 'react-html-parser';
-import black from '../images/black.jpg'
-import tien from '../images/tien.jpg'
+// import black from '../images/black.jpg'
+// import tien from '../images/tien.jpg'
 
 export default function Step4_SelectFilter() {
 
@@ -11,17 +11,17 @@ export default function Step4_SelectFilter() {
   const [photo, setPhoto] = useState(null)
 
   useEffect(() => {
-    const images = [
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
-    ];
+    // const images = [
+    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
+    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
+    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
+    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
+    // ];
 
-    const photoStrip = new PhotoStrip(images, black);
-    setPhoto(photoStrip)
-    setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
-    console.log(stripElem)
+    // const photoStrip = new PhotoStrip(images, black);
+    // setPhoto(photoStrip)
+    // setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
+    // console.log(stripElem)
 
   }, [])
 

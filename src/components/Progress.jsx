@@ -5,17 +5,13 @@ import Step2_Payment from './Step2_Payment';
 import Step3_TakePhoto from './Step3_TakePhoto';
 import Step4_SelectFilter from './Step4_SelectFilter';
 import Step5_Print from './Step5_Print';
-import background from '../images/background.jpg'
-import white from '../images/white.jpg'
-import black from '../images/black.jpg'
-import PhotoStrip from '../helpers/PhotoStip';
-import ReactHtmlParser from 'react-html-parser';
+import createPhotoStrip from '../helpers/createPhotoStrip';
 
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4 ,6]
-  const backgroundsUrl = [background, white, black]
+  const backgroundUrls = ['../images/black.jpg', '../images/white.jpg', '../images/background.jpg']
   const [numberPhoto, setNumberPhoto] = useState(2)
-  const [backgroundUrl, setBackgroundUrl] = useState(backgroundsUrl[0])
+  const [backgroundUrl, setBackgroundUrl] = useState(backgroundUrls[0])
   const [imageStrip, setImageStrip] = useState(null)
   const [stripElem, setStripElem] = useState('')
 
@@ -24,17 +20,20 @@ export default function Progress(props) {
   }
 
   useEffect(() => {
-    const images = [
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
-      'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
-    ];
+    const images = [];
+    for (let i = 1; i <= 4; i++) {
+      const image = new Image();
+      image.src = '../images/demo.jpg'
+      images.push(image);
+    }
+    const background = new Image()
+    background.src = backgroundUrl
 
-    const photoStrip = new PhotoStrip(images, black);
-    setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
-    console.log(stripElem)
-
+    // createPhotoStrip(images, 500, 500, background, 11).then(dataUrl => {
+    //   // const img = document.createElement('img');
+    //   // img.src = dataUrl;
+    //   console.log(dataUrl)
+    // })
   }, [])
   const steps =
     [
@@ -42,9 +41,11 @@ export default function Progress(props) {
                                                 numberPhotoOptions={numberPhotoOptions}
                                                 onSetNumberPhoto={numberPhoto => setNumberPhoto(numberPhoto)}
                                                 currentNumberPhoto={numberPhoto}
+                                                backgroundUrls={backgroundUrls}
                                                 onSetBackgroundUrl={url => setBackgroundUrl(url)}
                                                 currentBackgroundUrl={backgroundUrl}
                                               />},
+
       {name: 'Xác nhận thanh toán', component: <Step2_Payment 
                                                   money={props.money} 
                                                   numberPhoto={numberPhoto}
@@ -62,13 +63,12 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3} 
+          // startAtStep={3} 
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
           nextButtonCls={"button-4 yellow"}
         />
-        
     </div>
   )
 }

@@ -47,6 +47,7 @@ Menu.setApplicationMenu(menu);
 }
 
 function readBill(result){
+  console.log(result)
   const moneyValueChannel = {
     1 : 10000,
     2 : 20000,
@@ -56,8 +57,7 @@ function readBill(result){
     6: 500000
   }
   money += moneyValueChannel[result.channel]
-
-  mainWindow.webContents.send('detectMoneyIn', "detect money in bill acceptor");
+  mainWindow.webContents.send('detectMoneyIn', money);
 }
 
 app.whenReady().then(() => {

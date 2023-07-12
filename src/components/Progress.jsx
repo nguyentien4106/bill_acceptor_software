@@ -7,33 +7,23 @@ import Step4_SelectFilter from './Step4_SelectFilter';
 import Step5_Print from './Step5_Print';
 import createPhotoStrip from '../helpers/createPhotoStrip';
 
+import background from '../images/background/background.png'
+import background1 from '../images/background/background1.png'
+
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4 ,6]
   const backgroundUrls = ['../images/black.jpg', '../images/white.jpg', '../images/background.jpg']
+
   const [numberPhoto, setNumberPhoto] = useState(2)
   const [backgroundUrl, setBackgroundUrl] = useState(backgroundUrls[0])
-  const [imageStrip, setImageStrip] = useState(null)
-  const [stripElem, setStripElem] = useState('')
+  const [imagesTaken, setImagesTaken] = useState([])
 
   const getPhotoStrip = (image) => {
-    setImageStrip(image)
+    // setImageStrip(image)
   }
 
   useEffect(() => {
-    const images = [];
-    for (let i = 1; i <= 4; i++) {
-      const image = new Image();
-      image.src = '../images/demo.jpg'
-      images.push(image);
-    }
-    const background = new Image()
-    background.src = backgroundUrl
 
-    // createPhotoStrip(images, 500, 500, background, 11).then(dataUrl => {
-    //   // const img = document.createElement('img');
-    //   // img.src = dataUrl;
-    //   console.log(dataUrl)
-    // })
   }, [])
   const steps =
     [
@@ -53,9 +43,10 @@ export default function Progress(props) {
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
-
+                                      onSetImagesTaken={images => setImagesTaken(images)}
                                     />},
-      {name: 'Chọn filter', component: <Step4_SelectFilter />},
+      {name: 'Chọn filter', component: <Step4_SelectFilter 
+                                          imagesTaken={imagesTaken} />},
       {name: 'Printing', component: <Step5_Print />}
     ]
     

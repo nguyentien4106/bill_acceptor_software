@@ -16,8 +16,8 @@ export default function MyComponent() {
       { src: demo, x: 0, y : 360},
       
     ], {
-      width: 600,
-      height: 1800
+      width: 200,
+      height: 600
     })
       .then(b64 => setImageDataUrl(b64));
   });

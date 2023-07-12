@@ -6,8 +6,55 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* font-family: 'Cute', sans-serif; */
+  background-color: #d3d3d3;
 }
 
+.multi-step{
+  height: 100%;
+}
+
+.footer-buttons{
+  position: absolute;
+  bottom: 0;
+  right: 20%;
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.w-75{
+  width: 75%;
+}
+
+.mt-100{
+  margin-top: 100px;
+}
+
+.mt-50{
+  margin-top: 50px;
+}
+
+.red{
+  color:red;
+}
+.App{
+  background-color: #d3d3d3;
+}
+
+.video{
+  height: 600px;
+  width: 600px;
+  border: 1px dashed black;
+}
+
+.image-taken{
+  width: 200px;
+  height: 200px;
+}
+
+.m-5{
+  margin: 5px;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

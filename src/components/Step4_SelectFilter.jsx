@@ -4,24 +4,14 @@ import ReactHtmlParser from 'react-html-parser';
 // import black from '../images/black.jpg'
 // import tien from '../images/tien.jpg'
 
-export default function Step4_SelectFilter() {
-
+export default function Step4_SelectFilter(props) {
+  const {imagesTaken} = props
   const [stripElem, setStripElem] = useState('')
   const [filter, setFilter] = useState('')
   const [photo, setPhoto] = useState(null)
 
   useEffect(() => {
-    // const images = [
-    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png',
-    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png',
-    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png',
-    //   'https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png'
-    // ];
-
-    // const photoStrip = new PhotoStrip(images, black);
-    // setPhoto(photoStrip)
-    // setStripElem(ReactHtmlParser(photoStrip.nodeToString()))
-    // console.log(stripElem)
+   console.log(props)
 
   }, [])
 
@@ -32,19 +22,15 @@ export default function Step4_SelectFilter() {
     link.click();
   }
   return (
-    <div>
-      <h1>Select Filter step</h1>
+    <div className='w-100 d-flex justify-content-around'>
+      <div className=''> 
+
+      </div>
       <div className='d-flex justify-content-between'>
-        <div className='image'>
-          <figure className='filter-1977'>
-            {stripElem}
-          </figure>
-        </div>
+        
         <div className='filter'> 
-
+          {imagesTaken.map(item => <img className='image-taken' src={item}></img>)}
         </div>
-
-        <button onClick={download}>Download</button>
       </div>
     </div>
   )

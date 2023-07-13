@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import '../css/Step1_SelectBackground.css'
-import background from '../images/background/background.png'
-import black from '../images/black.jpg'
+import backgroundBlack from '../images/background/black.jpg'
+import backgroundWhite from '../images/background/white.jpg'
 import demo from '../images/demo.png'
-import white from '../images/white.jpg'
+import demo1 from '../images/demo1.jpg'
 import createPhotoStrip from '../helpers/createPhotoStrip';
+import ReactLoading from 'react-loading';
 
 export default function Step1_SelectBackground(props) {
-  const imagesDemoUrls = [demo, demo, demo, demo]
+  const imagesDemoUrls = [demo1, demo1, demo1, demo1]
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(props.currentNumberPhoto)
   const [currentBackgroundUrl, setCurrentBackgroundUrl] = useState(props.currentBackgroundUrl)
-  const [demoBackground, setDemoBackground] = useState(background);
+  const [demoBackground, setDemoBackground] = useState(backgroundBlack);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleClickNumberPhoto = (item) => {
     props.onSetNumberPhoto(item)
@@ -23,22 +25,25 @@ export default function Step1_SelectBackground(props) {
   }
 
   useEffect(() => {
-    let background;
+    createPhotoStrip(imagesDemoUrls, 500, 500, demoBackground)
+    .then(setDemoBackground)
+  }, [])
 
-    if(currentBackgroundUrl === "../images/white.jpg"){
-      background = white;
-    }
-    else {
-      background = black;
-    }
-
-    createPhotoStrip(imagesDemoUrls, 500, 500, background)
-      .then(setDemoBackground)
+  useEffect(() => {
+    const currentBackground = currentBackgroundUrl === "../images/white.jpg" ? backgroundWhite : backgroundBlack;
+    setIsLoading(true)
+    
+    createPhotoStrip(imagesDemoUrls, 500, 500, currentBackground)
+      .then(background => {
+        setIsLoading(false)
+        setDemoBackground(background)
+      })
 
   }, [currentBackgroundUrl])
 
   return (
     <div className='step1-container d-flex align-items-start flex-column'>
+      {isLoading && <ReactLoading type='balls' height={64} width={64} color='#ffffff'></ReactLoading>}
       <div className='d-flex justify-content-start align-items-start w-100'>
         <legend>1. Lựa chọn số lượng </legend>
         <div style={{width: 500}} className='d-flex justify-content-between'>

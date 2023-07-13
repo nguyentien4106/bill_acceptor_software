@@ -7,12 +7,10 @@ import Step4_SelectFilter from './Step4_SelectFilter';
 import Step5_Print from './Step5_Print';
 import createPhotoStrip from '../helpers/createPhotoStrip';
 
-import background from '../images/background/background.png'
-import background1 from '../images/background/background1.png'
 
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4, 6, 8, 10]
-  const backgroundUrls = ['../images/black.jpg', '../images/white.jpg', '../images/background.jpg']
+  const backgroundUrls = ['../images/black.jpg', '../images/white.jpg']
 
   const [numberPhoto, setNumberPhoto] = useState(2)
   const [backgroundUrl, setBackgroundUrl] = useState(backgroundUrls[0])
@@ -29,10 +27,10 @@ export default function Progress(props) {
     [
       {name: 'Chọn phông nền ảnh', component: <Step1_SelectBackground 
                                                 numberPhotoOptions={numberPhotoOptions}
-                                                onSetNumberPhoto={numberPhoto => setNumberPhoto(numberPhoto)}
+                                                onSetNumberPhoto={setNumberPhoto}
                                                 currentNumberPhoto={numberPhoto}
                                                 backgroundUrls={backgroundUrls}
-                                                onSetBackgroundUrl={url => setBackgroundUrl(url)}
+                                                onSetBackgroundUrl={setBackgroundUrl}
                                                 currentBackgroundUrl={backgroundUrl}
                                               />},
 
@@ -43,10 +41,12 @@ export default function Progress(props) {
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
-                                      onSetImagesTaken={images => setImagesTaken(images)}
+                                      onSetImagesTaken={setImagesTaken}
                                     />},
+
       {name: 'Chọn filter', component: <Step4_SelectFilter 
                                           imagesTaken={imagesTaken} />},
+
       {name: 'Printing', component: <Step5_Print />}
     ]
     
@@ -54,7 +54,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3} 
+          // startAtStep={3} 
           showSteps={false}
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 

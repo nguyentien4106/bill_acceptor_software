@@ -7,7 +7,7 @@ export default function Step4_SelectFilter(props) {
   const {imagesTaken} = props
   const filtersName = ['filter-1977', 'filter-aden', 'filter-amaro', 'filter-ashby', 'filter-brooklyn', 'filter-lofi']
   const [stripElem, setStripElem] = useState('')
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState(filtersName[0])
   const [photo, setPhoto] = useState(null)
   const [imagesChoosen, setImagesChoosen] = useState([])
 

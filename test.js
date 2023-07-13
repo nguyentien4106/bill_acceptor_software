@@ -50,11 +50,7 @@ for (let i = 1; i <= 4; i++) {
 const mergeImages = require('merge-images');
 const { Canvas, Image } = require('canvas');
  
-mergeImages(imageUrls, {
-  Canvas: Canvas,
-  Image: Image
-})
-  .then(b64 => console.log(b64));
+
 // var canvasWidth = 328;
 // var canvasHeight = 800; // Increased height to accommodate the images
 // drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight)

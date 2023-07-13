@@ -226,3 +226,9 @@ ol.progtrckr li.progtrckr-done:hover:before {
 .yellow{
   background-color: #fff000;
 }
+
+.image-filter-demo{
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}

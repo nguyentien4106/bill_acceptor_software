@@ -5,6 +5,7 @@ import { Store } from 'react-notifications-component';
 
 export default function Step4_SelectFilter(props) {
   const {imagesTaken} = props
+  const filtersName = ['filter-1977', 'filter-aden', 'filter-amaro', 'filter-ashby', 'filter-brooklyn', 'filter-lofi']
   const [stripElem, setStripElem] = useState('')
   const [filter, setFilter] = useState('')
   const [photo, setPhoto] = useState(null)
@@ -28,8 +29,10 @@ export default function Step4_SelectFilter(props) {
 
     }
     else {
+      Store.removeNotification("maxError")
       Store.addNotification({
         title: "",
+        id: "maxError",
         message: "Bạn chỉ có thể chọn tối đa 4 hình ảnh để in",
         type: "danger",
         insert: "top",
@@ -47,8 +50,8 @@ export default function Step4_SelectFilter(props) {
 
   return (
     <div className='w-100 d-flex justify-content-around'>
-      <div className=''> 
-        This is demo
+      <div> 
+        <img className={`${filter} image-show`} src={demo}></img>
       </div>
       <div className='d-flex justify-content-between flex-column'>
         <div className='imagesTaken'>
@@ -68,8 +71,7 @@ export default function Step4_SelectFilter(props) {
           </div>
         </div>
         <div className='filter'> 
-          {imagesTaken.map(item => <img className='image-taken' src={item}></img>)}
-          Filter Choose here
+          {filtersName.map(filterName => <img className={`${filterName} image-filter-demo ${filter === filterName ? "checked" : ""}`} src={demo} onClick={() => setFilter(filterName)}></img>)}
         </div>
       </div>
     </div>

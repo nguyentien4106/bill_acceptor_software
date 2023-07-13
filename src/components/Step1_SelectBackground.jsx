@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import '../css/Step1_SelectBackground.css'
-import mergeImages from 'merge-images'
-import background1 from '../images/background/background1.png'
 import background from '../images/background/background.png'
+import black from '../images/black.jpg'
+import demo from '../images/demo.png'
+import white from '../images/white.jpg'
+import createPhotoStrip from '../helpers/createPhotoStrip';
 
 export default function Step1_SelectBackground(props) {
+  const imagesDemoUrls = [demo, demo, demo, demo]
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(props.currentNumberPhoto)
   const [currentBackgroundUrl, setCurrentBackgroundUrl] = useState(props.currentBackgroundUrl)
   const [demoBackground, setDemoBackground] = useState(background);
@@ -19,27 +22,30 @@ export default function Step1_SelectBackground(props) {
     setCurrentBackgroundUrl(url)
   }
 
-
   useEffect(() => {
-    console.log(currentBackgroundUrl)
+    let background;
+
     if(currentBackgroundUrl === "../images/white.jpg"){
-      setDemoBackground(background1)
+      background = white;
     }
     else {
-      setDemoBackground(background)
+      background = black;
     }
+
+    createPhotoStrip(imagesDemoUrls, 500, 500, background)
+      .then(setDemoBackground)
 
   }, [currentBackgroundUrl])
 
   return (
     <div className='step1-container d-flex align-items-start flex-column'>
-      <div className='d-flex justify-content-start align-items-start'>
+      <div className='d-flex justify-content-start align-items-start w-100'>
         <legend>1. Lựa chọn số lượng </legend>
-        <div style={{width: 500}}>
+        <div style={{width: 500}} className='d-flex justify-content-between'>
           {
             props.numberPhotoOptions.map(item => 
               <label key={item} onClick={() => handleClickNumberPhoto(item)} className={currentPhotoNumber === item ? "checked number-photo-option" : "number-photo-option"}>
-                {item}Ảnh
+                {item} Ảnh
               </label>
             )
           }

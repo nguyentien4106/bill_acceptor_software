@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Progress from './components/Progress';
 import MyComponent from '../src/components/MyComponent'
+import { ReactNotifications } from 'react-notifications-component'
+
 const {ipcRenderer} = window.require('electron')
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
  
   return (
     <div className="App">
+      {/* <MyComponent></MyComponent> */}
+      <ReactNotifications/>
       <Progress 
         money={money}
       />

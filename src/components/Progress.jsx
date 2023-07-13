@@ -11,7 +11,7 @@ import background from '../images/background/background.png'
 import background1 from '../images/background/background1.png'
 
 export default function Progress(props) {
-  const numberPhotoOptions = [2, 4 ,6]
+  const numberPhotoOptions = [2, 4, 6, 8, 10]
   const backgroundUrls = ['../images/black.jpg', '../images/white.jpg', '../images/background.jpg']
 
   const [numberPhoto, setNumberPhoto] = useState(2)
@@ -54,7 +54,8 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={3} 
+          startAtStep={3} 
+          showSteps={false}
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}

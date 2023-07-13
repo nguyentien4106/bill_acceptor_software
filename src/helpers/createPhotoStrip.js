@@ -63,8 +63,9 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight) {
 
     // Callback function that is called when an image has finished loading
     function onImageLoad() {
-      console.count('load')
       imagesLoaded++;
+      console.count(`load ${imagesLoaded}` )
+
       if (imagesLoaded === imageObjs.length) {
         // All images have finished loading, draw them onto the canvas
         var x = 0;
@@ -79,7 +80,6 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight) {
 
         // Get the data URL of the canvas
         var img = c.toDataURL("image/png");
-
         // Resolve the promise with the data URL and the resulting image
         resolve({ dataURL: img, image: new Image() });
       }

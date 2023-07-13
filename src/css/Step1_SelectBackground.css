@@ -3,17 +3,14 @@
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 100px;
 }
 
-.checked{
-	background-color: #FFCCCC;
-	color: white;
-}
 
 .number-photo-option{
 	margin: 10px;
 	cursor: pointer;
-
+	width: 70px;
 }
 
 .w-100{
@@ -31,6 +28,7 @@
 	width: 100px;
 	height: 100px;
 	margin: 10px;
+	border-radius: 10px;
 }
 .image-show{
 	width: 150px;

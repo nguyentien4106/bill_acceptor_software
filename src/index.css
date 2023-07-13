@@ -16,10 +16,10 @@ body {
 .footer-buttons{
   position: absolute;
   bottom: 0;
-  right: 20%;
+  right: 0;
   display: flex;
   justify-content: space-around;
-  width: 50%;
+  width: 100%;
 }
 
 .w-75{
@@ -39,6 +39,14 @@ body {
 }
 .App{
   background-color: #d3d3d3;
+}
+
+.checked{
+	background-color: #c96565;
+	color: white;
+	border-radius: 10px;
+	font-weight: 700;
+  border: 2px solid #c96565;
 }
 
 .video{

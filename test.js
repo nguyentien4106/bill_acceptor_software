@@ -1,78 +1,53 @@
-function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight) {
-  return new Promise((resolve, reject) => {
-    var c = document.createElement("canvas");
-    c.width = canvasWidth;
-    c.height = canvasHeight;
-    var ctx = c.getContext("2d");
-    var imageObjs = [];
-    var imagesLoaded = 0;
-    var margin = 10; // Margin between images
+async function createPhotoStrip(imagesUrl, canvasWidth, canvasHeight, backgroundUrl, margin = 11) {
+  const images = [];
+  for (let i = 0; i < 4; i++) {
+    const image = new Image();
+    image.src = imagesUrl[i];
+    images.push(image);
+  }
+  const background = new Image();
+  background.src = backgroundUrl;
 
-    // Load the images
-    for (var i = 0; i < imageUrls.length; i++) {
-      var imageObj = new Image();
-      imageObj.onload = onImageLoad;
-      imageObj.src = imageUrls[i];
-      imageObjs.push(imageObj);
-    }
+  const canvas = document.createElement('canvas');
+  canvas.width = 273;
+  canvas.height = 1200;
+  
+  const ctx = canvas.getContext('2d');
 
-    // Callback function that is called when an image has finished loading
-    function onImageLoad() {
-      imagesLoaded++;
-      if (imagesLoaded === imageObjs.length) {
-        // All images have finished loading, draw them onto the canvas
-        var x = 0;
-        var y = margin; // Start at the top with some margin
-        for (var i = 0; i < imageObjs.length; i++) {
-          var imageObj = imageObjs[i];
-          var aspectRatio = imageObj.width / imageObj.height;
-          var height = (canvasWidth / aspectRatio) - margin; // Calculate the height based on the aspect ratio of the image
-          ctx.drawImage(imageObj, x, y, canvasWidth, height);
-          y += height + margin; // Update the y position for the next image
-        }
+  ctx.drawImage(background, 0, 0, canvasWidth, 1200);
 
-        // Get the data URL of the canvas
-        var img = c.toDataURL("image/png");
+  await Promise.all(images.map(image => createImage(image)));
 
-        // Resolve the promise with the data URL and the resulting image
-        resolve({ dataURL: img, image: new Image() });
-      }
-    }
-  });
+  const upperLeft = images[0];
+  const upperRight = images[1];
+  const lowerLeft = images[2];
+  const lowerRight = images[3];
+
+  const width = canvasWidth / 2;
+  const height = canvasHeight / 2;
+  const upperRightX = canvasWidth / 2;
+  ctx.drawImage(background, 0, 0, 280, 1200);
+
+  ctx.drawImage(upperLeft, margin, margin, width, height);
+  ctx.drawImage(upperRight, margin, upperRightX + margin * 2, width, height);
+  ctx.drawImage(lowerLeft, margin, upperRightX * 2 + margin * 3, width, height);
+  ctx.drawImage(lowerRight, margin, upperRightX * 3 + margin * 4, width, height);
+  return canvas.toDataURL('image/png');
+
+  async function createImage(image) {
+    return new Promise((resolve, reject) => {
+      image.addEventListener('load', () => resolve(image));
+      image.addEventListener('error', error => reject(error));
+    });
+  }
 }
 
-// Example usage:
-const imageUrls = [];
-for (let i = 1; i <= 4; i++) {
- imageUrls.push('photo1.jpg');
-}
-
-const mergeImages = require('merge-images');
-const { Canvas, Image } = require('canvas');
- 
-
-// var canvasWidth = 328;
-// var canvasHeight = 800; // Increased height to accommodate the images
-// drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight)
-//   .then((result) => {
-//     // Display the resulting image in the document
-//     result.image.onload = () => {
-//       document.body.appendChild(result.image);
-//     };
-//     result.image.src = result.dataURL;
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-// Example usage:
-// const imageUrls = [];
-// for (let i = 1; i <= 4; i++) {
-//  imageUrls.push('photo1.jpg');
-// }
-// var canvasWidth = 328;
-// var canvasHeight = 800; // Increased height to accommodate the images
-// drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight);
-// // Example usage:
-
-// var canvasWidth = 328;
-// var canvasHeight = 526;
+const imagesUrl = ['./src/images/demo.jpg', './src/images/demo.jpg', './src/images/demo.jpg', './src/images/demo.jpg']
+const bgInUse = './src/images/background/black.jpg'
+createPhotoStrip(imagesUrl, 500, 500, bgInUse)
+      .then(background => {
+        const img = document.createElement("img")
+        img.src = background
+        img.className = 'photo-strip'
+        document.body.appendChild(img);
+      })

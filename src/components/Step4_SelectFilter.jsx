@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import demo from '../images/demo.png'
+import demo from '../images/demo.jpg'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
 

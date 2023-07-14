@@ -32,5 +32,5 @@
 .image-show{
 	width: 200px;
 	height: 600px;
-	object-fit: scale-down;
+	object-fit: fill;
 }

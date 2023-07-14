@@ -5,15 +5,15 @@ import Step2_Payment from './Step2_Payment';
 import Step3_TakePhoto from './Step3_TakePhoto';
 import Step4_SelectFilter from './Step4_SelectFilter';
 import Step5_Print from './Step5_Print';
-import createPhotoStrip from '../helpers/createPhotoStrip';
-
+import backgroundBlack from '../images/background/black.jpg'
+import backgroundWhite from '../images/background/white.jpg'
 
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4, 6, 8, 10]
-  const backgroundUrls = ['../images/black.jpg', '../images/white.jpg']
+  const backgroundsImage = [{ name: 'black', src: backgroundBlack}, { name: 'white', src: backgroundWhite}]
 
   const [numberPhoto, setNumberPhoto] = useState(2)
-  const [backgroundUrl, setBackgroundUrl] = useState(backgroundUrls[0])
+  const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
 
   const getPhotoStrip = (image) => {
@@ -29,9 +29,9 @@ export default function Progress(props) {
                                                 numberPhotoOptions={numberPhotoOptions}
                                                 onSetNumberPhoto={setNumberPhoto}
                                                 currentNumberPhoto={numberPhoto}
-                                                backgroundUrls={backgroundUrls}
-                                                onSetBackgroundUrl={setBackgroundUrl}
-                                                currentBackgroundUrl={backgroundUrl}
+                                                backgroundsImage={backgroundsImage}
+                                                onSetBackground={setBackground}
+                                                background={background}
                                               />},
 
       {name: 'Xác nhận thanh toán', component: <Step2_Payment 

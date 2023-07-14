@@ -26,7 +26,7 @@ export default async function createPhotoStrip(imagesUrl, canvasWidth, canvasHei
   const width = canvasWidth / 2;
   const height = canvasHeight / 2;
   const upperRightX = canvasWidth / 2;
-  ctx.drawImage(background, 0, 0, 280, 1500);
+  ctx.drawImage(background, 0, 0, 280, 1200);
 
   ctx.drawImage(upperLeft, margin, margin, width, height);
   ctx.drawImage(upperRight, margin, upperRightX + margin * 2, width, height);

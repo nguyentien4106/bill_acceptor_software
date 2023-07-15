@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import '../css/Step1_SelectBackground.css'
-import backgroundBlack from '../images/black.jpg'
-import backgroundWhite from '../images/white.jpg'
+import backgroundBlack from '../images/background/black.jpg'
+import backgroundWhite from '../images/background/white.jpg'
 import demo1 from '../images/demo.jpg'
 import createPhotoStrip from '../helpers/createPhotoStrip';
 import { Store } from 'react-notifications-component';

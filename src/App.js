@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Progress from './components/Progress';
 import { ReactNotifications } from 'react-notifications-component'
+import { Store } from 'react-notifications-component';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -16,7 +17,9 @@ function App() {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
       console.log('money', data)
       setMoney(data)
-      
+      Store.addNotification({
+        
+      })
     });
 
     setAppData({

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Store } from 'react-notifications-component';
 
 export default function Step3_TakePhoto(props) {
   const videoRef = useRef(null);
@@ -38,7 +39,21 @@ export default function Step3_TakePhoto(props) {
       props.onSetImagesTaken([...images, dataURI])
       handleCapture()
     }
-    else{
+    else {
+      Store.addNotification({
+        title: "",
+        id: "maxPhoto",
+        message: "Bạn chỉ có thể chụp tối đa 6 hình !",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 2500,
+          onScreen: true
+        }
+      })
       videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       videoRef.current = null
     }
@@ -61,7 +76,7 @@ export default function Step3_TakePhoto(props) {
           {
             images && images.map((item, index) => {
               if(index < 3){
-                return <img className='image-taken' src={item}></img>
+                return <img key={index} className='image-taken' src={item}></img>
               }
             })
           }
@@ -70,7 +85,7 @@ export default function Step3_TakePhoto(props) {
           {
             images && images.map((item, index) => {
               if(index >= 3){
-                return <img className='image-taken' src={item}></img>
+                return <img key={index} className='image-taken' src={item}></img>
               }
             })
           }

@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import '../css/Step2_Payment.css'
+import { Store } from 'react-notifications-component';
 
 export default class Step2_Payment extends Component {
     constructor(props) {
@@ -27,7 +28,27 @@ export default class Step2_Payment extends Component {
         this.setState({
             error: this.state.money < this.state.numberPhoto * 35000
         })
-        return this.state.money > this.state.numberPhoto * 35000;
+
+        const isValid = this.state.money > this.state.numberPhoto * 35000
+
+        if(!isValid){
+            Store.addNotification({
+                title: "",
+                id: "invalidMoney",
+                message: "Bạn chưa nạp đủ tiền !!! Vui lòng nạp đủ số tiền theo yêu cầu !",
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                  duration: 10000,
+                  onScreen: true
+                }
+              })
+        }
+
+        return isValid;
     }
 
     displayMoney(money){
@@ -52,8 +73,6 @@ export default class Step2_Payment extends Component {
                             <h2>Bạn đã nạp </h2>
                             <h2>{this.displayMoney(this.state.money)} VND</h2>
                         </div>
-
-                        {this.state.error && <h2 className='mt-50 red' color='red'>Số tiền đã nạp không đủ</h2>}
                     </div>
                 </div>
         )

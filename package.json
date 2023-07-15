@@ -16,6 +16,7 @@
     "canvas": "^2.11.2",
     "child_process": "^1.0.2",
     "electron-is-dev": "^2.0.0",
+    "electron-print": "^1.0.2",
     "fs": "0.0.1-security",
     "merge-images": "^2.0.0",
     "path": "^0.12.7",

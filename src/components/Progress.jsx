@@ -15,10 +15,12 @@ export default function Progress(props) {
   const [numberPhoto, setNumberPhoto] = useState(2)
   const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
+  const [imagesChoosen, setImagesChoosen] = useState([])
 
   const getPhotoStrip = (image) => {
     // setImageStrip(image)
   }
+  
 
   useEffect(() => {
 
@@ -45,9 +47,16 @@ export default function Progress(props) {
                                     />},
 
       {name: 'Chọn filter', component: <Step4_SelectFilter 
-                                          imagesTaken={imagesTaken} />},
+                                          imagesTaken={imagesTaken} 
+                                          background={background.src}
+                                          onSetImagesChoosen={setImagesChoosen}
+                                          imagesChoosen={imagesChoosen}
+                                        />},
 
-      {name: 'Printing', component: <Step5_Print />}
+      {name: 'Printing', component: <Step5_Print 
+                                      imagesChoosen={imagesChoosen}
+                                      background={background}
+                                    />}
     ]
     
   return (
@@ -59,7 +68,7 @@ export default function Progress(props) {
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
-          nextButtonCls={"button-4 yellow"}
+          nextButtonCls={"button-4 yellow checked"}
         />
     </div>
   )

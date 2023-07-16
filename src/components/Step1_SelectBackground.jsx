@@ -15,6 +15,7 @@ export default function Step1_SelectBackground(props) {
 
   const handleClickNumberPhoto = (item) => {
     if(item !== 2){
+      Store.removeAllNotifications()
       Store.addNotification({
         title: "",
         id: "maxError",

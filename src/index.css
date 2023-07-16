@@ -69,6 +69,10 @@ code {
     monospace;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 ol.progtrckr {
   list-style-type: none;
   padding: 0;

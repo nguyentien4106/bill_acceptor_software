@@ -7,6 +7,7 @@ import Step4_SelectFilter from './Step4_SelectFilter';
 import Step5_Print from './Step5_Print';
 import backgroundBlack from '../images/background/black.jpg'
 import backgroundWhite from '../images/background/white.jpg'
+import { Store } from 'react-notifications-component';
 
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4, 6, 8, 10]
@@ -16,15 +17,12 @@ export default function Progress(props) {
   const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
+  const [imageToPrint, setImageToPrint] = useState(null)
 
   const getPhotoStrip = (image) => {
     // setImageStrip(image)
   }
-  
 
-  useEffect(() => {
-
-  }, [])
   const steps =
     [
       {name: 'Chọn phông nền ảnh', component: <Step1_SelectBackground 
@@ -51,11 +49,12 @@ export default function Progress(props) {
                                           background={background.src}
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
+                                          onSetImageToPrint={setImageToPrint}
                                         />},
 
       {name: 'Printing', component: <Step5_Print 
-                                      imagesChoosen={imagesChoosen}
-                                      background={background}
+                                      imageToPrint={imageToPrint}
+                                      onSetImageToPrint={setImageToPrint}
                                     />}
     ]
     
@@ -69,6 +68,7 @@ export default function Progress(props) {
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
           nextButtonCls={"button-4 yellow checked"}
+          onStepChange={() => Store.removeAllNotifications()}
         />
     </div>
   )

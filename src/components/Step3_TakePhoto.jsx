@@ -1,9 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Store } from 'react-notifications-component';
+import '../css/Step3_TakePhoto.css'
 
 export default function Step3_TakePhoto(props) {
   const videoRef = useRef(null);
   const [images, setImages] = useState([])
+
+  useEffect(() => {
+    handleCapture()
+  }, [])
 
   const handleCapture = async () => {
     try {
@@ -37,9 +42,10 @@ export default function Step3_TakePhoto(props) {
     if(images.length < 6){
       setImages([...images, dataURI])
       props.onSetImagesTaken([...images, dataURI])
-      handleCapture()
+      // handleCapture()
     }
     else {
+      Store.removeAllNotifications()
       Store.addNotification({
         title: "",
         id: "maxPhoto",
@@ -55,23 +61,19 @@ export default function Step3_TakePhoto(props) {
         }
       })
       videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-      videoRef.current = null
     }
     
   };
 
   return (
+  <>
     <div className='d-flex w-100 justify-content-around align-items-around'> 
-      <div className='d-flex flex-column justify-content-center w-75 align-items-center'>
-        <div className='video'>
+      <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
+        <div className='video mt-5 mb-5'>
           <video ref={videoRef} autoPlay={true}/>
         </div>
-        <div className='button'>
-          <button onClick={handleCapture}>Open Camera</button>
-          <button onClick={handleSnapshot}>Take Picture</button>
-        </div>
       </div>
-      <div className='d-flex'>
+      <div className='d-flex w-50'>
         <div className='d-flex flex-column m-5'>
           {
             images && images.map((item, index) => {
@@ -92,6 +94,13 @@ export default function Step3_TakePhoto(props) {
         </div>
         
       </div>
+
+      
     </div>
+    <div className='button'>
+      
+    <i className="bi bi-camera fa-10x mt-5 pointer button h1" onClick={handleSnapshot}></i>
+  </div>
+  </>
   );
 };

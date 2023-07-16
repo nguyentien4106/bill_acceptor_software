@@ -26,12 +26,13 @@ export default class Step2_Payment extends Component {
 
     isValidated(){
         this.setState({
-            error: this.state.money < this.state.numberPhoto * 35000
+            error: this.state.money < this.state.numberPhoto * 25000
         })
 
-        const isValid = this.state.money > this.state.numberPhoto * 35000
+        const isValid = this.state.money > this.state.numberPhoto * 25000
 
         if(!isValid){
+            Store.removeAllNotifications()
             Store.addNotification({
                 title: "",
                 id: "invalidMoney",
@@ -66,7 +67,7 @@ export default class Step2_Payment extends Component {
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-10'>
                             <h2>Số tiền cần thanh toán là </h2>
-                            <h2>{this.displayMoney(this.state.numberPhoto * 35000)} VND</h2>
+                            <h2>{this.displayMoney(this.state.numberPhoto * 25000)} VND</h2>
                         </div>
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-4'>

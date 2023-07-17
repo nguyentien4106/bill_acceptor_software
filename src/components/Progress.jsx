@@ -8,6 +8,7 @@ import Step5_Print from './Step5_Print';
 import backgroundBlack from '../images/background/black.jpg'
 import backgroundWhite from '../images/background/white.jpg'
 import { Store } from 'react-notifications-component';
+import Step6_HandlePrint from './Step6_HandlePrint';
 
 export default function Progress(props) {
   const numberPhotoOptions = [2, 4, 6, 8, 10]
@@ -55,14 +56,18 @@ export default function Progress(props) {
       {name: 'Printing', component: <Step5_Print 
                                       imageToPrint={imageToPrint}
                                       onSetImageToPrint={setImageToPrint}
-                                    />}
+                                    />},
+
+      {name: 'Printing', component: <Step6_HandlePrint 
+                                  imageToPrint={imageToPrint}
+                                />},                           
     ]
     
   return (
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={4} 
+          startAtStep={4} 
           showSteps={false}
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 

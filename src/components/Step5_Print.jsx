@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import demo from '../images/demo.jpg'
 import { PrinterFill } from "react-bootstrap-icons";
 import backgroundBlack from '../images/background/black.jpg'
-
 import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
+const {ipcRenderer} = window.require('electron')
 
 export default function Step5_Print(props) {
   const [filter, setFilter] = useState('origin')
@@ -22,18 +22,15 @@ export default function Step5_Print(props) {
     win.document.write(divElement.outerHTML);     // Write contents in the new window.
     win.document.close();
     win.print();  
-    // var printContents = divElement.innerHTML;
-    // var originalContents = document.body.innerHTML;
-    // document.body.innerHTML = printContents;
-    // window.print({
-    //   silent: true, // to suppress print dialog box
-    //   printerName: "Microsoft Print to PDF", // name of the printer to use
-    //   printerType: "Laser", // type of the printer to use
-    //   printQuality: "High", // quality of the printer output
-    //   color: true // whether to print in color or black and white,
-    // });
-    // document.body.innerHTML = originalContents;
   
+  }
+
+  useEffect(() => {
+    props.onSetImageToPrint(testImage)
+  }, [])
+
+  const Print = () => {
+    ipcRenderer.send("print", "print this")
   }
 
   return (
@@ -57,8 +54,9 @@ export default function Step5_Print(props) {
             }
           })}
         </div>
-        <PrinterFill className='mt-5 pointer' onClick={handlePrint} size={70}></PrinterFill>
+        {/* <PrinterFill className='mt-5 pointer' onClick={handlePrint} size={70}></PrinterFill> */}
         {/* <i className="bi bi-printer-fill fa-10x"></i> */}
+        <button onClick={Print}>Print</button>
       </div>
     </div>
   )

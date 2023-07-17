@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import '../css/Step1_SelectBackground.css'
-import backgroundBlack from '../images/background/black.jpg'
-import backgroundWhite from '../images/background/white.jpg'
 import demo1 from '../images/demo.jpg'
-import createPhotoStrip from '../helpers/createPhotoStrip';
+import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
 import { Store } from 'react-notifications-component';
 
 export default function Step1_SelectBackground(props) {
@@ -39,20 +37,18 @@ export default function Step1_SelectBackground(props) {
   }
 
   const handleClickBackgroundImage = bg =>{
-    console.log(bg)
     props.onSetBackground(bg)
     setCurrentBackground(bg)
   }
 
   useEffect(() => {
-    createPhotoStrip(imagesDemoUrls, 500, 500, demoBackground)
+    drawImagesOnCanvas(imagesDemoUrls, 530, 1200, demoBackground)
     .then(setDemoBackground)
   }, [])
 
   useEffect(() => {
-    const bgInUse = currentBackground.name === "white" ? backgroundWhite : backgroundBlack;
     
-    createPhotoStrip(imagesDemoUrls, 500, 500, bgInUse)
+    drawImagesOnCanvas(imagesDemoUrls, 530, 1200, currentBackground.src)
       .then(background => {
         setDemoBackground(background)
       })

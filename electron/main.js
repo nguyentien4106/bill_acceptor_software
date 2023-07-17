@@ -39,10 +39,17 @@ function createWindow() {
                 mainWindow.webContents.send('detectMoneyIn', money);
               }
             },
+            {
+              label:'Print',
+              click(){
+                money += 100000;
+                mainWindow.webContents.send('detectMoneyIn', money);
+              }
+            },
         ]
     }])
 
-Menu.setApplicationMenu(menu); 
+  Menu.setApplicationMenu(menu); 
 }
 
 function readBill(result){
@@ -61,7 +68,12 @@ function readBill(result){
 
 app.whenReady().then(() => {
   createWindow()
+  const contents = mainWindow.webContents;
+  contents.getPrintersAsync().then(res => console.log(res))
   initBillAcceptor(readBill)
+  ipcMain.on("print", (event, data) => {
+    console.log(data)
+  })
 
 });
 

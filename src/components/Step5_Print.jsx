@@ -1,29 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import demo from '../images/demo.jpg'
+import { PrinterFill } from "react-bootstrap-icons";
+import backgroundBlack from '../images/background/black.jpg'
+
+import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
 
 export default function Step5_Print(props) {
   const [filter, setFilter] = useState('origin')
   const filtersName = ['origin', 'filter-amaro', 'filter-rise', 'filter-willow', 'filter-slumber', 'filter-x-proII', 'filter-Lo-Fi', 'filter-lark', 'filter-moon']
+  const imagesDemoUrls = [demo, demo, demo, demo]
+  const [testImage, setTestImage] = useState(null)
+
+  useEffect(() => {
+    drawImagesOnCanvas(imagesDemoUrls, 530, 1200, backgroundBlack)
+    .then(setTestImage)
+  }, [])
 
   const handlePrint = () => {
     var divElement = document.getElementById("image");
-    var printContents = divElement.innerHTML;
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print({
-      silent: true, // to suppress print dialog box
-      printerName: "Microsoft Print to PDF", // name of the printer to use
-      printerType: "Laser", // type of the printer to use
-      printQuality: "High", // quality of the printer output
-      color: true // whether to print in color or black and white
-    });
+    var win = window.open('', '', 'height=700,width=700');
+    win.document.write(divElement.outerHTML);     // Write contents in the new window.
+    win.document.close();
+    win.print();  
+    // var printContents = divElement.innerHTML;
+    // var originalContents = document.body.innerHTML;
+    // document.body.innerHTML = printContents;
+    // window.print({
+    //   silent: true, // to suppress print dialog box
+    //   printerName: "Microsoft Print to PDF", // name of the printer to use
+    //   printerType: "Laser", // type of the printer to use
+    //   printQuality: "High", // quality of the printer output
+    //   color: true // whether to print in color or black and white,
+    // });
     // document.body.innerHTML = originalContents;
   
   }
 
   return (
     <div className='mt-5 d-flex justify-content-around'>
-      <img id='image' src={props.imageToPrint} className={`image-show ${filter}`}></img>
+      <div id='image'>
+        <img src={props.imageToPrint ? props.imageToPrint : testImage} className={`image-show ${filter}`}></img>
+      </div>
       <div className='imagesTaken align-item-center align-self-center'>
         <h2>Bạn hãy chọn filter cho tấm hình để in nhé !!</h2>
         <div className='first'>
@@ -40,7 +57,8 @@ export default function Step5_Print(props) {
             }
           })}
         </div>
-        <button className='mt-5' onClick={() => handlePrint()}>Print</button>
+        <PrinterFill className='mt-5 pointer' onClick={handlePrint} size={70}></PrinterFill>
+        {/* <i className="bi bi-printer-fill fa-10x"></i> */}
       </div>
     </div>
   )

@@ -62,12 +62,12 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={3} 
+          // startAtStep={4} 
           showSteps={false}
           backButtonCls={"button-4"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
-          nextButtonCls={"button-4 yellow checked"}
+          nextButtonCls={"button-4 checked"}
           onStepChange={() => Store.removeAllNotifications()}
         />
     </div>

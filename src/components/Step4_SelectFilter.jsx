@@ -7,15 +7,12 @@ import backgroundBlack from '../images/background/black.jpg'
 
 export default function Step4_SelectFilter(props) {
   const {imagesTaken, background} = props
-  const filtersName = ['filter-amaro', 'filter-rise', 'filter-willow', 'filter-slumber', 'filter-x-proII', 'filter-Lo-Fi', 'filter-lark', 'filter-moon']
-  // const [filter, setFilter] = useState(filtersName[0])
   const [imagesChoosen, setImageChoosen] = useState([])
   const [filter, setFilter] = useState('')
   const [photo, setPhoto] = useState(null)
   const test = [demo, demo, demo, demo]
   const handleChooseImage = image => {
     if(imagesChoosen.includes(image)){
-      console.log('include')
       setImageChoosen(imagesChoosen.filter(item => item != image))
       props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
       return

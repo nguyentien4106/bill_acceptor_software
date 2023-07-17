@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import '../css/Step2_Payment.css'
 import { Store } from 'react-notifications-component';
+import { CashStack } from "react-bootstrap-icons";
 
 export default class Step2_Payment extends Component {
     constructor(props) {
@@ -66,13 +67,15 @@ export default class Step2_Payment extends Component {
                         <h1>Vui lòng nạp số tiền theo yêu cầu</h1>
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-10'>
-                            <h2>Số tiền cần thanh toán là </h2>
-                            <h2>{this.displayMoney(this.state.numberPhoto * 25000)} VND</h2>
+                            <CashStack size={70} className='p-2'></CashStack>
+                            <h2 className='p-2'>Số tiền cần thanh toán là </h2>
+                            <h2 className='p-2 ms-auto'>{this.displayMoney(this.state.numberPhoto * 25000)} VND</h2>
                         </div>
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-4'>
-                            <h2>Bạn đã nạp </h2>
-                            <h2>{this.displayMoney(this.state.money)} VND</h2>
+                            <CashStack  size={70} className='p-2'></CashStack>
+                            <h2 className='p-2'>Bạn đã nạp </h2>
+                            <h2 className='ms-auto p-2'>{this.displayMoney(this.state.money)} VND</h2>
                         </div>
                     </div>
                 </div>

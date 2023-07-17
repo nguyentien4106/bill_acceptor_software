@@ -12,6 +12,7 @@ function App() {
   const [imageUrls, setImages] = useState([])
   const [background, setBackground] = useState()
   const [appData, setAppData] = useState({})
+  const [isPrint, setIsPrint] = useState(false)
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
@@ -40,6 +41,10 @@ function App() {
     })
   }, [])
 
+  useEffect(() => {
+    ipcRenderer.send("print", "print")
+  }, [isPrint])
+
  
   return (
     <div className="App">
@@ -47,6 +52,7 @@ function App() {
       <Progress 
         money={money}
       />
+      <button onClick={() => setIsPrint(true)}> Print</button>
     </div>
   );
 }

@@ -4,8 +4,11 @@ const isDev = require('electron-is-dev');
 const initBillAcceptor = require('../helpers/initBillAcceptor')
 const fs = require('fs')
 const os = require('os')
+
 let mainWindow;
 let money = 0;
+let printer;
+let isPrinted = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -70,37 +73,42 @@ function readBill(result){
 app.whenReady().then(() => {
   createWindow()
   const contents = mainWindow.webContents;
-  // contents.getPrintersAsync().then(res => console.log(res))
+  contents.getPrintersAsync().then(res => {
+    printer = res.filter(item => item.isDefault)[0]
+  })
+
   initBillAcceptor(readBill)
   const pdfPath = path.join(os.homedir(), 'Desktop', 'temp.pdf')
 
   ipcMain.on("print", (event, data) => {
-    const options = {
-      deviceName : "Microsoft Print to PDF",
-      silent: true
-    }
-    contents.printToPDF({}).then(data => {
-      fs.writeFile(pdfPath, data, (error) => {
-        if (error) throw error
-        console.log(`Wrote PDF successfully to ${pdfPath}`)
-        const options = {
-          type: 'question',
-          buttons: ['Cancel', 'Yes, please', 'No, thanks'],
-          defaultId: 2,
-          title: 'Question',
-          message: 'Do you want to do this?',
-          detail: 'It does not really matter',
-          checkboxChecked: true,
-        };
-      
-        dialog.showMessageBox(null, options, (response, checkboxChecked) => {
-          console.log(response);
-          console.log(checkboxChecked);
-        });
+    // print to pdf
+    if(!isPrinted){
+      isPrinted = true
+      contents.printToPDF({}).then(data => {
+        fs.writeFile(pdfPath, data, (error) => {
+          if (error) throw error
+          console.log(`Wrote PDF successfully to ${pdfPath}`)
+          const options = {
+            type: 'info',
+            defaultId: 2,
+            title: 'Thông báo',
+            message: 'Bạn đợi trong giây lát rồi nhận hình lại nhé !',
+          };
+        
+          dialog.showMessageBox(null, options, (response, checkboxChecked) => {
+            console.log(response);
+            console.log(checkboxChecked);
+          });
+        })
+      }).catch(error => {
+        console.log(`Failed to write PDF to ${pdfPath}: `, error)
       })
-    }).catch(error => {
-      console.log(`Failed to write PDF to ${pdfPath}: `, error)
-    })
+  
+      // print 
+  
+      contents.print({})
+    }
+    
   })
 
 });

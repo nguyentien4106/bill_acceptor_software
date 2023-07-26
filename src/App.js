@@ -9,13 +9,11 @@ const {ipcRenderer} = window.require('electron')
 function App() {
 
   const [money, setMoney] = useState(0)
-  const [imageUrls, setImages] = useState([])
   const [background, setBackground] = useState()
   const [appData, setAppData] = useState({})
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
-      console.log('money', data)
       setMoney(data)
       Store.removeAllNotifications()
       Store.addNotification({

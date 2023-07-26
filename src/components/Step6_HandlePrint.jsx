@@ -18,9 +18,9 @@ export default function Step6_HandlePrint(props) {
         drawImagesOnCanvas(imagesDemoUrls, 530, 1200, backgroundBlack)
             .then(image => {
                 setImage(image)
-                var img = document.createElement("img");
-                img.src = image;
-                document.body.append(img)
+                // var img = document.createElement("img");
+                // img.src = image;
+                // document.body.append(img)
                 // document.querySelectorAll('.footer-buttons button').forEach(function(el) {
                 //     el.style.display = 'none';
                 //  });
@@ -29,11 +29,21 @@ export default function Step6_HandlePrint(props) {
                 // console.log('apeend')
 
             })
-        console.log('use effect')
     }, [])
 
     const print = () => {
         ipcRenderer.send('print', image)
     }
-    return (<button onClick={print}>print</button>)
+
+    const end = () => {
+        console.log(props)
+        props.jumpToStep(0)
+    }
+
+    return (
+        <div>
+            <button onClick={print}>print</button>
+            <button onClick={end}>End</button>
+        </div>
+    )
 }

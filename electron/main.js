@@ -41,14 +41,7 @@ function createWindow() {
                 money += 100000;
                 mainWindow.webContents.send('detectMoneyIn', money);
               }
-            },
-            {
-              label:'Print',
-              click(){
-                money += 100000;
-                mainWindow.webContents.send('detectMoneyIn', money);
-              }
-            },
+            }
         ]
     }])
 
@@ -76,20 +69,20 @@ app.whenReady().then(() => {
   initBillAcceptor(readBill)
 
   ipcMain.on("print", (event, data) => {
-    // print to pdf
     const contents = mainWindow.webContents;
     contents.getPrintersAsync().then(res => {
       printer = res.filter(item => item.isDefault)[0]
       console.log(printer)
-      // const options = {
-      //   deviceName: printer.name,
-      //   silent : true
-      // }
-      // contents.print(options)
     })
 
     console.log(data)
 
+  })
+
+  ipcMain.on('resetMoney', (event) => {
+    const Zero = 0;
+    mainWindow.webContents.send('detectMoneyIn', Zero);
+    
   })
 
 });

@@ -56,6 +56,10 @@ drawImagesOnCanvas(imagesUrl, 530, 1200, bgInUse)
         img.src = background
         img.className = 'photo-strip'
         document.querySelector("#image").append(img)
+        const options = {
+          landscape: true
+        }
+        window.print(options)
       })
 
 function print(){

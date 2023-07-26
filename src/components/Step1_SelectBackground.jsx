@@ -6,7 +6,6 @@ import { Store } from 'react-notifications-component';
 
 export default function Step1_SelectBackground(props) {
   const imagesDemoUrls = [demo1, demo1, demo1, demo1]
-
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(props.currentNumberPhoto)
   const [currentBackground, setCurrentBackground] = useState(props.background)
   const [demoBackground, setDemoBackground] = useState(currentBackground.src);

@@ -8,7 +8,6 @@ import { CashStack } from "react-bootstrap-icons";
 export default class Step2_Payment extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             money: props.money,
             numberPhoto: props.numberPhoto,

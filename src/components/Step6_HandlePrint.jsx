@@ -4,6 +4,7 @@ import demo from '../images/demo.jpg'
 import { useState } from 'react'
 import backgroundBlack from '../images/background/black.jpg'
 import { drawImagesOnCanvas } from '../helpers/createPhotoStrip'
+import printJS from 'print-js'
 
 const {ipcRenderer} = window.require('electron')
 
@@ -18,21 +19,11 @@ export default function Step6_HandlePrint(props) {
         drawImagesOnCanvas(imagesDemoUrls, 530, 1200, backgroundBlack)
             .then(image => {
                 setImage(image)
-                // var img = document.createElement("img");
-                // img.src = image;
-                // document.body.append(img)
-                // document.querySelectorAll('.footer-buttons button').forEach(function(el) {
-                //     el.style.display = 'none';
-                //  });
-
-                // ipcRenderer.send('print', 'data')
-                // console.log('apeend')
-
             })
     }, [])
 
-    const print = () => {
-        ipcRenderer.send('print', image)
+    const handlePrint = () => {
+        printJS({ printable: 'image', type: 'html', header: 'PrintJS - Form Element Selection' })
     }
 
     const end = () => {
@@ -42,7 +33,8 @@ export default function Step6_HandlePrint(props) {
 
     return (
         <div>
-            <button onClick={print}>print</button>
+            <img id='image' src={image}></img>
+            <button onClick={handlePrint}>print</button>
             <button onClick={end}>End</button>
         </div>
     )

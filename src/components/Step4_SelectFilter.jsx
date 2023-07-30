@@ -1,16 +1,15 @@
 import React, { useState, useEffect} from 'react'
-import demo from '../images/demo.jpg'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import createPhotoStrip, {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
+import {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
 import backgroundBlack from '../images/background/black.jpg'
 
 export default function Step4_SelectFilter(props) {
-  const {imagesTaken, background} = props
+  const {imagesTaken} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [filter, setFilter] = useState('')
   const [photo, setPhoto] = useState(null)
-  const test = [demo, demo, demo, demo]
+  
   const handleChooseImage = image => {
     if(imagesChoosen.includes(image)){
       setImageChoosen(imagesChoosen.filter(item => item != image))

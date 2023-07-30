@@ -21,10 +21,7 @@ export default function Progress(props) {
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
   const [imageToPrint, setImageToPrint] = useState(null)
-
-  const getPhotoStrip = (image) => {
-    // setImageStrip(image)
-  }
+  const [filter, setFilter] = useState('')
 
   const handleOnStepChange = stepIndex => {
     Store.removeAllNotifications()
@@ -49,7 +46,6 @@ export default function Progress(props) {
       {name: 'Xác nhận thanh toán', component: <Step2_Payment 
                                                   money={props.money} 
                                                   numberPhoto={numberPhoto}
-                                                  onGetPhotoStrip={getPhotoStrip}
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
@@ -66,11 +62,12 @@ export default function Progress(props) {
 
       {name: 'Printing', component: <Step5_Print 
                                       imageToPrint={imageToPrint}
-                                      onSetImageToPrint={setImageToPrint}
+                                      onSetFilter={setFilter}
                                     />},
 
       {name: 'Printing', component: <Step6_HandlePrint 
                                   imageToPrint={imageToPrint}
+                                  filter={filter}
                                 />},                           
     ]
     
@@ -78,9 +75,9 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={4} 
+          // startAtStep={5} 
           showSteps={false}
-          backButtonCls={"button-4"} 
+          backButtonCls={"button-4 checked"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
           nextButtonCls={"button-4 checked"}

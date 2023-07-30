@@ -1,0 +1,6 @@
+@media print {
+    #image {
+      height: 1500px;
+      width: auto;
+    }
+  }

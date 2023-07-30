@@ -1,14 +1,36 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Store } from 'react-notifications-component';
 import '../css/Step3_TakePhoto.css'
 
-export default function Step3_TakePhoto(props) {
+const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const [images, setImages] = useState([])
 
   useEffect(() => {
-    handleCapture()
+    handleCapture();
+    // const next = document.getElementById("next-button");
+    // next.style.display = "none"
   }, [])
+
+  useEffect(() => {
+    if(images.length === 6){
+      const next = document.getElementById("next-button");
+      next.style.display = "block"
+      Store.addNotification({
+        id: "notifyenoughImage",
+        message: "Bạn đã chụp đủ số lượng hình ! Bấm kế tiếp để mình đi chọn hình nhé !!!",
+        type: "info",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 10000,
+          onScreen: true
+        }
+      })
+    }
+  }, [images.length])
 
   const handleCapture = async () => {
     try {
@@ -17,7 +39,7 @@ export default function Step3_TakePhoto(props) {
           video: {
             facingMode: "user",
             width: 600,
-            height: 600
+            height: 400
           }
         });
 
@@ -37,12 +59,11 @@ export default function Step3_TakePhoto(props) {
     canvas.height = videoRef.current.videoHeight;
     canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
-    const dataURI = canvas.toDataURL('image/jpeg');
+    const dataURI = canvas.toDataURL('image/jpg');
 
     if(images.length < 6){
       setImages([...images, dataURI])
       props.onSetImagesTaken([...images, dataURI])
-      // handleCapture()
     }
     else {
       Store.removeAllNotifications()
@@ -69,8 +90,8 @@ export default function Step3_TakePhoto(props) {
   <>
     <div className='d-flex w-100 justify-content-around align-items-around'> 
       <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
-        <div className='video mt-5 mb-5'>
-          <video ref={videoRef} autoPlay={true}/>
+        <div className='video-container mt-5 mb-5 d-flex'>
+          <video className='video justify-content-center' ref={videoRef} autoPlay={true}/>
         </div>
       </div>
       <div className='d-flex w-50'>
@@ -104,3 +125,5 @@ export default function Step3_TakePhoto(props) {
   </>
   );
 };
+
+export default Step3_TakePhoto;

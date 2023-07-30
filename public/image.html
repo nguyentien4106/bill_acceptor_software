@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My ElectronJS/React App</title>
+    <script src="https://rawgithub.com/edabg/jsprintsetup/master/jsprintsetup.js"></script>
+  </head>
+  <body>
+    <img src="./images/image.png">
+  </body>
+  <style>
+    body{
+        height: 1890px;
+        width: 630px;
+    }
+    img {
+        height: 1890px;
+        width: 630px;
+    }
+  </style>
+  <script>
+    const printer = jsPrintSetup.getPrinter();
+    console.log('printer', printer)
+  </script>
+</html>

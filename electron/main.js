@@ -80,8 +80,8 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('resetMoney', (event) => {
-    const Zero = 0;
-    mainWindow.webContents.send('detectMoneyIn', Zero);
+    money = 0;
+    mainWindow.webContents.send('detectMoneyIn', money);
     
   })
 

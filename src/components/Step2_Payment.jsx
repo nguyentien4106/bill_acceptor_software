@@ -61,6 +61,7 @@ export default class Step2_Payment extends Component {
 
     render(){
         return (
+            <React.Fragment>
                 <div className='d-flex justify-content-center mt-100'>
                     <div className='payment d-flex flex-column justify-content-center align-items-center align-self-center w-75'>
                         <h1>Vui lòng nạp số tiền theo yêu cầu</h1>
@@ -77,7 +78,13 @@ export default class Step2_Payment extends Component {
                             <h2 className='ms-auto p-2'>{this.displayMoney(this.state.money)} VND</h2>
                         </div>
                     </div>
+                    
                 </div>
+                <div className='mt-100'>
+                    <h3>Bạn lưu ý !!!<br/> Hiện tại máy chưa hỗ trợ trả lại tiền thừa nên hãy bỏ đúng số tiền máy yêu cầu thôi nhớ!!</h3>
+                </div>
+            </React.Fragment>
+                
         )
     }
 }

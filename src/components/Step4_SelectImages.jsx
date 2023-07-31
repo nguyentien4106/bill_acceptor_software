@@ -2,9 +2,8 @@ import React, { useState, useEffect} from 'react'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
 import {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
-import backgroundBlack from '../images/background/black.jpg'
 
-export default function Step4_SelectFilter(props) {
+export default function Step4_SelectImages(props) {
   const {imagesTaken} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [filter, setFilter] = useState('')
@@ -43,7 +42,7 @@ export default function Step4_SelectFilter(props) {
 
   useEffect(() => {
     if(imagesChoosen.length === 4){
-      drawImagesOnCanvas(imagesChoosen, 500, 1200, backgroundBlack).then(photo => {
+      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
         props.onSetImageToPrint(photo)
         setPhoto(photo)
       })

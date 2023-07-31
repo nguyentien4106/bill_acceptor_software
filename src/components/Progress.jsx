@@ -3,8 +3,8 @@ import StepZilla from "react-stepzilla";
 import Step1_SelectBackground from './Step1_SelectBackground';
 import Step2_Payment from './Step2_Payment';
 import Step3_TakePhoto from './Step3_TakePhoto';
-import Step4_SelectFilter from './Step4_SelectFilter';
-import Step5_Print from './Step5_Print';
+import Step4_SelectImages from './Step4_SelectImages';
+import Step5_SelectFilter from './Step5_SelectFilter';
 import backgroundBlack from '../images/background/black.jpg'
 import backgroundWhite from '../images/background/white.jpg'
 import { Store } from 'react-notifications-component';
@@ -30,6 +30,9 @@ export default function Progress(props) {
 
     if(stepIndex === 0){
       ipcRenderer.send("resetMoney")
+      setFilter(null)
+      setImageToPrint(null)
+      setImagesTaken(null)
     }
     
   }
@@ -56,7 +59,7 @@ export default function Progress(props) {
                                             onSetImagesTaken={setImagesTaken}
                                           />},
 
-      {name: 'Chọn filter', component: <Step4_SelectFilter 
+      {name: 'Chọn filter', component: <Step4_SelectImages
                                           imagesTaken={imagesTaken} 
                                           background={background.src}
                                           onSetImagesChoosen={setImagesChoosen}
@@ -64,9 +67,12 @@ export default function Progress(props) {
                                           onSetImageToPrint={setImageToPrint}
                                         />},
 
-      {name: 'Printing', component: <Step5_Print 
+      {name: 'Printing', component: <Step5_SelectFilter 
                                       imageToPrint={imageToPrint}
                                       onSetFilter={setFilter}
+                                      imagesChoosen={imagesChoosen}
+                                      onSetImageToPrint={setImageToPrint}
+
                                     />},
 
       {name: 'Printing', component: <Step6_HandlePrint 

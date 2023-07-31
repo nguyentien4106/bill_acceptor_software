@@ -1,4 +1,39 @@
 
+const filters = [
+  {
+    name: 'filter-amaro',
+    value: 'sepia(.35) contrast(1.1) brightness(1.2) saturate(1.3)'
+  },
+  {
+    name: 'filter-rise',
+    value: 'sepia(.25) contrast(1.25) brightness(1.2) saturate(.9)'
+  },
+  {
+    name: 'filter-willow',
+    value: 'brightness(1.2) contrast(.85) saturate(.05) sepia(.2)'
+  },
+  {
+    name: 'filter-slumber',
+    value: 'sepia(.35) contrast(1.25) saturate(1.25)'
+  },
+  {
+    name: 'filter-x-proII',
+    value: 'sepia(.45) contrast(1.25) brightness(1.75) saturate(1.3) hue-rotate(-5deg)'
+  },
+  {
+    name: 'filter-Lo-Fi',
+    value: 'saturate(1.1) contrast(1.5)'
+  },
+  {
+    name: 'filter-lark',
+    value: 'sepia(.25) contrast(1.2) brightness(1.3) saturate(1.25)'
+  },
+  {
+    name: 'filter-moon',
+    value: 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)'
+  }
+]
+
 export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl) {
   return new Promise((resolve, reject) => {
     const c = document.createElement("canvas");
@@ -47,4 +82,15 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
     background.onerror = error => reject(error);
     background.src = backgroundUrl;
   });
+}
+
+export function getImageWithFilter(canvas, img, filter){
+  var ctx = canvas.getContext('2d');
+  ctx.style = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)' //filters.filter(item => item.name === filter)[0].value
+  var img = new Image();
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0);
+  };
+  img.src = img;
+
 }

@@ -5,10 +5,6 @@ export default function Step5_Print(props) {
   const [filter, setFilter] = useState('origin')
   const filtersName = ['origin', 'filter-amaro', 'filter-rise', 'filter-willow', 'filter-slumber', 'filter-x-proII', 'filter-Lo-Fi', 'filter-lark', 'filter-moon']
 
-  useEffect(() => {
-    console.log(props.imageToPrint)
-  }, [])
-
   const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
     props.onSetFilter(filterName)

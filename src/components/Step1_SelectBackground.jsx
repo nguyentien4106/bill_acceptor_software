@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/Step1_SelectBackground.css'
 import demo1 from '../images/demo.jpg'
 import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
@@ -44,6 +44,14 @@ export default function Step1_SelectBackground(props) {
     drawImagesOnCanvas(imagesDemoUrls, 530, 1200, demoBackground)
     .then(setDemoBackground)
   }, [])
+
+  useEffect(() => {
+    const buttons = document.getElementsByClassName("footer-buttons")[0]
+    buttons.style.visibility = 'visible'
+
+    const prev = document.getElementById("prev-button")
+    prev.style.visibility = 'hidden'
+  })
 
   useEffect(() => {
     

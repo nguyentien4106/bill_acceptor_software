@@ -9,6 +9,8 @@ import backgroundBlack from '../images/background/black.jpg'
 import backgroundWhite from '../images/background/white.jpg'
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
+import Step3_TakeCamera from './Step3_TakeCamera';
+import Step0_WaitingScreen from './Step0_WaitingScreen';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -34,6 +36,8 @@ export default function Progress(props) {
 
   const steps =
     [
+      {name: "Screen Saver", component: <Step0_WaitingScreen />},
+
       {name: 'Chọn phông nền ảnh', component: <Step1_SelectBackground 
                                                 numberPhotoOptions={numberPhotoOptions}
                                                 onSetNumberPhoto={setNumberPhoto}
@@ -49,8 +53,8 @@ export default function Progress(props) {
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
-                                      onSetImagesTaken={setImagesTaken}
-                                    />},
+                                            onSetImagesTaken={setImagesTaken}
+                                          />},
 
       {name: 'Chọn filter', component: <Step4_SelectFilter 
                                           imagesTaken={imagesTaken} 
@@ -75,14 +79,13 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={5} 
+          // startAtStep={6} 
           showSteps={false}
           backButtonCls={"button-4 checked"} 
           backButtonText={"Quay lại"} 
           nextButtonText={"Kế tiếp"}
           nextButtonCls={"button-4 checked"}
           onStepChange={stepIndex => handleOnStepChange(stepIndex)}
-
         />
     </div>
   )

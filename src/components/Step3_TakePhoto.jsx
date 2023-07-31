@@ -8,8 +8,6 @@ const Step3_TakePhoto = (props) => {
 
   useEffect(() => {
     handleCapture();
-    // const next = document.getElementById("next-button");
-    // next.style.display = "none"
   }, [])
 
   useEffect(() => {

@@ -222,3 +222,19 @@ ol.progtrckr li.progtrckr-done:hover:before {
   height: 100px;
   margin: 10px;
 }
+
+.fullscreen{
+  width: 100vh;
+  height: 100vh;
+}
+
+.saver-container{
+  display: grid;
+  height: 100%;
+}
+
+.screensaver{
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+}

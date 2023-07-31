@@ -14,6 +14,8 @@ export default class Step2_Payment extends Component {
             error: false
         }
 
+        const prev = document.getElementById("prev-button")
+        prev.style.visibility = 'visible'
     }
 
     componentWillReceiveProps(nextProps) {

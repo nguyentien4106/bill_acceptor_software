@@ -1,30 +1,33 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
+import { Store } from 'react-notifications-component';
 
-class Step3 extends Component {
+class Step3_TakeCamera extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             images: [],
-            videoRef: React.useRef()
+            videoRef: React.createRef()
         }
+        this.handleSnapshot = this.handleSnapshot.bind(this)
     }
 
     handleSnapshot(){
-        if(!videoRef.current.srcObject){
+      console.log(this.state)
+        if(!this.state.videoRef.current.srcObject){
             return
           }
       
           const canvas = document.createElement('canvas');
-          canvas.width = videoRef.current.videoWidth;
-          canvas.height = videoRef.current.videoHeight;
-          canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+          canvas.width = this.state.videoRef.current.videoWidth;
+          canvas.height = this.state.videoRef.current.videoHeight;
+          canvas.getContext('2d').drawImage(this.state.videoRef.current, 0, 0, canvas.width, canvas.height);
       
           const dataURI = canvas.toDataURL('image/jpg');
       
-          if(images.length < 6){
-            this.setState([...images, dataURI])
-            props.onSetImagesTaken([...images, dataURI])
+          if(this.state.images.length < 6){
+            this.setState({images: [...this.state.images, dataURI]})
+            this.props.onSetImagesTaken([...this.state.images, dataURI])
           }
           else {
             Store.removeAllNotifications()
@@ -42,8 +45,28 @@ class Step3 extends Component {
                 onScreen: true
               }
             })
-            videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+            this.state.videoRef.current.srcObject.getTracks().forEach(track => track.stop());
           }
+    }
+
+    isValidated(){
+      const isValid = this.state.images.length === 6;
+      if(!isValid){
+        Store.addNotification({
+          id: "notifyenoughImage",
+          message: "Hãy chụp đủ 6 tấm hình đã bạn nhé !",
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            onScreen: true
+          }
+        })
+      }
+      return this.state.images.length === 6;
     }
 
     render() {
@@ -81,11 +104,11 @@ class Step3 extends Component {
             </div>
             <div className='button'>
               
-            <i className="bi bi-camera fa-10x mt-5 pointer button h1" onClick={handleSnapshot}></i>
+            <i className="bi bi-camera fa-10x mt-5 pointer button h1" onClick={this.handleSnapshot}></i>
           </div>
           </>
         )
     }
 }
 
-export default Step3
+export default Step3_TakeCamera

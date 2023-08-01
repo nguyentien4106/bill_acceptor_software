@@ -69,13 +69,14 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
           let y = margin; // Start at the top with some margin
           for (let i = 0; i < imageObjs.length; i++) {
             const imageObj = imageObjs[i];
+            ctx.filter = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)'
             ctx.drawImage(imageObj, x, y, imageWidth + 250, imageHeight);
             y += imageHeight + margin; // Update the y position for the next image
           }
 
           // Get the data URL of the canvas
           // Resolve the promise with the data URL and the resulting image
-          resolve(c.toDataURL("image/png"));
+          resolve(c.toDataURL('image/png'));
         }
       }
     };
@@ -84,13 +85,7 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
   });
 }
 
-export function getImageWithFilter(canvas, img, filter){
+export function getImageWithFilter(canvas, filter){
   var ctx = canvas.getContext('2d');
   ctx.style = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)' //filters.filter(item => item.name === filter)[0].value
-  var img = new Image();
-  img.onload = function() {
-    ctx.drawImage(img, 0, 0);
-  };
-  img.src = img;
-
 }

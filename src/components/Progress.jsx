@@ -23,7 +23,7 @@ export default function Progress(props) {
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
   const [imageToPrint, setImageToPrint] = useState(null)
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('origin')
 
   const handleOnStepChange = stepIndex => {
     Store.removeAllNotifications()
@@ -65,6 +65,7 @@ export default function Progress(props) {
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
                                           onSetImageToPrint={setImageToPrint}
+                                          filter={filter}
                                         />},
 
       {name: 'Printing', component: <Step5_SelectFilter 

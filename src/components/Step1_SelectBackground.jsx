@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../css/Step1_SelectBackground.css'
 import demo1 from '../images/demo.jpg'
-import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
+import { drawImagesOnCanvas, getImageWithFilter } from '../helpers/createPhotoStrip';
 import { Store } from 'react-notifications-component';
 
 export default function Step1_SelectBackground(props) {
@@ -42,8 +42,13 @@ export default function Step1_SelectBackground(props) {
 
   useEffect(() => {
     drawImagesOnCanvas(imagesDemoUrls, 530, 1200, demoBackground)
-    .then(setDemoBackground)
-  }, [])
+    .then(canvas => {
+      // getImageWithFilter(canvas, 1)
+      // const img = canvas.toDataURL("image/png")
+      // console.log(img)
+      setDemoBackground(canvas)
+    })
+  })
 
   useEffect(() => {
     const buttons = document.getElementsByClassName("footer-buttons")[0]

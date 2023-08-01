@@ -4,9 +4,8 @@ import { Store } from 'react-notifications-component';
 import {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
 
 export default function Step4_SelectImages(props) {
-  const {imagesTaken} = props
+  const {imagesTaken, filter} = props
   const [imagesChoosen, setImageChoosen] = useState([])
-  const [filter, setFilter] = useState('')
   const [photo, setPhoto] = useState(null)
   
   const handleChooseImage = image => {
@@ -47,7 +46,7 @@ export default function Step4_SelectImages(props) {
         setPhoto(photo)
       })
     }
-  }, [imagesChoosen.length])
+  }, [imagesChoosen.length, filter])
 
   return (
     <div className='w-100 d-flex justify-content-around flex-column mt-5'>

@@ -34,12 +34,16 @@ const filters = [
   }
 ]
 
-export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl) {
+export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
   return new Promise((resolve, reject) => {
     const c = document.createElement("canvas");
     c.width = canvasWidth;
     c.height = canvasHeight;
     const ctx = c.getContext("2d");
+    
+    if(filterName){
+      ctx.filter = filters.filter(item => item.name === filterName)[0].value
+    }
 
     // Load the background image
     const background = new Image();
@@ -69,7 +73,6 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
           let y = margin; // Start at the top with some margin
           for (let i = 0; i < imageObjs.length; i++) {
             const imageObj = imageObjs[i];
-            ctx.filter = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)'
             ctx.drawImage(imageObj, x, y, imageWidth + 250, imageHeight);
             y += imageHeight + margin; // Update the y position for the next image
           }

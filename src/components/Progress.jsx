@@ -11,7 +11,7 @@ import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step3_TakeCamera from './Step3_TakeCamera';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
-
+import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
@@ -37,6 +37,14 @@ export default function Progress(props) {
     
   }
 
+  useEffect(() => {
+    if(imagesChoosen.length === 4){
+      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background, filter).then(photo => {
+        setImageToPrint(photo)
+      })
+    }
+  }, [imagesChoosen.length, filter])
+  
   const steps =
     [
       {name: "Screen Saver", component: <Step0_WaitingScreen />},

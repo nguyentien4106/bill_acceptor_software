@@ -1,6 +1,10 @@
 
 const filters = [
   {
+    name: 'origin',
+    value: ''
+  },
+  {
     name: 'filter-amaro',
     value: 'sepia(.35) contrast(1.1) brightness(1.2) saturate(1.3)'
   },
@@ -93,7 +97,7 @@ export function getImageWithFilter(canvas, filter){
   ctx.style = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)' //filters.filter(item => item.name === filter)[0].value
 }
 
-export function applyFilterToImage(base64Image, width, height) {
+export function applyFilterToImage(base64Image, width, height, filterName) {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -103,7 +107,7 @@ export function applyFilterToImage(base64Image, width, height) {
       const context = canvas.getContext('2d');
       
       // Apply filter (example: convert image to grayscale)
-      context.filter = 'grayscale(100%)';
+      context.filter = filters.filter(item => item.name === filterName)[0].value;
       context.drawImage(image, 0, 0, width, height);
       
       // Convert canvas to base64

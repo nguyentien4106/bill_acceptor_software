@@ -92,3 +92,26 @@ export function getImageWithFilter(canvas, filter){
   var ctx = canvas.getContext('2d');
   ctx.style = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)' //filters.filter(item => item.name === filter)[0].value
 }
+
+export function applyFilterToImage(base64Image, width, height) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d');
+      
+      // Apply filter (example: convert image to grayscale)
+      context.filter = 'grayscale(100%)';
+      context.drawImage(image, 0, 0, width, height);
+      
+      // Convert canvas to base64
+      const filteredBase64Image = canvas.toDataURL('image/png');
+      
+      resolve(filteredBase64Image);
+    };
+    image.onerror = reject;
+    image.src = base64Image;
+  });
+}

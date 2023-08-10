@@ -7,7 +7,7 @@ export default function Step4_SelectImages(props) {
   const {imagesTaken, filter} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [photo, setPhoto] = useState(null)
-  console.log(filter)
+
   const handleChooseImage = image => {
     if(imagesChoosen.includes(image)){
       setImageChoosen(imagesChoosen.filter(item => item != image))
@@ -38,16 +38,6 @@ export default function Step4_SelectImages(props) {
     }
 
   }
-
-  // useEffect(() => {
-  //   console.log('change')
-  //   if(imagesChoosen.length === 4){
-  //     drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
-  //       props.onSetImageToPrint(photo)
-  //       setPhoto(photo)
-  //     })
-  //   }
-  // }, [imagesChoosen.length, filter])
 
   return (
     <div className='w-100 d-flex justify-content-around flex-column mt-5'>

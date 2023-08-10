@@ -5,6 +5,7 @@ import '../css/Step3_TakePhoto.css'
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const [images, setImages] = useState([])
+  const takePhotoAudio = document.getElementById("take_photo");
 
   useEffect(() => {
     handleCapture();
@@ -60,8 +61,10 @@ const Step3_TakePhoto = (props) => {
     const dataURI = canvas.toDataURL('image/jpg');
 
     if(images.length < 6){
-      setImages([...images, dataURI])
-      props.onSetImagesTaken([...images, dataURI])
+      takePhotoAudio.play().then(() => {
+        setImages([...images, dataURI])
+        props.onSetImagesTaken([...images, dataURI])
+      })
     }
     else {
       Store.removeAllNotifications()

@@ -7,7 +7,8 @@ function Step0_WaitingScreen({jumpToStep}) {
     useEffect(() => {
         const buttons = document.getElementsByClassName("footer-buttons")[0]
         buttons.style.visibility = 'hidden'
-
+        
+        music.loop = true;
         music.play()
     })
 

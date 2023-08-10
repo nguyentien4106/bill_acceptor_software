@@ -12,7 +12,6 @@ export default function Step5_SelectFilter(props) {
     setFilter(filterName)
     props.onSetFilter(filterName)
     applyFilterToImage(imageToPrint, 500, 1200, filterName).then(photo => {
-      // props.onSetImageToPrint(photo)
       setImageToPrint1(photo)
     })
   }

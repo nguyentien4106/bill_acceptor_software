@@ -13,20 +13,12 @@ export default function Step6_HandlePrint(props) {
     })
 
     const handlePrint = () => {
-        console.log(image)
-        var canvas = document.getElementById('myCanvas');
-        var ctx = canvas.getContext('2d');
-
-        var img = new Image();
-        img.onload = function() {
-        ctx.drawImage(img, 0, 0);
-        };
-        img.src = image;
-        // printJS({
-        //     printable: img, 
-        //     type: 'image', 
-        //     onPrintDialogClose: end
-        // })
+        printJS({
+            printable: image, 
+            type: 'image', 
+            onPrintDialogClose: end,
+            imageStyle: 'width: 177px; height: 700px;'
+        })
         
     }
 

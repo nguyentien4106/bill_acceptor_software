@@ -11,41 +11,46 @@ export default function Step1_SelectBackground(props) {
   const [demoBackground, setDemoBackground] = useState(currentBackground.src);
 
   const handleClickNumberPhoto = (item) => {
-    if(item !== 2){
-      Store.removeAllNotifications()
-      Store.addNotification({
-        title: "",
-        id: "maxError",
-        message: "Hiện tại bạn chỉ có thể chọn 2 ảnh được in. Chúng tôi sẽ hỗ trợ in nhiều ảnh hơn ở phiên bản kế tiếp !",
-        type: "warning",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 7000,
-          onScreen: true
-        }
-      })
-
-      return
-    }
-
-    props.onSetNumberPhoto(item)
-    setCurrentPhotoNumber(item)
+    const audio = document.getElementById("click-audio");
+    
+    audio.play().then(() => {
+      if(item !== 2){
+        Store.removeAllNotifications()
+        Store.addNotification({
+          title: "",
+          id: "maxError",
+          message: "Hiện tại bạn chỉ có thể chọn 2 ảnh được in. Chúng tôi sẽ hỗ trợ in nhiều ảnh hơn ở phiên bản kế tiếp !",
+          type: "warning",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 7000,
+            onScreen: true
+          }
+        })
+  
+        return
+      }
+  
+      props.onSetNumberPhoto(item)
+      setCurrentPhotoNumber(item)
+    })
+    
   }
 
   const handleClickBackgroundImage = bg =>{
-    props.onSetBackground(bg)
-    setCurrentBackground(bg)
+    const audio = document.getElementById("click-audio");
+    audio.play().then(() => {
+      props.onSetBackground(bg)
+      setCurrentBackground(bg)
+    })
   }
 
   useEffect(() => {
     drawImagesOnCanvas(imagesDemoUrls, 530, 1200, demoBackground)
     .then(canvas => {
-      // getImageWithFilter(canvas, 1)
-      // const img = canvas.toDataURL("image/png")
-      // console.log(img)
       setDemoBackground(canvas)
     })
   })
@@ -59,7 +64,6 @@ export default function Step1_SelectBackground(props) {
   })
 
   useEffect(() => {
-    
     drawImagesOnCanvas(imagesDemoUrls, 530, 1200, currentBackground.src)
       .then(background => {
         setDemoBackground(background)

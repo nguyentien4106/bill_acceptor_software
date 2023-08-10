@@ -36,6 +36,15 @@ function App() {
       money: money,
 
     })
+    const audio = document.getElementById("click-audio")
+    const prev = document.getElementById('prev-button')
+    const next = document.getElementById('next-button')
+    prev.addEventListener("click", () =>{
+      audio.play()
+    })
+    next.addEventListener("click", () =>{
+      audio.play()
+    })
   }, [])
 
   return (

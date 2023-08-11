@@ -14,21 +14,24 @@ function App() {
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
-      setMoney(data)
-      Store.removeAllNotifications()
-      Store.addNotification({
-        title: "",
-        id: "inputMoney",
-        message: `Bạn đã nạp vào ${data.toLocaleString('en-US', {style: 'currency',currency: 'VND'})}`,
-        type: "info",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true
-        }
+      const audio = document.getElementById('tingting');
+      audio.play().then(()=> {
+        setMoney(data)
+        Store.removeAllNotifications()
+        Store.addNotification({
+          title: "",
+          id: "inputMoney",
+          message: `Bạn đã nạp vào ${data.toLocaleString('en-US', {style: 'currency',currency: 'VND'})}`,
+          type: "info",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 2000,
+            onScreen: true
+          }
+        })
       })
     });
 

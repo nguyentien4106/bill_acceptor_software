@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Store } from 'react-notifications-component';
 import '../css/Step3_TakePhoto.css'
+import { setIntervalX } from '../helpers/helper';
 
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
+  const [isClicked, setIsClicked] = useState(false)
 
   useEffect(() => {
     handleCapture();
@@ -87,6 +89,13 @@ const Step3_TakePhoto = (props) => {
     
   };
 
+  const handleClickTakePhoto = () => {
+    if(!isClicked){
+      setIsClicked(true)
+    }
+    setIntervalX(handleSnapshot, 5000, 6);
+  }
+
   return (
   <>
     <div className='d-flex w-100 justify-content-around align-items-around'> 
@@ -121,7 +130,7 @@ const Step3_TakePhoto = (props) => {
     </div>
     <div className='button'>
       
-    <i className="bi bi-camera fa-10x mt-5 pointer button h1" onClick={handleSnapshot}></i>
+    <i className={`bi bi-camera fa-10x mt-5 pointer button h1 ${isClicked ? "d-none" : ""}`} onClick={handleClickTakePhoto}></i>
   </div>
   </>
   );

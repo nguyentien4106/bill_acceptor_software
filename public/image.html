@@ -6,7 +6,7 @@
     <script src="https://rawgithub.com/edabg/jsprintsetup/master/jsprintsetup.js"></script>
   </head>
   <body>
-    <img src="./images/image.png">
+    <img src="../black.jpg">
   </body>
   <style>
     body{
@@ -19,7 +19,8 @@
     }
   </style>
   <script>
-    const printer = jsPrintSetup.getPrinter();
-    console.log('printer', printer)
+      const style = document.createElement('style')
+      style.innerHTML = 'img {margin: 500px;}'
+      document.head.appendChild(style)
   </script>
 </html>

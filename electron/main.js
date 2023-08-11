@@ -49,7 +49,6 @@ function createWindow() {
 }
 
 function readBill(result){
-  console.log(result)
   const moneyValueChannel = {
     1 : 10000,
     2 : 20000,
@@ -65,19 +64,7 @@ function readBill(result){
 app.whenReady().then(() => {
   createWindow()
   
-
   initBillAcceptor(readBill)
-
-  ipcMain.on("print", (event, data) => {
-    const contents = mainWindow.webContents;
-    contents.getPrintersAsync().then(res => {
-      printer = res.filter(item => item.isDefault)[0]
-      console.log(printer)
-    })
-
-    console.log(data)
-
-  })
 
   ipcMain.on('resetMoney', (event) => {
     money = 0;

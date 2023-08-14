@@ -14,8 +14,8 @@ function App() {
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
-      const audio = document.getElementById('tingting');
-      audio.play().then(()=> {
+      // const audio = document.getElementById('tingting');
+      // audio.play().then(()=> {
         setMoney(data)
         Store.removeAllNotifications()
         Store.addNotification({
@@ -32,7 +32,7 @@ function App() {
             onScreen: true
           }
         })
-      })
+      // })
     });
 
     setAppData({

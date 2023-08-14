@@ -39,6 +39,16 @@ export default function Step4_SelectImages(props) {
 
   }
 
+  useEffect(() => {
+    if(imagesChoosen.length === 4){
+      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
+        // setImageToPrint(photo)
+        setPhoto(photo)
+        props.onSetImageToPrint(photo)
+      })
+    }
+  }, [imagesChoosen.length])
+
   return (
     <div className='w-100 d-flex justify-content-around flex-column mt-5'>
       <h3>Bạn được chọn tối đa 4 ảnh để in !!!</h3>

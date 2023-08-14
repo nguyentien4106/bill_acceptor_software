@@ -4,6 +4,9 @@ import { useState } from 'react'
 import printJS from 'print-js'
 import { getImageWithFilter } from '../helpers/createPhotoStrip'
 import demo from '../images/demo.jpg'
+
+const {ipcRenderer} = window.require('electron')
+
 export default function Step6_HandlePrint(props) {
     const [image, setImage] = useState(props.imageToPrint)
 
@@ -13,7 +16,7 @@ export default function Step6_HandlePrint(props) {
     })
 
     useEffect(() => {
-        setImage(demo)
+        // setImage(demo)
         window.addEventListener('afterprint', function() {
             // Code to execute after the print dialog is closed
             console.log('Print dialog closed');
@@ -21,14 +24,18 @@ export default function Step6_HandlePrint(props) {
     }, [])
 
     const handlePrint = () => {
-        printJS({
-            printable: image, 
-            type: 'image', 
-            onPrintDialogClose: end,
-            imageStyle: 'width: 177px; height: 700px;',
-            style: 'img {margin-left: -20px;}'
-        })
-        
+        // printJS({
+        //     printable: image, 
+        //     type: 'image', 
+        //     onPrintDialogClose: end,
+        //     imageStyle: 'width: 177px; height: 700px;',
+        //     style: 'img {margin-left: -20px;}'
+        // })
+        function sendCommandToWorker(content) {
+            ipcRenderer.send("print", content);
+        }
+        console.log(props.imageToPrint)
+        sendCommandToWorker(props.imageToPrint);
     }
 
     const end = () => {

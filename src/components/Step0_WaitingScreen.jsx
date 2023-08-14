@@ -1,5 +1,5 @@
 import React from 'react'
-import screensaver from '../images/gif_screen_saver_.gif'
+import screensaver from '../images/gif_screen_saver.gif'
 import { useEffect } from 'react'
 
 function Step0_WaitingScreen({jumpToStep}) {

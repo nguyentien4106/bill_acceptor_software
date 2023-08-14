@@ -130,7 +130,7 @@ const Step3_TakePhoto = (props) => {
     </div>
     <div className='button'>
       
-    <i className={`bi bi-camera fa-10x mt-5 pointer button h1 ${isClicked ? "d-none" : ""}`} onClick={handleClickTakePhoto}></i>
+    <i className={`bi bi-camera fa-10x mt-5 pointer button h1 `} onClick={handleSnapshot}></i>
   </div>
   </>
   );

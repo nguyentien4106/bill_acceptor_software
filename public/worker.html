@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <img id="image">
+    <script>
+      const ipcRenderer = window.require("electron").ipcRenderer;
+
+      ipcRenderer.on("sendImage", (event, content) => {
+          const img = document.getElementById("image")
+          img.src = content
+          console.log('conent in worker', content)
+      });
+    </script>
+    <style>
+      #image{
+        height: 770px;
+        width: 177px;
+      }
+    </style>
+  </body>
+</html>

@@ -6,10 +6,13 @@ const fs = require('fs')
 const os = require('os')
 
 let mainWindow;
+let workerWindow;
 let money = 0;
-let printer;
+
 
 function createWindow() {
+
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -46,6 +49,25 @@ function createWindow() {
     }])
 
   Menu.setApplicationMenu(menu); 
+
+  workerWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false
+    }
+  });
+
+  workerWindow.loadFile('public/worker.html');
+
+  workerWindow.on('closed', function () {
+    mainWindow = null;
+  });
+
+
+  workerWindow.webContents.openDevTools();
 }
 
 function readBill(result){
@@ -71,6 +93,25 @@ app.whenReady().then(() => {
     mainWindow.webContents.send('detectMoneyIn', money);
     
   })
+    
+  ipcMain.on("print", (event, content) => {
+    workerWindow.webContents.send("sendImage", content);
+  });
+
+  ipcMain.on("readyPrint", (event) => {
+
+    workerWindow.webContents.printToPDF({}).then((data) => {
+        fs.writeFile(pdfPath, data, function (error) {
+            if (error) {
+                throw error
+            }
+            shell.openItem(pdfPath)
+            event.sender.send('wrote-pdf', pdfPath)
+        })
+    }).catch((error) => {
+      throw error;
+    })
+  });
 
 });
 

@@ -37,13 +37,13 @@ export default function Progress(props) {
     
   }
 
-  useEffect(() => {
-    if(imagesChoosen.length === 4){
-      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background, filter).then(photo => {
-        setImageToPrint(photo)
-      })
-    }
-  }, [imagesChoosen.length, filter])
+  // useEffect(() => {
+  //   if(imagesChoosen.length === 4){
+  //     drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background, filter).then(photo => {
+  //       setImageToPrint(photo)
+  //     })
+  //   }
+  // }, [imagesChoosen.length, filter])
   
   const steps =
     [

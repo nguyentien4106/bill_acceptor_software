@@ -98,8 +98,8 @@ const Step3_TakePhoto = (props) => {
 
   return (
   <>
-    <div className='d-flex w-100 justify-content-around align-items-around'> 
-      <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
+    <div className='d-flex w-100 justify-content-around align-items-around' id='take-photo'> 
+      {/* <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
         <div className='video-container mt-5 mb-5 d-flex'>
           <video className='video justify-content-center' ref={videoRef} autoPlay={true}/>
         </div>
@@ -129,7 +129,7 @@ const Step3_TakePhoto = (props) => {
       
     </div>
     <div className='button'>
-      
+       */}
     <i className={`bi bi-camera fa-10x mt-5 pointer button h1 `} onClick={handleSnapshot}></i>
   </div>
   </>

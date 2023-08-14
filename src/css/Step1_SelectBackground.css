@@ -34,3 +34,25 @@
 	height: 600px;
 	object-fit: fill;
 }
+
+.box{
+	/* background: red; */
+	width: 630px;
+	height: 630px;
+	border-radius: 145px;
+	outline: 10px solid pink;
+}
+
+.first{
+	margin-top: 330px;
+	margin-left: 260px;
+}
+
+.second{
+	margin-top: 330px;
+	margin-left: 170px;
+}
+
+.selected{
+	outline: 10px solid red; 
+}

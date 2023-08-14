@@ -1,6 +1,7 @@
 import React from 'react'
-import screensaver from '../images/gif_screen_saver.gif'
 import { useEffect } from 'react'
+import video from '../images/button/backgroundVideo.mp4'
+import '../css/Step0.css'
 
 function Step0_WaitingScreen({jumpToStep}) {
     const music = document.getElementById("screen_saver_sound");
@@ -23,8 +24,8 @@ function Step0_WaitingScreen({jumpToStep}) {
     }
 
     return (
-        <div className='saver-container' onClick={handleClick}>
-            <img className='screensaver' src={screensaver} onClick={handleClick}></img>
+        <div id="video-container">
+            <video id="video-background" src={video} autoPlay loop muted onClick={handleClick}></video>
         </div>
     )
 }

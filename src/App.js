@@ -9,8 +9,8 @@ const {ipcRenderer} = window.require('electron')
 function App() {
 
   const [money, setMoney] = useState(0)
-  const [background, setBackground] = useState()
-  const [appData, setAppData] = useState({})
+  // const [background, setBackground] = useState()
+  // const [appData, setAppData] = useState({})
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
@@ -35,16 +35,14 @@ function App() {
       // })
     });
 
-    setAppData({
-      money: money,
-
-    })
     const audio = document.getElementById("click-audio")
     const prev = document.getElementById('prev-button')
     const next = document.getElementById('next-button')
+
     prev.addEventListener("click", () =>{
       audio.play()
     })
+
     next.addEventListener("click", () =>{
       audio.play()
     })

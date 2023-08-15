@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import demo from '../images/demo.jpg'
 import { applyFilterToImage } from '../helpers/createPhotoStrip'
+import Navigation from './Navigation';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
@@ -39,6 +40,7 @@ export default function Step5_SelectFilter(props) {
           })}
         </div>
       </div>
+      <Navigation currentStep={5} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true}/>
     </div>
   )
 }

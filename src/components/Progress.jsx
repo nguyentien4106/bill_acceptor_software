@@ -9,16 +9,12 @@ import backgroundBlack from '../images/background/black.jpg'
 import backgroundWhite from '../images/background/white.jpg'
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
-import Step3_TakeCamera from './Step3_TakeCamera';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
-import { drawImagesOnCanvas } from '../helpers/createPhotoStrip';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
-  const numberPhotoOptions = [2, 4, 6, 8, 10]
   const backgroundsImage = [{ name: 'black', src: backgroundBlack}, { name: 'white', src: backgroundWhite}]
 
-  const [numberPhoto, setNumberPhoto] = useState(2)
   const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
@@ -36,23 +32,12 @@ export default function Progress(props) {
     }
     
   }
-
-  // useEffect(() => {
-  //   if(imagesChoosen.length === 4){
-  //     drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background, filter).then(photo => {
-  //       setImageToPrint(photo)
-  //     })
-  //   }
-  // }, [imagesChoosen.length, filter])
   
   const steps =
     [
       {name: "Screen Saver", component: <Step0_WaitingScreen />},
 
       {name: 'Chọn phông nền ảnh', component: <Step1_SelectBackground 
-                                                numberPhotoOptions={numberPhotoOptions}
-                                                onSetNumberPhoto={setNumberPhoto}
-                                                currentNumberPhoto={numberPhoto}
                                                 backgroundsImage={backgroundsImage}
                                                 onSetBackground={setBackground}
                                                 background={background}
@@ -60,7 +45,6 @@ export default function Progress(props) {
 
       {name: 'Xác nhận thanh toán', component: <Step2_Payment 
                                                   money={props.money} 
-                                                  numberPhoto={numberPhoto}
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
@@ -96,10 +80,10 @@ export default function Progress(props) {
           steps={steps}
           // startAtStep={6} 
           showSteps={false}
-          backButtonCls={"button-4 checked"} 
-          backButtonText={"Quay lại"} 
-          nextButtonText={"Kế tiếp"}
-          nextButtonCls={"button-4 checked"}
+          backButtonCls={"back-button"} 
+          backButtonText={""} 
+          nextButtonText={""}
+          nextButtonCls={"next-button"}
           onStepChange={stepIndex => handleOnStepChange(stepIndex)}
         />
     </div>

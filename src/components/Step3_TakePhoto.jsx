@@ -2,12 +2,15 @@ import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } f
 import { Store } from 'react-notifications-component';
 import '../css/Step3_TakePhoto.css'
 import { setIntervalX } from '../helpers/helper';
+import Navigation from './Navigation';
+import demo from '../images/demo.jpg'
 
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
+  const imagesTest = [demo, demo, demo, demo, demo]
 
   useEffect(() => {
     handleCapture();
@@ -97,42 +100,53 @@ const Step3_TakePhoto = (props) => {
   }
 
   return (
-  <>
-    <div className='d-flex w-100 justify-content-around align-items-around' id='take-photo'> 
-      {/* <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
-        <div className='video-container mt-5 mb-5 d-flex'>
-          <video className='video justify-content-center' ref={videoRef} autoPlay={true}/>
-        </div>
-      </div>
-      <div className='d-flex w-50'>
-        <div className='d-flex flex-column m-5'>
-          {
-            images && images.map((item, index) => {
-              if(index < 3){
-                return <img key={index} className='image-taken' src={item}></img>
+      <>
+        <div className='d-flex w-100 justify-content-around align-items-around take-photo-background'> 
+          {/* <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
+            <div className='video-container mt-5 mb-5 d-flex'>
+              <video className='video justify-content-center' ref={videoRef} autoPlay={true}/>
+            </div>
+          </div>
+          <div className='d-flex w-50'>
+            <div className='d-flex flex-column m-5'>
+              {
+                images && images.map((item, index) => {
+                  if(index < 3){
+                    return <img key={index} className='image-taken' src={item}></img>
+                  }
+                })
               }
-            })
-          }
-        </div>
-        <div className='d-flex flex-column m-5'>
-          {
-            images && images.map((item, index) => {
-              if(index >= 3){
-                return <img key={index} className='image-taken' src={item}></img>
+            </div>
+            <div className='d-flex flex-column m-5'>
+              {
+                images && images.map((item, index) => {
+                  if(index >= 3){
+                    return <img key={index} className='image-taken' src={item}></img>
+                  }
+                })
               }
-            })
-          }
-        </div>
-        
-      </div>
+            </div>
+            
+          </div>
 
-      
-    </div>
-    <div className='button'>
-       */}
-    <i className={`bi bi-camera fa-10x mt-5 pointer button h1 `} onClick={handleSnapshot}></i>
-  </div>
-  </>
+          
+        </div>
+        <div className='button'>
+          */}
+          <div className='images'>
+            {
+              imagesTest.map(item => {
+                return <img src={item} className='image'></img>
+              })
+            }
+          </div>
+          <div className='camera'>
+            <video className='justify-content-center camera-source' ref={videoRef} autoPlay={true}/>
+          </div>
+          <i className={`bi bi-camera fa-10x mt-5 pointer button h1 `} onClick={handleSnapshot}></i>
+        </div>
+        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
+      </>
   );
 };
 

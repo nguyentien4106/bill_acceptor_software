@@ -178,7 +178,7 @@ ol.progtrckr li.progtrckr-done:hover:before {
 /* CSS */
 .button-4 {
   height: 30px;
-  width: 150px;
+  width: 100px;
 }
 
 .button-4:hover {
@@ -229,7 +229,6 @@ ol.progtrckr li.progtrckr-done:hover:before {
 }
 
 .saver-container{
-  /* display: grid; */
   height: 100%;
   position: absolute;
   top: 0;
@@ -248,21 +247,6 @@ ol.progtrckr li.progtrckr-done:hover:before {
   height: 100vh;
 }
 
-#video-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.video-background {
-  width: 100%;
-  height: 100%;
-  object-fit:contain;
-} 
-
 #video{
   height: 80%;
 }
@@ -272,7 +256,12 @@ ol.progtrckr li.progtrckr-done:hover:before {
   height: 100vh;
 }
 
-#take-photo{
-  background-image: url('./images/button/takephoto.jpg');
-  height: 90vh;
+.commonBackground{
+  background-image: url('./images/button/commonbackground.jpg');
+  height: 100vh;
 }
+
+.footer-buttons{
+  display: none;
+}
+

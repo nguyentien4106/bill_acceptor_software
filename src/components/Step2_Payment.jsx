@@ -4,13 +4,14 @@ import React, { Component } from 'react';
 import '../css/Step2_Payment.css'
 import { Store } from 'react-notifications-component';
 import { CashStack } from "react-bootstrap-icons";
+import Navigation from './Navigation';
 
 export default class Step2_Payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
             money: props.money,
-            numberPhoto: props.numberPhoto,
+            numberPhoto: 2,
             error: false
         }
 
@@ -63,9 +64,8 @@ export default class Step2_Payment extends Component {
 
     render(){
         return (
-            <React.Fragment>
-                <div className='d-flex justify-content-center mt-100'>
-                    <div className='payment d-flex flex-column justify-content-center align-items-center align-self-center w-75'>
+                <div className='d-flex justify-content-center commonBackground' id='payment'>
+                    <div className='payment d-flex flex-column justify-content-center align-items-center align-self-center'>
                         <h1>Vui lòng nạp số tiền theo yêu cầu</h1>
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-10'>
@@ -80,13 +80,8 @@ export default class Step2_Payment extends Component {
                             <h2 className='ms-auto p-2'>{this.displayMoney(this.state.money)} VND</h2>
                         </div>
                     </div>
-                    
+                    <Navigation currentStep={2} jumpToStep={this.props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
                 </div>
-                <div className='mt-100'>
-                    <h3>Bạn lưu ý !!!<br/> Hiện tại máy chưa hỗ trợ trả lại tiền thừa nên hãy bỏ đúng số tiền máy yêu cầu thôi nhớ!!</h3>
-                </div>
-            </React.Fragment>
-                
         )
     }
 }

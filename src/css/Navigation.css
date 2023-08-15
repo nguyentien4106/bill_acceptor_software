@@ -1,0 +1,24 @@
+.img-button{
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+  }
+
+  
+.next-button{
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+  
+.back-button{
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+
+}
+  

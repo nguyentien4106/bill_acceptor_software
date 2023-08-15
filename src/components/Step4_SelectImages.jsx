@@ -3,11 +3,14 @@ import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
 import {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
 import Navigation from './Navigation';
+import '../css/Step4.css'
+import demo from '../images/demo.jpg'
 
 export default function Step4_SelectImages(props) {
   const {imagesTaken, filter} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [photo, setPhoto] = useState(null)
+  const imagesTakenTest = [demo, demo, demo, demo, demo, demo]
 
   const handleChooseImage = image => {
     if(imagesChoosen.includes(image)){
@@ -51,7 +54,7 @@ export default function Step4_SelectImages(props) {
   // }, [imagesChoosen.length])
 
   return (
-    <div className='w-100 d-flex justify-content-around flex-column '>
+    <div className='selectImagesBackground'>
       {/* <h3>Bạn được chọn tối đa 4 ảnh để in !!!</h3>
       <h3>Thứ tự được sắp xếp theo thứ tự bạn chọn nhé !!</h3>
       <div className='d-flex justify-content-around mt-5 '>
@@ -75,6 +78,13 @@ export default function Step4_SelectImages(props) {
           </div>
         </div>
       </div> */}
+      <div className='images-taken'>
+        {
+          imagesTakenTest.map(item => {
+            return <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""}`} src={item} onClick={() => handleChooseImage(item)}></img>
+          })
+        }
+      </div>
       <Navigation currentStep={4} jumpToStep={props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
     </div>
   )

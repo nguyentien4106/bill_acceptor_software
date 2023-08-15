@@ -4,13 +4,18 @@ import '../css/Step3_TakePhoto.css'
 import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
 import demo from '../images/demo.jpg'
-
+import cameraButton from '../images/button/camerabutton.png'
+import Countdown from "react-countdown";
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
+  const takeButton = useRef('take')
+  const handleSnapShot = useRef('shot')
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
   const imagesTest = [demo, demo, demo, demo, demo]
+  const [isTaking, setIsTaking] = useState(false)
+  const [timer, setTimer] = useState(Date.now())
 
   useEffect(() => {
     handleCapture();
@@ -18,21 +23,22 @@ const Step3_TakePhoto = (props) => {
 
   useEffect(() => {
     if(images.length === 6){
-      const next = document.getElementById("next-button");
-      next.style.display = "block"
-      Store.addNotification({
-        id: "notifyenoughImage",
-        message: "Bạn đã chụp đủ số lượng hình ! Bấm kế tiếp để mình đi chọn hình nhé !!!",
-        type: "info",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 10000,
-          onScreen: true
-        }
-      })
+      // const next = document.getElementById("next-button");
+      // next.style.display = "block"
+      // Store.addNotification({
+      //   id: "notifyenoughImage",
+      //   message: "Bạn đã chụp đủ số lượng hình ! Bấm kế tiếp để mình đi chọn hình nhé !!!",
+      //   type: "info",
+      //   insert: "top",
+      //   container: "top-right",
+      //   animationIn: ["animate__animated", "animate__fadeIn"],
+      //   animationOut: ["animate__animated", "animate__fadeOut"],
+      //   dismiss: {
+      //     duration: 10000,
+      //     onScreen: true
+      //   }
+      // })
+      
     }
   }, [images.length])
 
@@ -54,9 +60,12 @@ const Step3_TakePhoto = (props) => {
   };
 
   const handleSnapshot = () => {
+    console.log('take')
     if(!videoRef.current.srcObject){
       return
     }
+
+    setIsTaking(false)
 
     const canvas = document.createElement('canvas');
     canvas.width = videoRef.current.videoWidth;
@@ -88,64 +97,57 @@ const Step3_TakePhoto = (props) => {
         }
       })
       videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+
     }
-    
   };
 
   const handleClickTakePhoto = () => {
     if(!isClicked){
       setIsClicked(true)
+      setIsTaking(true)
+      handleSnapShot.current.click()
+      setIntervalX(() => {
+        setTimer(Date.now())
+        setIsTaking(true)
+        handleSnapShot.current.click()
+      }, 3000, 3)
     }
-    setIntervalX(handleSnapshot, 5000, 6);
+  }
+
+  useEffect(() => {
+    takeButton.current.addEventListener('click', handleClickTakePhoto)
+    handleSnapShot.current.addEventListener('click', handleSnapshot)
+  }, [])
+
+  const renderer = ({ seconds, completed }) => {
+    if (!completed) {
+      // Render a complete state
+      return <h1 className='countdown-timer'>{seconds}</h1>;
+    } 
   }
 
   return (
       <>
         <div className='d-flex w-100 justify-content-around align-items-around take-photo-background'> 
-          {/* <div className='d-flex flex-column w-50 justify-content-center w-75 align-items-center'>
-            <div className='video-container mt-5 mb-5 d-flex'>
-              <video className='video justify-content-center' ref={videoRef} autoPlay={true}/>
-            </div>
-          </div>
-          <div className='d-flex w-50'>
-            <div className='d-flex flex-column m-5'>
-              {
-                images && images.map((item, index) => {
-                  if(index < 3){
-                    return <img key={index} className='image-taken' src={item}></img>
-                  }
-                })
-              }
-            </div>
-            <div className='d-flex flex-column m-5'>
-              {
-                images && images.map((item, index) => {
-                  if(index >= 3){
-                    return <img key={index} className='image-taken' src={item}></img>
-                  }
-                })
-              }
-            </div>
-            
-          </div>
-
           
-        </div>
-        <div className='button'>
-          */}
           <div className='images'>
             {
-              imagesTest.map(item => {
-                return <img src={item} className='image'></img>
+              imagesTest.map((item, index) => {
+                return <img key={index} src={item} className='image'></img>
               })
             }
           </div>
           <div className='camera'>
             <video className='justify-content-center camera-source' ref={videoRef} autoPlay={true}/>
           </div>
-          <i className={`bi bi-camera fa-10x mt-5 pointer button h1 `} onClick={handleSnapshot}></i>
+          <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} ref={takeButton}>
+          </img>
+          <button ref={handleSnapShot} className='d-none'></button>
         </div>
-        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
+        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true}/>
+        {
+          isTaking && <Countdown date={timer + 5000} renderer={renderer} />
+        }
       </>
   );
 };

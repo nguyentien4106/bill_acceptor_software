@@ -58,5 +58,35 @@
 .camera-source{
     height: 550px;
     width: 825px;
+}
+
+.take-button{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 50%;
+    right: 550px;
+    animation: zoom-in-zoom-out 2.5s ease infinite;
+    z-index: 1;
+}
+
+@keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.5, 1.5);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
   }
-  
+
+.countdown-timer{
+    position: absolute;
+    top: 50%;
+    right: 600px;
+    z-index: 2;
+    font-size: 100px;
+    color: white;
+}

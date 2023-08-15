@@ -1,0 +1,46 @@
+.selectImagesBackground{
+    background-image: url('../images/button/selectImagesBackground.png');
+    height: 100vh;
+}
+
+.images-taken{
+    height: 600px;
+    width: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    position: absolute;
+    top: 35%;
+    left: 20%;
+}
+
+.images-taken img:nth-child(1){
+    grid-column: 1 / 2;
+    grid-row: 1;
+}
+
+.images-taken img:nth-child(2){
+    grid-column: 2 / 3;
+    grid-row: 1;
+}
+
+.images-taken img:nth-child(3){
+    grid-column: 3 / 4;
+    grid-row: 1;
+}
+
+.images-taken img:nth-child(4){
+    grid-column: 1 / 2;
+    grid-row: 2;
+}
+
+.images-taken img:nth-child(5){
+    grid-column: 2 / 3;
+    grid-row: 2;
+}
+
+.images-taken img:nth-child(6){
+    grid-column: 3 / 4;
+    grid-row: 2;
+}

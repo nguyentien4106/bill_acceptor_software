@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import printJS from 'print-js'
+// import printJS from 'print-js'
 import { getImageWithFilter } from '../helpers/createPhotoStrip'
 import demo from '../images/demo.jpg'
 import backgroundPrint from '../images/button/print.jpg'

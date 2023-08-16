@@ -1,8 +1,5 @@
-'use strict';
-
 import React, { Component } from 'react';
 import '../css/Step2_Payment.css'
-import { Store } from 'react-notifications-component';
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
 
@@ -11,12 +8,9 @@ export default class Step2_Payment extends Component {
         super(props);
         this.state = {
             money: props.money,
-            numberPhoto: 2,
-            error: false
+            showNext: false
         }
 
-        const prev = document.getElementById("prev-button")
-        prev.style.visibility = 'visible'
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,35 +18,10 @@ export default class Step2_Payment extends Component {
           this.setState({
             money: nextProps.money
           });
+          this.setState({
+            showNext: nextProps.money >= 50000
+          })
         }
-    }
-
-    isValidated(){
-        this.setState({
-            error: this.state.money < this.state.numberPhoto * 25000
-        })
-
-        const isValid = this.state.money > this.state.numberPhoto * 25000
-
-        if(!isValid){
-            Store.removeAllNotifications()
-            Store.addNotification({
-                title: "",
-                id: "invalidMoney",
-                message: "Bạn chưa nạp đủ tiền !!! Vui lòng nạp đủ số tiền theo yêu cầu !",
-                type: "danger",
-                insert: "top",
-                container: "top-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                  duration: 10000,
-                  onScreen: true
-                }
-              })
-        }
-
-        return isValid;
     }
 
     displayMoney(money){
@@ -71,7 +40,7 @@ export default class Step2_Payment extends Component {
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-10'>
                             <CashStack size={70} className='p-2'></CashStack>
                             <h2 className='p-2'>Số tiền cần thanh toán là </h2>
-                            <h2 className='p-2 ms-auto'>{this.displayMoney(this.state.numberPhoto * 25000)} VND</h2>
+                            <h2 className='p-2 ms-auto'>{this.displayMoney(50000)} VND</h2>
                         </div>
                         <br/>
                         <div className='payment_elements d-flex align-content-around justify-content-between mt-4'>
@@ -80,7 +49,7 @@ export default class Step2_Payment extends Component {
                             <h2 className='ms-auto p-2'>{this.displayMoney(this.state.money)} VND</h2>
                         </div>
                     </div>
-                    <Navigation currentStep={2} jumpToStep={this.props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
+                    <Navigation currentStep={2} jumpToStep={this.props.jumpToStep} maxStep={6} showBack={false} showNext={this.state.showNext}/>
                 </div>
         )
     }

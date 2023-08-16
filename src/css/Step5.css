@@ -4,12 +4,68 @@
     left: 47%;
 }
 
-.image-filter-demo{
-    background-image: url('../images/button/button.png');
-    width: 100px;
-    height: 50px;
+.image-filter-Amaro{
+    background-image: url('../images/button/filter-button/Amaro.png');
+    width: 200px;
+    height: 100px;
     margin: 10px;
-    object-fit: contain;
+    background-size: cover;
+}
+.image-filter-Lark{
+    background-image: url('../images/button/filter-button/Lark.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Lo-Fi{
+    background-image: url('../images/button/filter-button/Lo-Fi.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Moon{
+    background-image: url('../images/button/filter-button/Moon.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Origin{
+    background-image: url('../images/button/filter-button/Origin.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Rise{
+    background-image: url('../images/button/filter-button/Rise.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Slumber{
+    background-image: url('../images/button/filter-button/Slumber.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-Willow{
+    background-image: url('../images/button/filter-button/Willow.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
+}
+.image-filter-X-proII{
+    background-image: url('../images/button/filter-button/X-proII.png');
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-size: cover;
 }
 
 .first-col-filter{
@@ -22,4 +78,13 @@
     position: absolute;
     right: 15%;
     top: 25%;
+}
+
+span.filter-name-text{
+    display: block;
+    width: 100px;
+    height: 100%;
+    margin-top: 30px;
+    margin-left: 30px;
+    /* color: white; */
 }

@@ -61,11 +61,6 @@ body {
   border: 1px solid black;
 }
 
-/* .image-taken{
-  width: 300px;
-  height: 200px;
-} */
-
 .m-5{
   margin: 5px;
 }
@@ -78,7 +73,7 @@ code {
   cursor: pointer;
 }
 
-ol.progtrckr {
+/* ol.progtrckr {
   list-style-type: none;
   padding: 0;
 }
@@ -215,7 +210,7 @@ ol.progtrckr li.progtrckr-done:hover:before {
 
 .yellow{
   background-color: #fff000;
-}
+} */
 
 
 

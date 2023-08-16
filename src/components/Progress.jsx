@@ -43,7 +43,7 @@ export default function Progress(props) {
                                                 background={background}
                                               />},
 
-      {name: 'Xác nhận thanh toán', component: <Step2_Payment 
+      {name: 'Xác nhận thanh toán', component: <Step2_Payment
                                                   money={props.money} 
                                                 />},
 
@@ -79,7 +79,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={3} 
+          startAtStep={5} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

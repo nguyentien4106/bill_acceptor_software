@@ -7,18 +7,20 @@ import '../css/Step4.css'
 import demo from '../images/demo.jpg'
 
 export default function Step4_SelectImages(props) {
-  const {imagesTaken, filter} = props
+  const {imagesTaken} = props
   const [imagesChoosen, setImageChoosen] = useState([])
-  const [photo, setPhoto] = useState(null)
-  const imagesTakenTest = [demo, demo, demo, demo, demo, demo]
+  const [showNext, setShowNext] = useState(false)
 
   const handleChooseImage = image => {
-    if(imagesChoosen.includes(image)){
-      setImageChoosen(imagesChoosen.filter(item => item != image))
-      props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
-      return
+    // if(imagesChoosen.includes(image)){
+    //   setImageChoosen(imagesChoosen.filter(item => item != image))
+    //   props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
+    //   return
+    // }
+    if(imagesChoosen.length == 4){
+      setShowNext(true)
     }
-
+    
     if(imagesChoosen.length < 4){
       setImageChoosen([...imagesChoosen, image])
       props.onSetImagesChoosen([...imagesChoosen, image])
@@ -46,7 +48,6 @@ export default function Step4_SelectImages(props) {
   useEffect(() => {
     if(imagesChoosen.length === 4){
       drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
-        setPhoto(photo)
         props.onSetImageToPrint(photo)
       })
     }
@@ -54,29 +55,6 @@ export default function Step4_SelectImages(props) {
 
   return (
     <div className='selectImagesBackground'>
-      {/* <h3>Bạn được chọn tối đa 4 ảnh để in !!!</h3>
-      <h3>Thứ tự được sắp xếp theo thứ tự bạn chọn nhé !!</h3>
-      <div className='d-flex justify-content-around mt-5 '>
-        <div className='demo'>
-          <img src={photo} className={`image-show ${filter}`}></img>
-        </div>
-        <div className='imagesTaken'>
-          <div className='first'>
-            {imagesTaken.map((image, index) => {
-              if(index <= 2){
-                return <img key={index} className={`image-taken m-2 ${imagesChoosen.includes(image) ? "checked" : ""}`} src={image} onClick={() => handleChooseImage(image)}></img>
-              }
-            })}
-          </div>
-          <div className='second mt-4'>
-            {imagesTaken.length >= 3 && imagesTaken.map((image, index) => {
-              if(index >= 3){
-                return <img key={index} className={`image-taken m-2 ${imagesChoosen.includes(image) ? "checked" : ""}`} src={image} onClick={() => handleChooseImage(image)}></img>
-              }
-            })}
-          </div>
-        </div>
-      </div> */}
       <div className='images-taken'>
         {
           imagesTaken.map(item => {
@@ -84,7 +62,7 @@ export default function Step4_SelectImages(props) {
           })
         }
       </div>
-      <Navigation currentStep={4} jumpToStep={props.jumpToStep} maxStep={6}  showBack={true} showNext={true}/>
+      <Navigation currentStep={4} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={showNext}/>
     </div>
   )
 }

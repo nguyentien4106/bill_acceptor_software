@@ -1,5 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react'
 import Navigation from './Navigation'
 import { applyFilterToImage } from '../helpers/createPhotoStrip'
 import black from '../images/background/black.jpg';
@@ -7,26 +6,16 @@ const {ipcRenderer} = window.require('electron')
 
 export default function Step6_HandlePrint(props) {
     // const [image, setImage] = useState(props.imageToPrint)
-
-    useEffect(() => {
-        window.addEventListener('afterprint', function() {
-            console.log('Print dialog closed');
-        });
-
-        ipcRenderer.on("finish", (event) => {
-            props.jumpToStep(0)
-        })
-    }, [])
+    ipcRenderer.on("finish", (event) => {
+        props.jumpToStep(0)
+    })
 
     const handlePrint = () => {
-
-        function sendCommandToWorker(image) {
+        const sendCommandToWorker = (image) => {
             ipcRenderer.send("print", image);
         }
-        console.log(props.imageToPrint)
-        console.log(props.filter)
-        applyFilterToImage(black, 500, 1200, props.filter).then(img => {
-            console.log(img)
+
+        applyFilterToImage(props.imageToPrint, 500, 1200, props.filter).then(img => {
             sendCommandToWorker(img);
         })
     }

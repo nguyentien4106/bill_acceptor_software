@@ -1,21 +1,19 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Store } from 'react-notifications-component';
 import '../css/Step3_TakePhoto.css'
 import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
-import demo from '../images/demo.jpg'
 import cameraButton from '../images/button/camerabutton.png'
 import Countdown from "react-countdown";
+import useCountDown from "react-countdown-hook";
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const takeButton = useRef('take')
-  // const handleSnapShot = useRef('shot')
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
-  const imagesTest = [demo, demo, demo, demo, demo]
   const [isTaking, setIsTaking] = useState(false)
   const [showNext, setShowNext] = useState(false)
+  const [timeLeft, actions] = useCountDown(5000)
 
   useEffect(() => {
     handleCapture();
@@ -44,26 +42,6 @@ const Step3_TakePhoto = (props) => {
     }
   };
 
-  // const takePhoto = () => {
-  //   if(!videoRef.current.srcObject){
-  //     return
-  //   }
-
-  //   // setIsTaking(false)
-
-  //   const canvas = document.createElement('canvas');
-  //   canvas.width = videoRef.current.videoWidth;
-  //   canvas.height = videoRef.current.videoHeight;
-  //   canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-  //   const dataURI = canvas.toDataURL('image/jpg');
-  //   return dataURI;
-  //   takePhotoAudio.play().then(() => {
-  //     setImages([...images, dataURI])
-  //     props.onSetImagesTaken([...images, dataURI])
-  //   })
-  // };
-
   const capturePhoto = () => {
     return new Promise((resolve, reject) => {
       // Access the camera
@@ -74,21 +52,31 @@ const Step3_TakePhoto = (props) => {
         canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
   
         const dataURI = canvas.toDataURL('image/jpg');
-        
+        setIsTaking(prev => !prev)
         resolve(dataURI);
       })
     });
   }
   
+  const start = () => {
+    actions.reset()
+    actions.start()
+  }
+
   const handleClickTakePhoto = () => {
     if(!isClicked){
       setIsClicked(true)
+      setIsTaking(true)
+      start()
+
       setIntervalX(() => {
         capturePhoto().then(img => {
           setImages(prev => [...prev, img])
           props.onSetImagesTaken(prev => [...prev, img])
+          setIsTaking(prev => true)
+          start()
         })
-      }, 1000, 6)
+      }, 5000, 6)
     }
   }
 
@@ -97,15 +85,12 @@ const Step3_TakePhoto = (props) => {
     takeButton.current.addEventListener('click', handleClickTakePhoto)
   }, [])
 
-  const renderer = ({ seconds, completed }) => {
-    if (!completed) {
-      return <h1 className='countdown-timer'>{seconds}</h1>;
-    } 
-  }
-
   return (
       <>
         <div className='d-flex w-100 justify-content-around align-items-around take-photo-background'> 
+          {
+            isTaking && <h1 className="countdown-timer">{(timeLeft / 1000)}</h1>
+          }
           <div className='images'>
             {
               images.map((item, index) => {
@@ -118,12 +103,9 @@ const Step3_TakePhoto = (props) => {
           </div>
           <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} ref={takeButton}>
           </img>
-          {/* <button ref={handleSnapShot} className='d-none'></button> */}
         </div>
         <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={showNext}/>
-        {
-          isTaking && <Countdown date={Date.now() + 5000} renderer={renderer} />
-        }
+        
       </>
   );
 };

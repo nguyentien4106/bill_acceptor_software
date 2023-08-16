@@ -26,9 +26,10 @@ export default function Progress(props) {
 
     if(stepIndex === 0){
       ipcRenderer.send("resetMoney")
-      setFilter(null)
+      setFilter('origin')
       setImageToPrint(null)
-      setImagesTaken(null)
+      setImagesTaken([])
+      setImagesChoosen([])
     }
     
   }
@@ -79,7 +80,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={1} 
+          startAtStep={3} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

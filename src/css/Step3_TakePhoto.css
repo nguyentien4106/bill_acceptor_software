@@ -7,7 +7,6 @@
     position: absolute;
     left: 100px;
     bottom: 30px;
-    outline: 5px solid blue;
     height: 700px;
     width: 700px;
     display: grid;
@@ -40,7 +39,6 @@
     position: absolute;
     bottom: 80px;
     right: 200px;
-    outline: 5px solid red;
 }
 
 .image{

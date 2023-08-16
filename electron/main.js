@@ -38,6 +38,7 @@ function createWindow() {
 
 
   mainWindow.webContents.openDevTools();
+  mainWindow.focus()
 
   var menu = Menu.buildFromTemplate([
     {

@@ -1,12 +1,12 @@
 export function setIntervalX(callback, delay, repetitions) {
-    var x = 0;
-    var intervalID = window.setInterval(function () {
+    let x = 0;
+    let intervalID = window.setInterval(function () {
+        if (++x === repetitions) {
+            window.clearInterval(intervalID);
+        }
 
-       callback();
+        callback();
 
-       if (++x === repetitions) {
-           window.clearInterval(intervalID);
-       }
     }, delay);
 }
 

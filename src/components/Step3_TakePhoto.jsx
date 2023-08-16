@@ -14,6 +14,7 @@ const Step3_TakePhoto = (props) => {
   const [isTaking, setIsTaking] = useState(false)
   const [showNext, setShowNext] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
+  const sound = document.getElementById("countdown")
 
   useEffect(() => {
     handleCapture();
@@ -22,6 +23,9 @@ const Step3_TakePhoto = (props) => {
   useEffect(() => {
     if(images.length === 6){
       setShowNext(true)
+      setIsTaking(false)
+      sound.pause();
+      document.getElementById("timeup").play()
     }
   }, [images.length])
 
@@ -59,27 +63,26 @@ const Step3_TakePhoto = (props) => {
   }
   
   const start = () => {
+    setIsTaking(true)
     actions.reset()
-    actions.start()
+    actions.start() 
   }
 
-  const handleClickTakePhoto = () => {
+  const handleClickTakePhoto = async () => {
     if(!isClicked){
       setIsClicked(true)
-      setIsTaking(true)
-      start()
+      sound.play()
 
+      start()
       setIntervalX(() => {
         capturePhoto().then(img => {
           setImages(prev => [...prev, img])
           props.onSetImagesTaken(prev => [...prev, img])
-          setIsTaking(prev => true)
           start()
         })
-      }, 5000, 6)
+      }, 1000, 6)
     }
   }
-
 
   useEffect(() => {
     takeButton.current.addEventListener('click', handleClickTakePhoto)

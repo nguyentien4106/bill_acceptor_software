@@ -5,18 +5,15 @@ import '../css/Step0.css'
 
 function Step0_WaitingScreen({jumpToStep}) {
     const music = document.getElementById("screen_saver_sound");
+
     useEffect(() => {
-        const buttons = document.getElementsByClassName("footer-buttons")[0]
-        buttons.style.visibility = 'hidden'
-        
         music.loop = true;
         music.play()
-    })
+    }, [])
 
     const handleClick = () => {
         const audio = document.getElementById("click-audio");
-    
-        audio.play().then( () => {
+        audio.play().then(() => {
             music.pause()
             music.currentTime = 0;
             jumpToStep(1)

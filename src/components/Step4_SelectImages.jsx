@@ -18,9 +18,10 @@ export default function Step4_SelectImages(props) {
     //   return
     // }
     if(imagesChoosen.length == 4){
+      console.log('enough')
       setShowNext(true)
     }
-    
+
     if(imagesChoosen.length < 4){
       setImageChoosen([...imagesChoosen, image])
       props.onSetImagesChoosen([...imagesChoosen, image])

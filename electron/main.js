@@ -50,24 +50,25 @@ function createWindow() {
 
   Menu.setApplicationMenu(menu); 
 
-  // workerWindow = new BrowserWindow({
-  //   width: 800,
-  //   height: 600,
-  //   webPreferences: {
-  //     nodeIntegration: true,
-  //     enableRemoteModule: true,
-  //     contextIsolation: false
-  //   }
-  // });
+  workerWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false
+    },
+    show: false
+  });
 
-  // workerWindow.loadFile('public/worker.html');
+  workerWindow.loadFile('public/worker.html');
 
-  // workerWindow.on('closed', function () {
-  //   mainWindow = null;
-  // });
+  workerWindow.on('closed', function () {
+    mainWindow = null;
+  });
 
 
-  // workerWindow.webContents.openDevTools();
+  workerWindow.webContents.openDevTools();
 }
 
 function readBill(result){
@@ -94,12 +95,13 @@ app.whenReady().then(() => {
     
   })
     
-  ipcMain.on("print", (event, content) => {
-    workerWindow.webContents.send("sendImage", content);
+  ipcMain.on("print", (event, image) => {
+    workerWindow.webContents.send("sendImage", image);
   });
 
   ipcMain.on("readyPrint", (event) => {
     console.log('ready to print')
+    mainWindow.webContents.send("finish")
   });
 
 });

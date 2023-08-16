@@ -16,12 +16,16 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    title: "Photo Box",
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: false
     },
-    // fullscreen: true
+    movable: false,
+    // minimizable: false
+    // fullscreen: true,
+    // skipTaskbar: true
   });
 
   mainWindow.loadURL(
@@ -59,7 +63,6 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    show: false
   });
 
   workerWindow.loadFile('public/worker.html');
@@ -100,8 +103,16 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("readyPrint", (event) => {
-    console.log('ready to print')
-    mainWindow.webContents.send("finish")
+    const pdfPath = path.join(os.homedir(), 'Desktop', 'image.pdf')
+    workerWindow.webContents.printToPDF({}).then(data => {
+      fs.writeFile(pdfPath, data, (error) => {
+        if (error) throw error
+        console.log(`Wrote PDF successfully to ${pdfPath}`)
+      })
+     mainWindow.webContents.send("finish")
+    }).catch(error => {
+      console.log(`Failed to write PDF to ${pdfPath}: `, error)
+    })
   });
 
 });

@@ -38,23 +38,27 @@
 .box{
 	/* background: red; */
 	width: 630px;
-	height: 630px;
+	height: 620px;
 	border-radius: 145px;
 	outline: 10px solid pink;
 }
 
 .first{
-	margin-top: 330px;
-	margin-left: 260px;
+	position: absolute;
+	left: 15%;
+	bottom: 10%;
 }
 
 .second{
-	margin-top: 330px;
-	margin-left: 170px;
+	position: absolute;
+	right: 15%;
+	bottom: 10%;
 }
 
 .selected{
 	outline: 10px solid red; 
+	border-radius: 150px;
+	height: 500px;
 }
 
 .navigation-container{
@@ -64,4 +68,25 @@
 	top: 50%;
 	right: 0;
 	width: 100%;
+}
+
+#selectBackground{
+	background-image: url('../images/button/backgroundSelectbackground.jpg');
+	height: 100vh;
+  }
+
+.white{
+	background-image: url('../images/button/white.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 500px;
+	width: 500px;
+}
+
+.black{
+	background-image: url('../images/button/black.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 500px;
+	width: 500px;
 }

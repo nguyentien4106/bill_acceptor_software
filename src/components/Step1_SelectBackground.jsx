@@ -15,15 +15,15 @@ export default function Step1_SelectBackground(props) {
 
   return (
     <div id='selectBackground'>
-      <div className='d-flex justify-content-start align-items-start w-100'>
-          <div className={`white first box ${backgroundChoose === "white" ? "selected" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[1])}>
+      <div className='d-flex justify-content-start align-items-center w-100'>
+          <div className={`white first ${backgroundChoose === "white" ? "" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[1])}>
             {
-              backgroundChoose === "white" && <i className="bi bi-check-lg fa-10x h1"></i>
+              backgroundChoose === "white" && <i className="bi bi-check-lg fa-10x h1" style={{fontSize: 200, color: 'pink'}}></i>
             }
           </div>
-          <div className={`black second box ${backgroundChoose === "black" ? "selected" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[0])}>
-          {
-              backgroundChoose === "black" && <i className="bi bi-check-lg fa-10x h1"></i>
+          <div className={`black second ${backgroundChoose === "black" ? "" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[0])}>
+            {
+              backgroundChoose === "black" && <i className="bi bi-check-lg fa-10x h1" style={{fontSize: 200, color: 'pink'}}></i>
             }
           </div>
       </div>

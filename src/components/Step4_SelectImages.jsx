@@ -17,10 +17,6 @@ export default function Step4_SelectImages(props) {
     //   props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
     //   return
     // }
-    if(imagesChoosen.length == 4){
-      console.log('enough')
-      setShowNext(true)
-    }
 
     if(imagesChoosen.length < 4){
       setImageChoosen([...imagesChoosen, image])
@@ -48,6 +44,7 @@ export default function Step4_SelectImages(props) {
 
   useEffect(() => {
     if(imagesChoosen.length === 4){
+      setShowNext(true)
       drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
         props.onSetImageToPrint(photo)
       })
@@ -59,7 +56,12 @@ export default function Step4_SelectImages(props) {
       <div className='images-taken'>
         {
           imagesTaken.map(item => {
-            return <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""}`} src={item} onClick={() => handleChooseImage(item)}></img>
+            return (
+              <div className="container-image">
+                <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""} `} src={item} onClick={() => handleChooseImage(item)}></img>
+                <div class="top-right">{imagesChoosen.indexOf(item) >= 0 ? imagesChoosen.indexOf(item) + 1 : ""}</div>
+              </div>
+            )
           })
         }
       </div>

@@ -79,7 +79,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3} 
+          startAtStep={1} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

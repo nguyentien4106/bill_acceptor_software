@@ -1,0 +1,25 @@
+.image-demo{
+    position: absolute;
+    top: 25%;
+    left: 47%;
+}
+
+.image-filter-demo{
+    background-image: url('../images/button/button.png');
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    object-fit: contain;
+}
+
+.first-col-filter{
+    position: absolute;
+    left: 15%;
+    top: 25%;
+}
+
+.second-col-filter{
+    position: absolute;
+    right: 15%;
+    top: 25%;
+}

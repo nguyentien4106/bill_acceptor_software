@@ -43,15 +43,14 @@ export default function Step4_SelectImages(props) {
 
   }
 
-  // useEffect(() => {
-  //   if(imagesChoosen.length === 4){
-  //     drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
-  //       // setImageToPrint(photo)
-  //       setPhoto(photo)
-  //       props.onSetImageToPrint(photo)
-  //     })
-  //   }
-  // }, [imagesChoosen.length])
+  useEffect(() => {
+    if(imagesChoosen.length === 4){
+      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
+        setPhoto(photo)
+        props.onSetImageToPrint(photo)
+      })
+    }
+  }, [imagesChoosen.length])
 
   return (
     <div className='selectImagesBackground'>
@@ -80,7 +79,7 @@ export default function Step4_SelectImages(props) {
       </div> */}
       <div className='images-taken'>
         {
-          imagesTakenTest.map(item => {
+          imagesTaken.map(item => {
             return <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""}`} src={item} onClick={() => handleChooseImage(item)}></img>
           })
         }

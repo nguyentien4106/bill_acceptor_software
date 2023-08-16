@@ -9,13 +9,13 @@ import Countdown from "react-countdown";
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const takeButton = useRef('take')
-  const handleSnapShot = useRef('shot')
+  // const handleSnapShot = useRef('shot')
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
   const imagesTest = [demo, demo, demo, demo, demo]
   const [isTaking, setIsTaking] = useState(false)
-  const [timer, setTimer] = useState(Date.now())
+  const [showNext, setShowNext] = useState(false)
 
   useEffect(() => {
     handleCapture();
@@ -23,22 +23,7 @@ const Step3_TakePhoto = (props) => {
 
   useEffect(() => {
     if(images.length === 6){
-      // const next = document.getElementById("next-button");
-      // next.style.display = "block"
-      // Store.addNotification({
-      //   id: "notifyenoughImage",
-      //   message: "Bạn đã chụp đủ số lượng hình ! Bấm kế tiếp để mình đi chọn hình nhé !!!",
-      //   type: "info",
-      //   insert: "top",
-      //   container: "top-right",
-      //   animationIn: ["animate__animated", "animate__fadeIn"],
-      //   animationOut: ["animate__animated", "animate__fadeOut"],
-      //   dismiss: {
-      //     duration: 10000,
-      //     onScreen: true
-      //   }
-      // })
-      
+      setShowNext(true)
     }
   }, [images.length])
 
@@ -59,69 +44,61 @@ const Step3_TakePhoto = (props) => {
     }
   };
 
-  const handleSnapshot = () => {
-    console.log('take')
-    if(!videoRef.current.srcObject){
-      return
-    }
+  // const takePhoto = () => {
+  //   if(!videoRef.current.srcObject){
+  //     return
+  //   }
 
-    setIsTaking(false)
+  //   // setIsTaking(false)
 
-    const canvas = document.createElement('canvas');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+  //   const canvas = document.createElement('canvas');
+  //   canvas.width = videoRef.current.videoWidth;
+  //   canvas.height = videoRef.current.videoHeight;
+  //   canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
-    const dataURI = canvas.toDataURL('image/jpg');
+  //   const dataURI = canvas.toDataURL('image/jpg');
+  //   return dataURI;
+  //   takePhotoAudio.play().then(() => {
+  //     setImages([...images, dataURI])
+  //     props.onSetImagesTaken([...images, dataURI])
+  //   })
+  // };
 
-    if(images.length < 6){
+  const capturePhoto = () => {
+    return new Promise((resolve, reject) => {
+      // Access the camera
       takePhotoAudio.play().then(() => {
-        setImages([...images, dataURI])
-        props.onSetImagesTaken([...images, dataURI])
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+  
+        const dataURI = canvas.toDataURL('image/jpg');
+        
+        resolve(dataURI);
       })
-    }
-    else {
-      Store.removeAllNotifications()
-      Store.addNotification({
-        title: "",
-        id: "maxPhoto",
-        message: "Bạn chỉ có thể chụp tối đa 6 hình !",
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2500,
-          onScreen: true
-        }
-      })
-      videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-
-    }
-  };
-
+    });
+  }
+  
   const handleClickTakePhoto = () => {
     if(!isClicked){
       setIsClicked(true)
-      setIsTaking(true)
-      handleSnapShot.current.click()
       setIntervalX(() => {
-        setTimer(Date.now())
-        setIsTaking(true)
-        handleSnapShot.current.click()
-      }, 3000, 3)
+        capturePhoto().then(img => {
+          setImages(prev => [...prev, img])
+          props.onSetImagesTaken(prev => [...prev, img])
+        })
+      }, 1000, 6)
     }
   }
 
+
   useEffect(() => {
     takeButton.current.addEventListener('click', handleClickTakePhoto)
-    handleSnapShot.current.addEventListener('click', handleSnapshot)
   }, [])
 
   const renderer = ({ seconds, completed }) => {
     if (!completed) {
-      // Render a complete state
       return <h1 className='countdown-timer'>{seconds}</h1>;
     } 
   }
@@ -129,10 +106,9 @@ const Step3_TakePhoto = (props) => {
   return (
       <>
         <div className='d-flex w-100 justify-content-around align-items-around take-photo-background'> 
-          
           <div className='images'>
             {
-              imagesTest.map((item, index) => {
+              images.map((item, index) => {
                 return <img key={index} src={item} className='image'></img>
               })
             }
@@ -142,11 +118,11 @@ const Step3_TakePhoto = (props) => {
           </div>
           <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} ref={takeButton}>
           </img>
-          <button ref={handleSnapShot} className='d-none'></button>
+          {/* <button ref={handleSnapShot} className='d-none'></button> */}
         </div>
-        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true}/>
+        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={showNext}/>
         {
-          isTaking && <Countdown date={timer + 5000} renderer={renderer} />
+          isTaking && <Countdown date={Date.now() + 5000} renderer={renderer} />
         }
       </>
   );

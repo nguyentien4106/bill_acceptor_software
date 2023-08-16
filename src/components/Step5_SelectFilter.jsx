@@ -1,41 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import demo from '../images/demo.jpg'
-import { applyFilterToImage } from '../helpers/createPhotoStrip'
+import { applyFilterToImage, drawImagesOnCanvas } from '../helpers/createPhotoStrip'
 import Navigation from './Navigation';
+import '../css/Step5.css'
+import filterButton from '../images/button/button.png'
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
   const filtersName = ['origin', 'filter-amaro', 'filter-rise', 'filter-willow', 'filter-slumber', 'filter-x-proII', 'filter-Lo-Fi', 'filter-lark', 'filter-moon']
   const {imageToPrint} = props
-  const [imageToPrint1, setImageToPrint1] = useState(imageToPrint)
+
+  // useEffect(() => {
+  //   drawImagesOnCanvas(props.imagesChoosen, 500, 1200, props.background).then(img => setImageToPrint1(img))
+  // }, [])
 
   const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
     props.onSetFilter(filterName)
     applyFilterToImage(imageToPrint, 500, 1200, filterName).then(photo => {
-      setImageToPrint1(photo)
     })
   }
 
 
   return (
-    <div className='mt-5 d-flex justify-content-around'>
-      <div id='image'>
-        <img src={imageToPrint1} className={`image-show`}></img>
+    <div className='d-flex justify-content-around commonBackground'>
+      <div className='image-demo'>
+        <img src={imageToPrint} className={`image-show ${filter}`}></img>
       </div>
-      <div className='imagesTaken align-item-center align-self-center'>
+      <div className=''>
         <h2>Bạn hãy chọn filter cho tấm hình để in nhé !!</h2>
-        <div className='first'>
+        <div className='first-col-filter'>
           {filtersName.map((filterName, index) => {
             if(index <= 4){
-              return <img key={filterName} className={`${filterName} image-filter-demo ${filter === filterName ? "checked" : ""}`} src={demo} onClick={() => handleOnClickChooseFilter(filterName)}></img>
+              return <div key={filterName} className={`${filterName} image-filter-demo ${filter === filterName ? "checked" : ""}`}  onClick={() => handleOnClickChooseFilter(filterName)}>{filterName}</div>
             }
           })}
         </div>
-        <div className='second mt-4'>
+        <div className='second-col-filter mt-4'>
           {filtersName.length >= 3 && filtersName.map((filterName, index) => {
             if(index >= 5){
-              return <img key={filterName} className={`${filterName} image-filter-demo ${filter === filterName ? "checked" : ""}`} src={demo} onClick={() => handleOnClickChooseFilter(filterName)}></img>
+              return <div key={filterName} className={`${filterName} image-filter-demo ${filter === filterName ? "checked" : ""}`} src={filterButton} onClick={() => handleOnClickChooseFilter(filterName)}></div>
             }
           })}
         </div>

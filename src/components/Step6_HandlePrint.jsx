@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { getImageWithFilter } from '../helpers/createPhotoStrip'
 import demo from '../images/demo.jpg'
 import backgroundPrint from '../images/button/print.jpg'
+import Navigation from './Navigation'
 const {ipcRenderer} = window.require('electron')
 
 export default function Step6_HandlePrint(props) {
@@ -48,6 +49,7 @@ export default function Step6_HandlePrint(props) {
             <div className='align-self-center'>
                 <button className='checked' style={{"height" : "50px", "width": "100px"}} onClick={handlePrint}><i className="bi bi-printer fa-10x h1"></i></button>
             </div>
+            <Navigation currentStep={6} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false}/>
         </div>
     )
 }

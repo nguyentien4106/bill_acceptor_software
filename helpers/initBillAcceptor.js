@@ -17,7 +17,14 @@ module.exports = (readBill) => {
         tp.command('ACCEPT_BANKNOTE');
     });
 
-    tp.on('STACKING', result => readBill(result));
+    tp.on('STACKING', result => {
+      if(result.channel > 3){
+        tp.command('REJECT_BANKNOTE')
+      }
+      else {
+        readBill(result)
+      }
+    });
 
     tp.open('COM4', serialPortConfig)
       .then(() => {

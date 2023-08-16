@@ -20,7 +20,8 @@ function createWindow() {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: false
-    }
+    },
+    // fullscreen: true
   });
 
   mainWindow.loadURL(
@@ -66,7 +67,6 @@ function createWindow() {
   workerWindow.on('closed', function () {
     mainWindow = null;
   });
-
 
   workerWindow.webContents.openDevTools();
 }

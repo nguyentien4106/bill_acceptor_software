@@ -3,8 +3,8 @@ import '../css/Step3_TakePhoto.css'
 import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
 import cameraButton from '../images/button/camerabutton.png'
-import Countdown from "react-countdown";
 import useCountDown from "react-countdown-hook";
+
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
   const takeButton = useRef('take')
@@ -12,7 +12,6 @@ const Step3_TakePhoto = (props) => {
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
   const [isTaking, setIsTaking] = useState(false)
-  const [showNext, setShowNext] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
   const sound = document.getElementById("countdown")
 
@@ -22,10 +21,13 @@ const Step3_TakePhoto = (props) => {
 
   useEffect(() => {
     if(images.length === 6){
-      setShowNext(true)
       setIsTaking(false)
       sound.pause();
       document.getElementById("timeup").play()
+
+      setTimeout(() => {
+        props.jumpToStep(4);
+      }, 1000)
     }
   }, [images.length])
 
@@ -80,7 +82,7 @@ const Step3_TakePhoto = (props) => {
           props.onSetImagesTaken(prev => [...prev, img])
           start()
         })
-      }, 1000, 6)
+      }, 5000, 6)
     }
   }
 
@@ -107,7 +109,7 @@ const Step3_TakePhoto = (props) => {
           <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} ref={takeButton}>
           </img>
         </div>
-        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={showNext}/>
+        <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={false}/>
         
       </>
   );

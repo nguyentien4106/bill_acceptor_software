@@ -10,7 +10,8 @@
     width: 100px;
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 2%;
+    animation: zoom-in-zoom-out 1.5s ease infinite;
 }
   
 .back-button{
@@ -19,6 +20,34 @@
     position: absolute;
     top: 50%;
     left: 0;
-
 }
-  
+
+.circle{
+    position: relative;
+    border-radius: 50%;
+    width: 70px;
+    height: 60px;
+    background-color: pink;
+}
+
+.step-downtime{
+    position: absolute;
+    top: 50%;
+    right: 40%;
+    z-index: 2;
+    font-size: 100px;
+    color: white;
+}
+
+
+@keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.5, 1.5);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+}

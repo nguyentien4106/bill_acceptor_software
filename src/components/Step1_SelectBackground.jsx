@@ -27,7 +27,7 @@ export default function Step1_SelectBackground(props) {
             }
           </div>
       </div>
-      <Navigation currentStep={1} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true}/>
+      <Navigation currentStep={1} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true} countdownTime={60}/>
     </div>
   )
 }

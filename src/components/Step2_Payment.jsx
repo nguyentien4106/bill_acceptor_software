@@ -18,9 +18,12 @@ export default class Step2_Payment extends Component {
           this.setState({
             money: nextProps.money
           });
-          this.setState({
-            showNext: nextProps.money >= 50000
-          })
+        //   this.setState({
+        //     showNext: nextProps.money >= 50000
+        //   })
+          if(nextProps.money >= 50000){
+            this.props.jumpToStep(3)
+          }
         }
     }
 

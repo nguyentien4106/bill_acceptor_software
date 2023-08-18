@@ -38,17 +38,13 @@ const filters = [
   }
 ]
 
-export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
+export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl) {
   return new Promise((resolve, reject) => {
     const c = document.createElement("canvas");
     c.width = canvasWidth;
     c.height = canvasHeight;
     const ctx = c.getContext("2d");
-    
-    if(filterName){
-      ctx.filter = filters.filter(item => item.name === filterName)[0].value
-    }
-
+  
     // Load the background image
     const background = new Image();
     background.onload = () => {
@@ -90,11 +86,6 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
     background.onerror = error => reject(error);
     background.src = backgroundUrl;
   });
-}
-
-export function getImageWithFilter(canvas, filter){
-  var ctx = canvas.getContext('2d');
-  ctx.style = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)' //filters.filter(item => item.name === filter)[0].value
 }
 
 export function applyFilterToImage(base64Image, width, height, filterName) {

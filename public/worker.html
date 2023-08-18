@@ -3,22 +3,37 @@
   <head>
   </head>
   <body>
-    <img id="image">
+    <div class="images">
+      <img class="image">
+      <img class="image">
+    </div>
     <script>
       const ipcRenderer = window.require("electron").ipcRenderer;
 
       ipcRenderer.on("sendImage", (event, content) => {
-          const img = document.getElementById("image")
-          img.src = content
+          const imgs = document.getElementsByClassName("image")
+          imgs[0].src = content
+          imgs[1].src = content
           ipcRenderer.send("readyPrint")
       });
     </script>
     <style>
-      #image{
-        height: 770px;
-        width: 177px;
-        /* display: block;
-        margin: 0 auto; */
+      .image{
+        width: 600px;
+        height: 1800px;
+        display: block;
+        margin: 0 auto;
+      }
+      .images{
+        width: 1240px;
+        height: 1844px;
+        display: flex;
+        justify-content: space-around;
+        justify-self: center;
+      }
+      body{
+        width: 1240px;
+        height: 1844px;
       }
     </style>
   </body>

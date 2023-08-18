@@ -2,8 +2,10 @@ const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const initBillAcceptor = require('../helpers/initBillAcceptor')
+const writeLog = require('../helpers/writeLog')
+const moment = require('moment')
 const fs = require('fs')
-const os = require('os')
+const os = require('os');
 
 let mainWindow;
 let workerWindow;
@@ -11,8 +13,6 @@ let money = 0;
 
 
 function createWindow() {
-
-
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -45,9 +45,23 @@ function createWindow() {
         label: 'Menu',
         submenu: [
             {
-              label:'Add money',
+              label:'Add 100',
               click(){
                 money += 100000;
+                mainWindow.webContents.send('detectMoneyIn', money);
+              }
+            },
+            {
+              label:'Add 10',
+              click(){
+                money += 10000;
+                mainWindow.webContents.send('detectMoneyIn', money);
+              }
+            },
+            {
+              label:'Add 20',
+              click(){
+                money += 20000;
                 mainWindow.webContents.send('detectMoneyIn', money);
               }
             }
@@ -99,20 +113,33 @@ app.whenReady().then(() => {
     
   })
     
-  ipcMain.on("print", (event, image) => {
-    workerWindow.webContents.send("sendImage", image);
+  ipcMain.on("print", (event, data) => {
+    workerWindow.webContents.send("sendImage", data);
   });
 
-  ipcMain.on("readyPrint", (event) => {
+  ipcMain.on("readyPrint", (event, log) => {
     const pdfPath = path.join(os.homedir(), 'Desktop', 'image.pdf')
-    workerWindow.webContents.printToPDF({}).then(data => {
-      fs.writeFile(pdfPath, data, (error) => {
-        if (error) throw error
-        console.log(`Wrote PDF successfully to ${pdfPath}`)
-      })
-     mainWindow.webContents.send("finish")
-    }).catch(error => {
-      console.log(`Failed to write PDF to ${pdfPath}: `, error)
+    // workerWindow.webContents.printToPDF({}).then(data => {
+    //   fs.writeFile(pdfPath, data, (error) => {
+    //     if (error) {
+    //         const failed = log + `\nFailed Printed at ${moment()}`
+    //         writeLog(failed)
+    //     }
+    //     const success = log + `\nSuccess Printed at ${moment()}`
+    //     writeLog(success)
+    //   })
+    //   money = 0;
+    //   mainWindow.webContents.send("finish")
+    // }).catch(error => {
+    //   console.log(`Failed to write PDF to ${pdfPath}: `, error)
+    // })
+    console.log('print')
+    const options = {
+      silent: true,
+      deviceName: '',
+    }
+    workerWindow.webContents.print(options, (success, errorType) => {
+      if (!success) console.log(errorType)
     })
   });
 

@@ -20,10 +20,11 @@ export default function Progress(props) {
   const [imagesChoosen, setImagesChoosen] = useState([])
   const [imageToPrint, setImageToPrint] = useState(null)
   const [filter, setFilter] = useState('origin')
+  const [log, setLog] = useState("")
 
   const handleOnStepChange = stepIndex => {
     Store.removeAllNotifications()
-
+    
     if(stepIndex === 0){
       ipcRenderer.send("resetMoney")
       setFilter('origin')
@@ -46,11 +47,13 @@ export default function Progress(props) {
 
       {name: 'Xác nhận thanh toán', component: <Step2_Payment
                                                   money={props.money} 
+                                                  onSetLog={setLog}
                                                 />},
 
       {name: 'Chụp ảnh', component: <Step3_TakePhoto 
-                                            onSetImagesTaken={setImagesTaken}
-                                          />},
+                                        onSetLog={setLog}
+                                        onSetImagesTaken={setImagesTaken}
+                                    />},
 
       {name: 'Chọn filter', component: <Step4_SelectImages
                                           imagesTaken={imagesTaken} 
@@ -59,6 +62,7 @@ export default function Progress(props) {
                                           imagesChoosen={imagesChoosen}
                                           onSetImageToPrint={setImageToPrint}
                                           filter={filter}
+                                          onSetLog={setLog}
                                         />},
 
       {name: 'Printing', component: <Step5_SelectFilter 
@@ -67,12 +71,14 @@ export default function Progress(props) {
                                       imagesChoosen={imagesChoosen}
                                       background={background.src}
                                       onSetImageToPrint={setImageToPrint}
-
+                                      onSetLog={setLog}
                                     />},
 
       {name: 'Printing', component: <Step6_HandlePrint 
                                   imageToPrint={imageToPrint}
                                   filter={filter}
+                                  onSetLog={setLog}
+                                  log={log}
                                 />},                           
     ]
     
@@ -80,7 +86,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3} 
+          startAtStep={6} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

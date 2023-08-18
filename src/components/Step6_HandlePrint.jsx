@@ -2,17 +2,18 @@ import React from 'react'
 import Navigation from './Navigation'
 import { applyFilterToImage } from '../helpers/createPhotoStrip'
 import black from '../images/background/black.jpg';
+import moment from 'moment';
 const {ipcRenderer} = window.require('electron')
 
 export default function Step6_HandlePrint(props) {
-    // const [image, setImage] = useState(props.imageToPrint)
     ipcRenderer.on("finish", (event) => {
         props.jumpToStep(0)
     })
 
     const handlePrint = () => {
-        const sendCommandToWorker = (image) => {
-            ipcRenderer.send("print", image);
+        const log = props.log + `\nPrinted at ${moment()}`
+        const sendCommandToWorker = image => {
+            ipcRenderer.send("print", {image: image, log: log});
         }
 
         applyFilterToImage(black, 500, 1200, props.filter).then(img => {

@@ -4,6 +4,7 @@ import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
 import cameraButton from '../images/button/camerabutton.png'
 import useCountDown from "react-countdown-hook";
+import moment from 'moment';
 
 const Step3_TakePhoto = (props) => {
   const videoRef = useRef(null);
@@ -26,6 +27,7 @@ const Step3_TakePhoto = (props) => {
       document.getElementById("timeup").play()
 
       setTimeout(() => {
+        props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
         props.jumpToStep(4);
       }, 1000)
     }

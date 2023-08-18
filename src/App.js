@@ -9,13 +9,9 @@ const {ipcRenderer} = window.require('electron')
 function App() {
 
   const [money, setMoney] = useState(0)
-  // const [background, setBackground] = useState()
-  // const [appData, setAppData] = useState({})
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
-      // const audio = document.getElementById('tingting');
-      // audio.play().then(()=> {
         setMoney(data)
         Store.removeAllNotifications()
         Store.addNotification({
@@ -32,7 +28,6 @@ function App() {
             onScreen: true
           }
         })
-      // })
     });
 
     const audio = document.getElementById("click-audio")

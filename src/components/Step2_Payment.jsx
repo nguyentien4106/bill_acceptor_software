@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/Step2_Payment.css'
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
+const {ipcRenderer} = window.require('electron')
 
 export default class Step2_Payment extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ export default class Step2_Payment extends Component {
         //   this.setState({
         //     showNext: nextProps.money >= 50000
         //   })
+          this.props.onSetLog(prev => prev + `\ninput: ${nextProps.money} VND`)
           if(nextProps.money >= 50000){
             this.props.jumpToStep(3)
           }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation';
 import '../css/Step5.css'
 import { getFilters } from '../helpers/helper';
+import moment from 'moment';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
@@ -12,6 +13,7 @@ export default function Step5_SelectFilter(props) {
 
   const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
+    props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
     props.onSetFilter(filterName)
   }
 

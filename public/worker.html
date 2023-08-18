@@ -10,11 +10,11 @@
     <script>
       const ipcRenderer = window.require("electron").ipcRenderer;
 
-      ipcRenderer.on("sendImage", (event, content) => {
+      ipcRenderer.on("sendImage", (event, data) => {
           const imgs = document.getElementsByClassName("image")
-          imgs[0].src = content
-          imgs[1].src = content
-          ipcRenderer.send("readyPrint")
+          imgs[0].src = data.image
+          imgs[1].src = data.image
+          ipcRenderer.send("readyPrint", data.log)
       });
     </script>
     <style>

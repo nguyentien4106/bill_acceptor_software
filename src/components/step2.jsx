@@ -1,8 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import useCountDown from 'react-countdown-hook';
-import '../css/Step2_Payment.css'
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
 

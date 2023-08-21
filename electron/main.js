@@ -22,8 +22,7 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    movable: false,
-    // minimizable: false
+    // minimizable: false,
     // fullscreen: true,
     // skipTaskbar: true
   });
@@ -78,6 +77,7 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
+    show: false
   });
 
   workerWindow.loadFile('public/worker.html');
@@ -118,28 +118,13 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("readyPrint", (event, log) => {
-    const pdfPath = path.join(os.homedir(), 'Desktop', 'image.pdf')
-    // workerWindow.webContents.printToPDF({}).then(data => {
-    //   fs.writeFile(pdfPath, data, (error) => {
-    //     if (error) {
-    //         const failed = log + `\nFailed Printed at ${moment()}`
-    //         writeLog(failed)
-    //     }
-    //     const success = log + `\nSuccess Printed at ${moment()}`
-    //     writeLog(success)
-    //   })
-    //   money = 0;
-    //   mainWindow.webContents.send("finish")
-    // }).catch(error => {
-    //   console.log(`Failed to write PDF to ${pdfPath}: `, error)
-    // })
-    console.log('print')
-    const options = {
-      silent: true,
-      deviceName: '',
-    }
-    workerWindow.webContents.print(options, (success, errorType) => {
-      if (!success) console.log(errorType)
+    workerWindow.webContents.print({silent: true, printBackground: false, deviceName: ''}, (success, reason) => {
+      if(success){
+        mainWindow.webContents.send("finish")
+      }
+      else{
+        console.log(reason)
+      }
     })
   });
 

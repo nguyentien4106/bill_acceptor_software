@@ -12,11 +12,11 @@ export default function Step4_SelectImages(props) {
   const [showNext, setShowNext] = useState(false)
 
   const handleChooseImage = image => {
-    // if(imagesChoosen.includes(image)){
-    //   setImageChoosen(imagesChoosen.filter(item => item != image))
-    //   props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
-    //   return
-    // }
+    if(imagesChoosen.includes(image)){
+      setImageChoosen(imagesChoosen.filter(item => item != image))
+      props.onSetImagesChoosen(imagesChoosen.filter(item => item != image))
+      return
+    }
 
     if(imagesChoosen.length < 4){
       setImageChoosen([...imagesChoosen, image])
@@ -49,6 +49,9 @@ export default function Step4_SelectImages(props) {
         props.onSetImageToPrint(photo)
       })
     }
+    else {
+      setShowNext(false)
+    }
   }, [imagesChoosen.length])
 
   return (
@@ -56,10 +59,14 @@ export default function Step4_SelectImages(props) {
       <div className='images-taken'>
         {
           imagesTaken.map(item => {
+            const index = imagesChoosen.indexOf(item) + 1
+
             return (
               <div className="container-image">
                 <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""} `} src={item} onClick={() => handleChooseImage(item)}></img>
-                <div class="top-right">{imagesChoosen.indexOf(item) >= 0 ? imagesChoosen.indexOf(item) + 1 : ""}</div>
+                {
+                  index != 0 && <div class="top-right">{index}</div>
+                }
               </div>
             )
           })

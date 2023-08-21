@@ -3,6 +3,7 @@ import '../css/Step2_Payment.css'
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
 const {ipcRenderer} = window.require('electron')
+import useCountDown from "react-countdown-hook";
 
 export default class Step2_Payment extends Component {
     constructor(props) {

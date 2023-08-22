@@ -1,8 +1,8 @@
-import React from 'react'
-import { useEffect } from 'react';
+import React, { useEffect} from 'react'
 import { useState } from 'react';
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
+import '../css/Step2_Payment.css'
 
 function Step2(props) {
     const OneMinute = 60
@@ -55,7 +55,6 @@ function Step2(props) {
                 </div>
             </div>
             <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={showNext}/>
-            <h1 className='top-right'>{timeLeft / 1000}</h1>
         </div>
     )
 }

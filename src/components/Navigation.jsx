@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import back from '../images/button/back.png'
 import next from '../images/button/next.png'
 import '../css/Navigation.css'
@@ -18,9 +18,7 @@ export default function Navigation(props) {
     const handleNextClick = () => {
         audio.play().then(() => {
             jumpToStep(currentStep + 1 < maxStep ? currentStep + 1 : maxStep)
-            if(nextCallback){
-                nextCallback()
-            }
+
         })
     }
 
@@ -38,7 +36,6 @@ export default function Navigation(props) {
 
     return (
         <>
-            <h1 className='top-right'>{timeLeft / 1000}</h1>
             {
                 countdownTime && <h1 className="circle">{time}</h1>
             }

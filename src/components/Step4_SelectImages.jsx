@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import {drawImagesOnCanvas} from '../helpers/createPhotoStrip';
+import {drawImagesOnCanvasTest1240} from '../helpers/createPhotoStrip';
 import Navigation from './Navigation';
 import '../css/Step4.css'
 import demo from '../images/demo.jpg'
@@ -45,7 +45,7 @@ export default function Step4_SelectImages(props) {
   useEffect(() => {
     if(imagesChoosen.length === 4){
       setShowNext(true)
-      drawImagesOnCanvas(imagesChoosen, 500, 1200, props.background).then(photo => {
+      drawImagesOnCanvasTest1240(imagesChoosen, 1240, 1844, props.background).then(photo => {
         props.onSetImageToPrint(photo)
       })
     }

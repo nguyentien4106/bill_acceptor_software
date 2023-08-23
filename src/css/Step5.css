@@ -88,3 +88,11 @@ span.filter-name-text{
     margin-left: 30px;
     /* color: white; */
 }
+
+
+.image-show-demo {
+    object-fit: cover;
+    object-position: 0;
+    width: 200px;
+    height: 600px;
+}

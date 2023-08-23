@@ -3,26 +3,38 @@
   <head>
   </head>
   <body>
-    <div class="images">
-      <img class="image">
-      <img class="image">
-    </div>
+    <img id="image">
     <script>
       const ipcRenderer = window.require("electron").ipcRenderer;
 
       ipcRenderer.on("sendImage", (event, data) => {
-          const imgs = document.getElementsByClassName("image")
-          imgs[0].src = data.image
-          imgs[1].src = data.image
+          const img = document.getElementById("image")
+          img.src = data.image
           ipcRenderer.send("readyPrint", data.log)
       });
     </script>
     <style>
-      #image{
-        height: 770px;
-        width: 177px;
-        /* display: block;
-        margin: 0 auto; */
+      @media print {
+        @page {
+          size: 1240px 1844px;
+          margin: 0cm !important;
+        }
+
+        #image {
+          position: absolute;
+          height: 1844px;
+          width: 1240px;
+          left: 0;
+          top: 0;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+
+      body {
+        margin: 0px !important;
+        display: block;
+        margin: 0 auto;
       }
     </style>
   </body>

@@ -16,7 +16,7 @@ export default function Step6_HandlePrint(props) {
             ipcRenderer.send("print", {image: image, log: log});
         }
 
-        applyFilterToImage(props.imageToPrint, 500, 1200, props.filter).then(img => {
+        applyFilterToImage(props.imageToPrint, 1240, 1844, props.filter).then(img => {
             sendCommandToWorker(img);
         })
     }

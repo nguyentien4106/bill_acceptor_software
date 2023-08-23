@@ -11,6 +11,7 @@ export default function Step5_SelectFilter(props) {
   const filterFirstCol = filters.slice(0, 4);
   const filterSecondCol = filters.slice(4)
 
+
   const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
     props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
@@ -20,7 +21,7 @@ export default function Step5_SelectFilter(props) {
   return (
     <div className='d-flex justify-content-around commonBackground'>
       <div className='image-demo'>
-        <img src={imageToPrint} className={`image-show ${filter}`}></img>
+        <img src={imageToPrint} className={`image-show-demo ${filter}`}></img>
       </div>
       <div>
         <h2>Bạn hãy chọn filter cho tấm hình để in nhé !!</h2>

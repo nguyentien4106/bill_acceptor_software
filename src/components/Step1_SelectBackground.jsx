@@ -3,7 +3,7 @@ import '../css/Step1_SelectBackground.css'
 import Navigation from './Navigation';
 
 export default function Step1_SelectBackground(props) {
-  const [backgroundChoose, setBackgroundChoose] = useState("white")
+  const [backgroundChoose, setBackgroundChoose] = useState(props.background.name)
 
   const handleClickBackgroundImage = bg => {
     const audio = document.getElementById("click-audio");

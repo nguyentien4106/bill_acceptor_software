@@ -111,7 +111,7 @@ export function applyFilterToImage(base64Image, width, height, filterName) {
   });
 }
 
-export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight, backgroundUrl) {
+export function drawImagesOnCanvas1240(imageUrls, canvasWidth, canvasHeight, backgroundUrl) {
   const elementWidth = canvasWidth / 2;
   const elementHeight = canvasHeight;
   return new Promise((resolve, reject) => {

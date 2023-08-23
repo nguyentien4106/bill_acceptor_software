@@ -10,7 +10,6 @@ import backgroundWhite from '../images/background/white.jpg'
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
-import Step2 from './step2';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
@@ -20,6 +19,7 @@ export default function Progress(props) {
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
   const [imageToPrint, setImageToPrint] = useState(null)
+  const [imageToDemo, setImageToDemo] = useState(null)
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
 
@@ -32,6 +32,7 @@ export default function Progress(props) {
       setImageToPrint(null)
       setImagesTaken([])
       setImagesChoosen([])
+      setImageToDemo(null)
     }
     
   }
@@ -46,7 +47,7 @@ export default function Progress(props) {
                                                 background={background}
                                               />},
 
-      {name: 'Xác nhận thanh toán', component: <Step2
+      {name: 'Xác nhận thanh toán', component: <Step2_Payment
                                                   money={props.money} 
                                                   onSetLog={setLog}
                                                 />},
@@ -62,6 +63,7 @@ export default function Progress(props) {
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
                                           onSetImageToPrint={setImageToPrint}
+                                          onSetImageToDemo={setImageToDemo}
                                           filter={filter}
                                           onSetLog={setLog}
                                         />},
@@ -70,9 +72,10 @@ export default function Progress(props) {
                                       imageToPrint={imageToPrint}
                                       onSetFilter={setFilter}
                                       imagesChoosen={imagesChoosen}
-                                      background={background.src}
+                                      background={background}
                                       onSetImageToPrint={setImageToPrint}
                                       onSetLog={setLog}
+                                      imageToDemo={imageToDemo}
                                     />},
 
       {name: 'Printing', component: <Step6_HandlePrint 

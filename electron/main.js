@@ -35,39 +35,41 @@ function createWindow() {
     mainWindow = null;
   });
 
+  if(isDev){
+    
+    mainWindow.webContents.openDevTools();
+    mainWindow.focus()
 
-  mainWindow.webContents.openDevTools();
-  mainWindow.focus()
+    var menu = Menu.buildFromTemplate([
+      {
+          label: 'Menu',
+          submenu: [
+              {
+                label:'Add 100',
+                click(){
+                  money += 100000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              },
+              {
+                label:'Add 10',
+                click(){
+                  money += 10000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              },
+              {
+                label:'Add 20',
+                click(){
+                  money += 20000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              }
+          ]
+      }])
 
-  var menu = Menu.buildFromTemplate([
-    {
-        label: 'Menu',
-        submenu: [
-            {
-              label:'Add 100',
-              click(){
-                money += 100000;
-                mainWindow.webContents.send('detectMoneyIn', money);
-              }
-            },
-            {
-              label:'Add 10',
-              click(){
-                money += 10000;
-                mainWindow.webContents.send('detectMoneyIn', money);
-              }
-            },
-            {
-              label:'Add 20',
-              click(){
-                money += 20000;
-                mainWindow.webContents.send('detectMoneyIn', money);
-              }
-            }
-        ]
-    }])
-
-  Menu.setApplicationMenu(menu); 
+    Menu.setApplicationMenu(menu); 
+  }
 
   workerWindow = new BrowserWindow({
     width: 800,
@@ -80,13 +82,15 @@ function createWindow() {
     show: false
   });
 
-  workerWindow.loadFile('public/worker.html');
+  workerWindow.loadFile(isDev ? 'public/worker.html' : `file://${path.join(__dirname, '../build/worker.html')}`);
 
   workerWindow.on('closed', function () {
     mainWindow = null;
   });
 
-  workerWindow.webContents.openDevTools();
+  if(isDev){
+    workerWindow.webContents.openDevTools();
+  }
 }
 
 function readBill(result){

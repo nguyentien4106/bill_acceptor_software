@@ -2,9 +2,8 @@
     height: 70px;
     width: 70px;
     cursor: pointer;
-  }
+}
 
-  
 .next-button{
     height: 50px;
     width: 100px;
@@ -38,7 +37,6 @@
     font-size: 100px;
     color: white;
 }
-
 
 @keyframes zoom-in-zoom-out {
     0% {

@@ -118,12 +118,14 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("readyPrint", (event, log) => {
-    workerWindow.webContents.print({silent: true, printBackground: false, deviceName: ''}, (success, reason) => {
+    workerWindow.webContents.print({silent: true}, (success, reason) => {
       if(success){
         mainWindow.webContents.send("finish")
+        writeLog(log + `\nPrint successfully at ${moment()}`)
       }
       else{
         console.log(reason)
+        writeLog(log + `\nPrint failed at ${moment()}`)
       }
     })
   });

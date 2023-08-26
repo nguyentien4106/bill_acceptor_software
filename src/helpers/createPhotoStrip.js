@@ -148,13 +148,12 @@ export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight,
             let y = margin; // Start at the top with some margin
             for (let i = 0; i < imageObjs.length; i++) {
               const imageObj = imageObjs[i];
-              ctx.drawImage(imageObj, x, y , imageWidth, imageHeight);
-              ctx.drawImage(imageObj, x + elementWidth - 15, y , imageWidth, imageHeight);
+              const imgFiltred = applyFiltersToImageSync(imageObj)
+              
+              ctx.drawImage(imgFiltred, x, y , imageWidth, imageHeight);
+              ctx.drawImage(imgFiltred, x + elementWidth - 15, y , imageWidth, imageHeight);
               y += imageHeight + margin; // Update the y position for the next image
             }
-  
-            // Get the data URL of the canvas
-            // Resolve the promise with the data URL and the resulting image
             resolve(c.toDataURL('image/png'));
           }
         }
@@ -162,4 +161,17 @@ export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight,
       background.onerror = error => reject(error);
       background.src = backgroundUrl
     });
+}
+
+function applyFiltersToImageSync(imageObject) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext('2d');    
+  canvas.width = imageObject.width;
+  canvas.height = imageObject.height;
+
+  // apply css filters here
+  ctx.filter = 'brightness(1.4) contrast(.95) saturate(0) sepia(.35)';
+  ctx.drawImage(imageObject, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
 }

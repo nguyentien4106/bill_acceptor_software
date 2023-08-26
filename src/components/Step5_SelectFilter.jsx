@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import '../css/Step5.css'
 import { getFilters } from '../helpers/helper';
 import moment from 'moment';
+import { drawImagesOnCanvasTest1240 } from '../helpers/createPhotoStrip';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
@@ -10,18 +11,22 @@ export default function Step5_SelectFilter(props) {
   const filters = getFilters()
   const filterFirstCol = filters.slice(0, 4);
   const filterSecondCol = filters.slice(4)
-
+  const [imageDemo, setImageDemo] = useState(props.imageToPrint)
 
   const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
     props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
     props.onSetFilter(filterName)
+    drawImagesOnCanvasTest1240(props.imageChoosen, 1240, 1844, props.background.src, filterName).then(img => {
+      setImageDemo(img)
+      props.onSetImageToPrint(img)
+    })
   }
 
   return (
     <div className='d-flex justify-content-around commonBackground'>
       <div className='image-demo'>
-        <img src={imageToPrint} className={`image-show-demo ${filter}`}></img>
+        <img src={imageDemo} className={`image-show-demo`}></img>
       </div>
       <div>
         <h2>Bạn hãy chọn filter cho tấm hình để in nhé !!</h2>

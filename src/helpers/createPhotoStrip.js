@@ -175,3 +175,7 @@ function applyFiltersToImageSync(imageObject) {
   
   return canvas;
 }
+
+export function assignQRCodeToImage(image, qrcode){
+  
+}

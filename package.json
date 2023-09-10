@@ -24,6 +24,8 @@
     "os": "^0.1.2",
     "path": "^0.12.7",
     "print-js": "^1.6.0",
+    "qr-image": "^3.2.0",
+    "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-bootstrap-icons": "^1.10.3",

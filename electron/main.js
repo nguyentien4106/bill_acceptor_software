@@ -6,6 +6,7 @@ const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const fs = require('fs')
 const os = require('os');
+const GoogleService = require("../helpers/google-api-service")
 
 let mainWindow;
 let workerWindow;
@@ -108,8 +109,8 @@ function readBill(result){
 
 app.whenReady().then(() => {
   createWindow()
-  
   initBillAcceptor(readBill)
+  GoogleService.testUpload()
 
   ipcMain.on('resetMoney', (event) => {
     money = 0;
@@ -133,6 +134,15 @@ app.whenReady().then(() => {
       }
     })
   });
+
+  ipcMain.on("pushDrive", (event, data) => {
+    // GoogleService.testUpload()
+    GoogleService.uploadFile(data.name, data.image).then(res => {
+      GoogleService.generatePublicUrl(res.id).then(urlRes => {
+        mainWindow.webContents.send("getLink", urlRes)
+      })
+    })
+  })
 
 });
 

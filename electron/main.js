@@ -7,6 +7,8 @@ const moment = require('moment')
 const fs = require('fs')
 const os = require('os');
 const GoogleService = require("../helpers/google-api-service")
+const PhotoHelper = require("../helpers/assignQRCodeIntoPhoto")
+const QRCode = require('qrcode')
 
 let mainWindow;
 let workerWindow;
@@ -110,12 +112,10 @@ function readBill(result){
 app.whenReady().then(() => {
   createWindow()
   initBillAcceptor(readBill)
-  GoogleService.testUpload()
 
   ipcMain.on('resetMoney', (event) => {
     money = 0;
     mainWindow.webContents.send('detectMoneyIn', money);
-    
   })
     
   ipcMain.on("print", (event, data) => {
@@ -135,11 +135,17 @@ app.whenReady().then(() => {
     })
   });
 
+  // data.image base64
   ipcMain.on("pushDrive", (event, data) => {
-    // GoogleService.testUpload()
     GoogleService.uploadFile(data.name, data.image).then(res => {
       GoogleService.generatePublicUrl(res.id).then(urlRes => {
-        mainWindow.webContents.send("getLink", urlRes)
+        console.log('pushed', urlRes)
+        const jsonData = {
+          image: data.image,
+          qrUrl: urlRes.webViewLink
+        }
+
+        mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
       })
     })
   })

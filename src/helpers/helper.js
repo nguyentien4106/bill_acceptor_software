@@ -22,3 +22,25 @@ export function getFilters(){
         {name: 'filter-moon', text: "Moon"}
     ]
 }
+
+export const assignQRCodeIntoPhoto = (image, qrcode) => {
+    return new Promise((resolve, reject) => {
+        const canvas = document.createElement("canvas")
+        const ctx = canvas.getContext('2d');
+
+        const photo = new Image();
+        photo.onload = function() {
+            ctx.drawImage(photo, 0, 0, photo.width, photo.height);
+        };
+        photo.src = image
+
+        const code = new Image();
+        code.onload = () => {
+            console.log(code.width)
+            console.log(code.height)
+            ctx.drawImage(code, 0, 0, code.width, code.height)
+            resolve(canvas)
+        }
+        code.src = qrcode
+    })
+}

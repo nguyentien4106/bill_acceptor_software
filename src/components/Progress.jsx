@@ -19,6 +19,7 @@ export default function Progress(props) {
   const [imagesTaken, setImagesTaken] = useState([])
   const [imagesChoosen, setImagesChoosen] = useState([])
   const [imageToPrint, setImageToPrint] = useState(null)
+  const [imageToDrive, setImageToDrive] = useState(null)
   const [imageToDemo, setImageToDemo] = useState(null)
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
@@ -33,6 +34,7 @@ export default function Progress(props) {
       setImagesTaken([])
       setImagesChoosen([])
       setImageToDemo(null)
+      setImageToDrive(null)
     }
     
   }
@@ -52,14 +54,14 @@ export default function Progress(props) {
                                                   onSetLog={setLog}
                                                 />},
 
-      {name: 'Chụp ảnh', component: <Step3_TakePhoto 
+      {name: '', component: <Step3_TakePhoto 
                                         onSetLog={setLog}
                                         onSetImagesTaken={setImagesTaken}
                                     />},
 
-      {name: 'Chọn filter', component: <Step4_SelectImages
+      {name: '', component: <Step4_SelectImages
                                           imagesTaken={imagesTaken} 
-                                          background={background.src}
+                                          background={background}
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
                                           onSetImageToPrint={setImageToPrint}
@@ -68,18 +70,22 @@ export default function Progress(props) {
                                           onSetLog={setLog}
                                         />},
 
-      {name: 'Printing', component: <Step5_SelectFilter 
+      {name: '', component: <Step5_SelectFilter 
                                       imageToPrint={imageToPrint}
+                                      imageToDrive={imageToDrive}
                                       onSetFilter={setFilter}
                                       imagesChoosen={imagesChoosen}
                                       background={background}
                                       onSetImageToPrint={setImageToPrint}
+                                      onSetImageToDrive={setImageToDrive}
                                       onSetLog={setLog}
                                       imageToDemo={imageToDemo}
                                     />},
 
-      {name: 'Printing', component: <Step6_HandlePrint 
+      {name: '', component: <Step6_HandlePrint 
                                   imageToPrint={imageToPrint}
+                                  imagesChoosen={imagesChoosen}
+                                  background={background}
                                   filter={filter}
                                   onSetLog={setLog}
                                   log={log}

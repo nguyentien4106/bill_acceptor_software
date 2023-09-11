@@ -1,14 +1,11 @@
 const { google } = require('googleapis');
-const path = require('path');
-const fs = require("fs")
 const stream = require("stream"); // Added
-var qr = require('qr-image');
 
 const CLIENT_ID = '711886891625-nuud2finio4ij5n68nutroldtq8b1c19.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-
 const REFRESH_TOKEN = '1//04kDVFHV5txKGCgYIARAAGAQSNwF-L9IrX6xNiXW4vVKD5UK0JdIaFlDT88buBd0hX2KDODZhBnbRbwu5HrYo7g9plhnA2dEPysY';
+const FOLDER_ID = '1nucNIiGn_z9NQrkgjnWdkrTAhhcs-RwD'
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -46,6 +43,7 @@ function uploadFile(name, base64Img) {
           requestBody: {
             name: name, //This can be name of your choice
             mimeType: 'image/jpg',
+            parents: [FOLDER_ID]
           },
           media: {
             mimeType: 'image/jpg',
@@ -61,22 +59,13 @@ function uploadFile(name, base64Img) {
     });
 }
 
-// uploadFile("exampleimage", base64ImgTest).then(res => {
-//   generatePublicUrl(res.id).then(urlRes => {
-//     const qr_svg = qr.image(urlRes.webViewLink, { type: 'png' });
-//     qr_svg.pipe(fs.createWriteStream('view.png'));
-//     const qr_svg_download = qr.image(urlRes.webContentLink, { type: 'png' });
-//     qr_svg_download.pipe(fs.createWriteStream('download.png'));
-//   })
-// });
-
 function testUpload(){
     uploadFile("nguyenxuanhee", base64ImgTest).then(res => {
         generatePublicUrl(res.id).then(urlRes => {
-            const qr_svg = qr.image(urlRes.webViewLink, { type: 'png' });
-            qr_svg.pipe(fs.createWriteStream('view.png'));
-            const qr_svg_download = qr.image(urlRes.webContentLink, { type: 'png' });
-            qr_svg_download.pipe(fs.createWriteStream('download.png'));
+            // const qr_svg = qr.image(urlRes.webViewLink, { type: 'png' });
+            // qr_svg.pipe(fs.createWriteStream('view.png'));
+            // const qr_svg_download = qr.image(urlRes.webContentLink, { type: 'png' });
+            // qr_svg_download.pipe(fs.createWriteStream('download.png'));
         })
     }); 
 }

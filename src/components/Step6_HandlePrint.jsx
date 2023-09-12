@@ -10,6 +10,7 @@ import QRCode from 'qrcode';
 import { useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import "../css/Step6_HandlePrint.css"
+import { Store } from 'react-notifications-component';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -17,57 +18,68 @@ const override = {
     display: "block",
     margin: "0 auto",
     borderColor: "red",
-  };
+};
+
+const sendCommandToWorker = (image, log) => {
+    ipcRenderer.send("print", {image: image, log: log});
+}
+
+ipcRenderer.once("getLink", (event, data) => {
+    const opts = {
+        errorCorrectionLevel: 'L',
+        width: 80,
+        margin: 0.5
+    }
+    const jsonData = JSON.parse(data)
+    console.log(jsonData)
+    QRCode.toDataURL(jsonData.qrUrl, opts, async function (err, qrCodeImage) {
+        if (err) throw err
+        const img = document.getElementById("img")
+        const imagePrint = await drawImagesOnCanvas1240WithQrCode([demo, demo, demo, demo], 1240, 1844, jsonData.background, jsonData.filter, qrCodeImage)
+        img.src = imagePrint
+        sendCommandToWorker(imagePrint, "log")
+    })
+})
 
 export default function Step6_HandlePrint(props) {
     ipcRenderer.on("finish", event => {
-        props.jumpToStep(0)
-    })
-
-    ipcRenderer.once("getLink", (event, data) => {
-        const opts = {
-            errorCorrectionLevel: 'H',
-            width: 76,
-        }
-        const jsonData = JSON.parse(data)
-        console.log(jsonData)
-        QRCode.toDataURL(jsonData.qrUrl, opts, async function (err, qrCodeImage) {
-            if (err) throw err
-            const img = document.getElementById("img")
-            const imagePrint = await drawImagesOnCanvas1240WithQrCode([demo, demo, demo, demo], 1240, 1800, black2, props.filter, qrCodeImage)
-            img.src = imagePrint
+        Store.addNotification({
+            title: "",
+            id: "notify",
+            message: "Xong rồi! Hãy nhận lại ảnh của bạn ở khe lấy ảnh nhé.",
+            type: "info",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+            }
         })
+        setLoading(prev => false)
+        let intervalId = setInterval(() => props.jumpToStep(0), 5000);
+        clearInterval(intervalId);
     })
-
     const [loading, setLoading] = useState(false)
-    const color = "#c96565"
 
     const pushDrive = () => {
-        drawImagesOnCanvas([demo, demo, demo, demo], 600, 1800, props.background.name === "white" ? white1 : black1, props.filter).then(driveImg => {
+        drawImagesOnCanvas([demo, demo, demo, demo], 600, 1800, props.background.src, props.filter).then(driveImg => {
             const data = {
                 name: moment().format("YYYY_MM_DD_h_mm_ss_a"),
                 image: driveImg,
+                imagesChoosen: props.imagesChoosen,
+                background: props.background.src,
+                filter: props.filter
             }
             
-            ipcRenderer.send("pushDrive", data)
+            ipcRenderer.send("pushDrive", JSON.stringify(data))
         })
     }
 
     const handlePrint = () => {
         setLoading(true)
-        const log = props.log + `\nPrinted at ${moment()}`
-        const sendCommandToWorker = image => {
-            ipcRenderer.send("print", {image: image, log: log});
-        }
-
-        // applyFilterToImage(black1, 634, 1844, props.filter).then(driveImg => {
-        //     const data = {
-        //         name: moment().format("YYYY_MM_DD_h_mm_ss_a"),
-        //         image: driveImg,
-        //     }
-            
-        //     ipcRenderer.send("pushDrive", data)
-        // })
+        const log = props.log + `${props.log}\nPrinted at ${moment()}`
+        
         pushDrive()
     }
 
@@ -77,7 +89,7 @@ export default function Step6_HandlePrint(props) {
                 <div className='align-self-center'>
                     <button className='checked' style={{"height" : "50px", "width": "100px"}} onClick={handlePrint}><i className="bi bi-printer fa-10x h1"></i></button>
                 </div>
-                <Navigation currentStep={6} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false}/>
+                <Navigation currentStep={6} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdowntime={30}/>
             </div>
             <img id='img'></img>
             {
@@ -87,7 +99,7 @@ export default function Step6_HandlePrint(props) {
                         <h2>Đang xử lý...</h2>
                         <br></br>
                         <BounceLoader
-                            color={color}
+                            color={"#c96565"}
                             loading={loading}
                             cssOverride={override}
                             size={150}

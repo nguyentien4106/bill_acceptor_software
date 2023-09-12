@@ -245,8 +245,6 @@ export function drawImagesOnCanvas1240WithQrCode(imageUrls, canvasWidth, canvasH
 }
 
 export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
-  const elementWidth = canvasWidth;
-  const elementHeight = canvasHeight;
   let filter;
 
   if(filterName){
@@ -269,7 +267,8 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
         let imagesLoaded = 0;
         const imageHeight = 380;
         const imageWidth = 560;
-        const margin = 15; // Margin between images
+        const ymargin = 15; // Margin between images
+        const xmargin = 20; // Margin between images
         for (let i = 0; i < imageUrls.length; i++) {
           const imageObj = new Image();
           imageObj.onload = onImageLoad;
@@ -283,14 +282,14 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
   
           if (imagesLoaded === imageObjs.length) {
             // All images have finished loading, draw them onto the canvas
-            let x = margin; // Start at the left with some margin
-            let y = margin; // Start at the top with some margin
+            let x = xmargin; // Start at the left with some margin
+            let y = ymargin; // Start at the top with some margin
             for (let i = 0; i < imageObjs.length; i++) {
               const imageObj = imageObjs[i];
               const imgFiltred = applyFiltersToImageSync(imageObj, filter)
               
-              ctx.drawImage(imgFiltred, x, y , imageWidth, imageHeight);
-              y += imageHeight + margin; // Update the y position for the next image
+              ctx.drawImage(imgFiltred, x, y, imageWidth, imageHeight);
+              y += imageHeight + ymargin; // Update the y position for the next image
             }
             resolve(c.toDataURL('image/png'));
           }

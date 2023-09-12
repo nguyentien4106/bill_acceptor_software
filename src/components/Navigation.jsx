@@ -4,7 +4,6 @@ import next from '../images/button/next.png'
 import '../css/Navigation.css'
 
 export default function Navigation(props) {
-
     const {currentStep, jumpToStep, maxStep, showBack, showNext, countdownTime} = props
     const audio = document.getElementById("click-audio");
     const [time, setTime] = useState(countdownTime)

@@ -36,6 +36,7 @@ function createWindow() {
 
   mainWindow.on('closed', function () {
     mainWindow = null;
+    app.quit();
   });
 
   if(isDev){
@@ -136,13 +137,18 @@ app.whenReady().then(() => {
   });
 
   // data.image base64
-  ipcMain.on("pushDrive", (event, data) => {
+  ipcMain.on("pushDrive", (event, params) => {
+    const data = JSON.parse(params)
+
     GoogleService.uploadFile(data.name, data.image).then(res => {
       GoogleService.generatePublicUrl(res.id).then(urlRes => {
         console.log('pushed', urlRes)
         const jsonData = {
           image: data.image,
-          qrUrl: urlRes.webViewLink
+          qrUrl: urlRes.webViewLink,
+          background: data.background,
+          imagesChoosen: data.imagesChoosen,
+          filter: data.filter
         }
 
         mainWindow.webContents.send("getLink", JSON.stringify(jsonData))

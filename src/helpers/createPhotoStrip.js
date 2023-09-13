@@ -85,7 +85,6 @@ export function drawImagesOnCanvas1240(imageUrls, canvasWidth, canvasHeight, bac
         const imageHeight = 380;
         const imageWidth = 560;
         const margin = (elementWidth - imageWidth) / 2; // Margin between images
-        console.log(imageUrls)
         for (let i = 0; i < imageUrls.length; i++) {
           const imageObj = new Image();
           imageObj.onload = onImageLoad;
@@ -136,8 +135,8 @@ export function drawImagesOnCanvas1240WithQrCode(imageUrls, canvasWidth, canvasH
       const background = new Image();
       const qrCode = new Image();
       qrCode.onload = () => {
-        ctx.drawImage(qrCode, 580, 1844 - 150, 76, 76);
-        ctx.drawImage(qrCode, 1240 - 120, 1844 - 150, 76, 76);
+        ctx.drawImage(qrCode, 520, 1844 - 150, 76, 76);
+        ctx.drawImage(qrCode, 1240 - 140, 1844 - 150, 76, 76);
         resolve(c.toDataURL('image/png'));
       }
 
@@ -224,7 +223,6 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
             let y = ymargin; // Start at the top with some margin
             for (let i = 0; i < imageObjs.length; i++) {
               const imageObj = imageObjs[i];
-              console.log(filter)
               const imgFiltred = applyFiltersToImageSync(imageObj, filter)
               
               ctx.drawImage(imgFiltred, x, y, imageWidth, imageHeight);

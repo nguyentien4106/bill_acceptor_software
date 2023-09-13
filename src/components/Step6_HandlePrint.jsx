@@ -1,11 +1,13 @@
 import React from 'react'
 import Navigation from './Navigation'
-import { applyFilterToImage, drawImagesOnCanvas, drawImagesOnCanvas1240WithQrCode } from '../helpers/createPhotoStrip'
+import { drawImagesOnCanvas, drawImagesOnCanvas1240WithQrCode } from '../helpers/createPhotoStrip'
 import moment from 'moment';
 import QRCode from 'qrcode';
 import { useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import "../css/Step6_HandlePrint.css"
+import black from "../images/background/black_cloud.jpg"
+import white from "../images/background/white.jpg"
 
 const {ipcRenderer} = window.require('electron')
 
@@ -22,7 +24,7 @@ const sendCommandToWorker = (image, log) => {
 ipcRenderer.once("getLink", (event, data) => {
     const opts = {
         errorCorrectionLevel: 'L',
-        width: 80,
+        width: 90,
         margin: 0.5
     }
     const jsonData = JSON.parse(data)
@@ -42,7 +44,7 @@ export default function Step6_HandlePrint(props) {
     const [loading, setLoading] = useState(false)
 
     const pushDrive = log => {
-        drawImagesOnCanvas(props.imagesChoosen, 600, 1800, props.background.src, props.filter).then(driveImg => {
+        drawImagesOnCanvas(props.imagesChoosen, 600, 1800, props.background.name === "white" ? white : black, props.filter).then(driveImg => {
             const data = {
                 name: moment().format("YYYY_MM_DD_h_mm_ss_a"),
                 image: driveImg,

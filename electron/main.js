@@ -88,7 +88,7 @@ function createWindow() {
     show: false
   });
 
-  workerWindow.loadFile(isDev ? 'public/worker.html' : `file://${path.join(__dirname, '../build/worker.html')}`);
+  workerWindow.loadFile(`build/worker.html`);
 
   workerWindow.on('closed', function () {
     mainWindow = null;

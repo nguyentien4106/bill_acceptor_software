@@ -2,6 +2,7 @@
   "name": "bill_acceptor_software",
   "version": "0.1.0",
   "main": "electron/main.js",
+  "homepage": ".",
   "private": true,
   "browser": {
     "fs": false,

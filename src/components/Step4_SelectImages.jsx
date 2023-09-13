@@ -1,11 +1,9 @@
 import React, { useState, useEffect} from 'react'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import {drawImagesOnCanvas1240WithQrCode} from '../helpers/createPhotoStrip';
+import {drawImagesOnCanvas1240} from '../helpers/createPhotoStrip';
 import Navigation from './Navigation';
 import '../css/Step4.css'
-import black1 from '../images/background/black.jpg'
-import white1 from '../images/background/white.jpg'
 
 export default function Step4_SelectImages(props) {
   const {imagesTaken} = props
@@ -46,7 +44,7 @@ export default function Step4_SelectImages(props) {
   useEffect(() => {
     if(imagesChoosen.length === 4){
       setShowNext(true)
-      drawImagesOnCanvas1240WithQrCode(imagesChoosen, 1240, 1844, props.background.src, 'origin', 'qr', false).then(photo => {
+      drawImagesOnCanvas1240(imagesChoosen, 1240, 1844, props.background.src).then(photo => {
         props.onSetImageToPrint(photo)
       })
     }

@@ -135,8 +135,8 @@ export function drawImagesOnCanvas1240WithQrCode(imageUrls, canvasWidth, canvasH
       const background = new Image();
       const qrCode = new Image();
       qrCode.onload = () => {
-        ctx.drawImage(qrCode, 520, 1844 - 150, 76, 76);
-        ctx.drawImage(qrCode, 1240 - 140, 1844 - 150, 76, 76);
+        ctx.drawImage(qrCode, 520 - 38, 1844 - 150, 114, 114);
+        ctx.drawImage(qrCode, 1240 - 158, 1844 - 150, 114, 114);
         resolve(c.toDataURL('image/png'));
       }
 

@@ -23,8 +23,8 @@ const sendCommandToWorker = (image, log) => {
 
 ipcRenderer.once("getLink", (event, data) => {
     const opts = {
-        errorCorrectionLevel: 'L',
-        width: 90,
+        errorCorrectionLevel: 'H',
+        width: 114,
         margin: 0.5
     }
     const jsonData = JSON.parse(data)

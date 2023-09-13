@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import {drawImagesOnCanvasTest1240, drawImagesOnCanvas} from '../helpers/createPhotoStrip';
+import {drawImagesOnCanvas1240WithQrCode} from '../helpers/createPhotoStrip';
 import Navigation from './Navigation';
 import '../css/Step4.css'
 import black1 from '../images/background/black.jpg'
@@ -46,12 +46,8 @@ export default function Step4_SelectImages(props) {
   useEffect(() => {
     if(imagesChoosen.length === 4){
       setShowNext(true)
-      drawImagesOnCanvasTest1240(imagesChoosen, 1240, 1844, props.background.src).then(photo => {
+      drawImagesOnCanvas1240WithQrCode(imagesChoosen, 1240, 1844, props.background.src, 'origin', 'qr', false).then(photo => {
         props.onSetImageToPrint(photo)
-      })
-
-      drawImagesOnCanvas(imagesChoosen, 600, 1800, props.background.name === "white" ? white1 : black1).then(photo => {
-        props.onSetImageToDrive(photo)
       })
     }
     else {

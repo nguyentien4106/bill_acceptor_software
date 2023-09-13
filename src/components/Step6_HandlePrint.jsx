@@ -1,16 +1,11 @@
 import React from 'react'
 import Navigation from './Navigation'
 import { applyFilterToImage, drawImagesOnCanvas, drawImagesOnCanvas1240WithQrCode } from '../helpers/createPhotoStrip'
-import black1 from '../images/background/black.jpg';
-import black2 from '../images/background/black46.jpeg';
-import white1 from '../images/background/white.jpg';
-import demo from '../images/demo.jpg'
 import moment from 'moment';
 import QRCode from 'qrcode';
 import { useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import "../css/Step6_HandlePrint.css"
-import { Store } from 'react-notifications-component';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -31,45 +26,30 @@ ipcRenderer.once("getLink", (event, data) => {
         margin: 0.5
     }
     const jsonData = JSON.parse(data)
-    console.log(jsonData)
+
     QRCode.toDataURL(jsonData.qrUrl, opts, async function (err, qrCodeImage) {
         if (err) throw err
-        const img = document.getElementById("img")
-        const imagePrint = await drawImagesOnCanvas1240WithQrCode([demo, demo, demo, demo], 1240, 1844, jsonData.background, jsonData.filter, qrCodeImage)
-        img.src = imagePrint
-        sendCommandToWorker(imagePrint, "log")
+        const imagePrint = await drawImagesOnCanvas1240WithQrCode(jsonData.imagesChoosen, 1240, 1844, jsonData.background, jsonData.filter, qrCodeImage)
+        sendCommandToWorker(imagePrint, jsonData.log)
     })
 })
 
 export default function Step6_HandlePrint(props) {
     ipcRenderer.on("finish", event => {
-        Store.addNotification({
-            title: "",
-            id: "notify",
-            message: "Xong rồi! Hãy nhận lại ảnh của bạn ở khe lấy ảnh nhé.",
-            type: "info",
-            insert: "top",
-            container: "top-right",
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            dismiss: {
-                duration: 5000,
-            }
-        })
-        setLoading(prev => false)
-        let intervalId = setInterval(() => props.jumpToStep(0), 5000);
-        clearInterval(intervalId);
+
+        props.jumpToStep(0)
     })
     const [loading, setLoading] = useState(false)
 
-    const pushDrive = () => {
-        drawImagesOnCanvas([demo, demo, demo, demo], 600, 1800, props.background.src, props.filter).then(driveImg => {
+    const pushDrive = log => {
+        drawImagesOnCanvas(props.imagesChoosen, 600, 1800, props.background.src, props.filter).then(driveImg => {
             const data = {
                 name: moment().format("YYYY_MM_DD_h_mm_ss_a"),
                 image: driveImg,
                 imagesChoosen: props.imagesChoosen,
                 background: props.background.src,
-                filter: props.filter
+                filter: props.filter,
+                log: log
             }
             
             ipcRenderer.send("pushDrive", JSON.stringify(data))
@@ -78,9 +58,8 @@ export default function Step6_HandlePrint(props) {
 
     const handlePrint = () => {
         setLoading(true)
-        const log = props.log + `${props.log}\nPrinted at ${moment()}`
         
-        pushDrive()
+        pushDrive(`${props.log}\nPrinted at ${moment()}`)
     }
 
     return (

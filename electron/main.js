@@ -1,14 +1,15 @@
 const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
-const initBillAcceptor = require('../helpers/initBillAcceptor')
+// const initBillAcceptor = require('../helpers/initBillAcceptor')
 const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const fs = require('fs')
 const os = require('os');
 const GoogleService = require("../helpers/google-api-service")
-const PhotoHelper = require("../helpers/assignQRCodeIntoPhoto")
-const QRCode = require('qrcode')
+const BillAcceptor = require("../helpers/initBillAcceptor")
+// const PhotoHelper = require("../helpers/assignQRCodeIntoPhoto")
+// const QRCode = require('qrcode')
 
 let mainWindow;
 let workerWindow;
@@ -36,6 +37,7 @@ function createWindow() {
 
   mainWindow.on('closed', function () {
     mainWindow = null;
+    BillAcceptor.closeBillAcceptor()
     app.quit();
   });
 
@@ -112,7 +114,7 @@ function readBill(result){
 
 app.whenReady().then(() => {
   createWindow()
-  initBillAcceptor(readBill)
+  BillAcceptor.initBillAcceptor(readBill)
 
   ipcMain.on('resetMoney', (event) => {
     money = 0;
@@ -142,13 +144,13 @@ app.whenReady().then(() => {
 
     GoogleService.uploadFile(data.name, data.image).then(res => {
       GoogleService.generatePublicUrl(res.id).then(urlRes => {
-        console.log('pushed', urlRes)
         const jsonData = {
           image: data.image,
           qrUrl: urlRes.webViewLink,
           background: data.background,
           imagesChoosen: data.imagesChoosen,
-          filter: data.filter
+          filter: data.filter,
+          log: data.log
         }
 
         mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
@@ -160,6 +162,7 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
+    BillAcceptor.closeBillAcceptor()
     app.quit();
   }
 });

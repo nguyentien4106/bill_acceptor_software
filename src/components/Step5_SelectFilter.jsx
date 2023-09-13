@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Navigation from './Navigation';
 import '../css/Step5.css'
 import { getFilters } from '../helpers/helper';
 import moment from 'moment';
-import { drawImagesOnCanvasTest1240, drawImagesOnCanvas } from '../helpers/createPhotoStrip';
-import black1 from '../images/background/black.jpg'
-import white1 from '../images/background/white.jpg'
+import {drawImagesOnCanvas1240WithQrCode, drawImagesOnCanvas1240 } from '../helpers/createPhotoStrip';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
@@ -14,14 +12,13 @@ export default function Step5_SelectFilter(props) {
   const filterSecondCol = filters.slice(4)
   const [imageDemo, setImageDemo] = useState(props.imageToPrint)
 
-  const handleOnClickChooseFilter = filterName => {
+  const handleOnClickChooseFilter = async filterName => {
     setFilter(filterName)
     props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
     props.onSetFilter(filterName)
-    drawImagesOnCanvasTest1240(props.imageChoosen, 1240, 1844, props.background.src, filterName).then(img => {
-      setImageDemo(img)
-      props.onSetImageToPrint(img)
-    })
+    console.log(props)
+    const image = await drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, props.background.src, filterName, 'qr', false)
+    setImageDemo(image)
   }
 
   return (

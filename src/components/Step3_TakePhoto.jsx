@@ -84,7 +84,7 @@ const Step3_TakePhoto = (props) => {
           props.onSetImagesTaken(prev => [...prev, img])
           start()
         })
-      }, 5000, 6)
+      }, 1000, 6)
     }
   }
 

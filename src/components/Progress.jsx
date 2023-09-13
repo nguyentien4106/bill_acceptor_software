@@ -5,8 +5,8 @@ import Step2_Payment from './Step2_Payment';
 import Step3_TakePhoto from './Step3_TakePhoto';
 import Step4_SelectImages from './Step4_SelectImages';
 import Step5_SelectFilter from './Step5_SelectFilter';
-import backgroundBlack from '../images/background/black46.jpeg'
-import backgroundWhite from '../images/background/white46.jpeg'
+import backgroundBlack from '../images/background/blackqr.jpg'
+import backgroundWhite from '../images/background/whiteqr.jpg'
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
@@ -96,7 +96,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={6} 
+          startAtStep={3} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

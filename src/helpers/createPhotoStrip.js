@@ -37,99 +37,37 @@ const filters = [
   }
 ]
 
-// export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
-//   console.log('ru')
-//   const elementWidth = canvasWidth / 2;
-//   const elementHeight = canvasHeight;
-//   let filter;
-
-//   if(filterName){
-//     filter = filters.filter(item => item.name === filterName)[0].value;
-//   }
-
+// export function applyFilterToImage(base64Image, width, height, filterName) {
 //   return new Promise((resolve, reject) => {
-//     const c = document.createElement("canvas");
-//     c.width = canvasWidth;
-//     c.height = canvasHeight;
-//     const ctx = c.getContext("2d");
-  
-//     // Load the background image
-//     const background = new Image();
-//     background.onload = () => {
-//       ctx.drawImage(background, 0, 0, canvasWidth, canvasHeight);
-
-//       // Load the images
-//       const imageObjs = [];
-//       let imagesLoaded = 0;
-//       const imageHeight = 380;
-//       const imageWidth = 560;
-//       const margin = (elementWidth - imageWidth) / 2; // Margin between images
-//       for (let i = 0; i < imageUrls.length; i++) {
-//         const imageObj = new Image();
-//         imageObj.onload = onImageLoad;
-//         imageObj.src = imageUrls[i];
-//         imageObjs.push(imageObj);
-//       }
-
-//       // Callback function that is called when an image has finished loading
-//       function onImageLoad() {
-//         imagesLoaded++;
-
-//         if (imagesLoaded === imageObjs.length) {
-//           // All images have finished loading, draw them onto the canvas
-//           let x = margin; // Start at the left with some margin
-//           let y = margin; // Start at the top with some margin
-//           for (let i = 0; i < imageObjs.length; i++) {
-//             const imageObj = imageObjs[i];
-//             const imgFiltred = applyFiltersToImageSync(imageObj, filter)
-//             ctx.drawImage(imgFiltred, x, y , imageWidth, imageHeight);
-
-//             y += imageHeight + margin; // Update the y position for the next image
-//           }
-
-//           // Get the data URL of the canvas
-//           // Resolve the promise with the data URL and the resulting image
-//           resolve(c.toDataURL('image/png'));
-//         }
-//       }
+//     const image = new Image();
+//     image.onload = () => {
+//       const canvas = document.createElement('canvas');
+//       canvas.width = width;
+//       canvas.height = height;
+//       const context = canvas.getContext('2d');
+      
+//       // Apply filter (example: convert image to grayscale)
+//       context.filter = filters.filter(item => item.name === filterName)[0].value;
+//       context.drawImage(image, 0, 0, width, height);
+      
+//       // Convert canvas to base64
+//       const filteredBase64Image = canvas.toDataURL('image/png');
+      
+//       resolve(filteredBase64Image);
 //     };
-//     background.onerror = error => reject(error);
-//     background.src = backgroundUrl;
+//     image.onerror = reject;
+//     image.src = base64Image;
 //   });
 // }
 
-export function applyFilterToImage(base64Image, width, height, filterName) {
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const context = canvas.getContext('2d');
-      
-      // Apply filter (example: convert image to grayscale)
-      context.filter = filters.filter(item => item.name === filterName)[0].value;
-      context.drawImage(image, 0, 0, width, height);
-      
-      // Convert canvas to base64
-      const filteredBase64Image = canvas.toDataURL('image/png');
-      
-      resolve(filteredBase64Image);
-    };
-    image.onerror = reject;
-    image.src = base64Image;
-  });
-}
-
-export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
-  const elementWidth = canvasWidth / 2;
-  const elementHeight = canvasHeight;
+export function drawImagesOnCanvas1240(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
   let filter;
 
   if(filterName){
     filter = filters.filter(item => item.name === filterName)[0].value;
   }
 
+  const elementWidth = canvasWidth / 2;
   return new Promise((resolve, reject) => {
       const c = document.createElement("canvas");
       c.width = canvasWidth;
@@ -147,6 +85,7 @@ export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight,
         const imageHeight = 380;
         const imageWidth = 560;
         const margin = (elementWidth - imageWidth) / 2; // Margin between images
+        console.log(imageUrls)
         for (let i = 0; i < imageUrls.length; i++) {
           const imageObj = new Image();
           imageObj.onload = onImageLoad;
@@ -176,12 +115,11 @@ export function drawImagesOnCanvasTest1240(imageUrls, canvasWidth, canvasHeight,
       };
       background.onerror = error => reject(error);
       background.src = backgroundUrl
-  });
+    });
 }
 
 export function drawImagesOnCanvas1240WithQrCode(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName, qrCodeSrc) {
   const elementWidth = canvasWidth / 2;
-  const elementHeight = canvasHeight;
   let filter;
 
   if(filterName){
@@ -198,8 +136,8 @@ export function drawImagesOnCanvas1240WithQrCode(imageUrls, canvasWidth, canvasH
       const background = new Image();
       const qrCode = new Image();
       qrCode.onload = () => {
-        ctx.drawImage(qrCode, 20, 1844 - 150, 76, 76);
-        ctx.drawImage(qrCode, 1240 - 100, 1844 - 150, 76, 76);
+        ctx.drawImage(qrCode, 580, 1844 - 150, 76, 76);
+        ctx.drawImage(qrCode, 1240 - 120, 1844 - 150, 76, 76);
         resolve(c.toDataURL('image/png'));
       }
 
@@ -286,6 +224,7 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
             let y = ymargin; // Start at the top with some margin
             for (let i = 0; i < imageObjs.length; i++) {
               const imageObj = imageObjs[i];
+              console.log(filter)
               const imgFiltred = applyFiltersToImageSync(imageObj, filter)
               
               ctx.drawImage(imgFiltred, x, y, imageWidth, imageHeight);

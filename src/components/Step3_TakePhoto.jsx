@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import '../css/Step3_TakePhoto.css'
+import React, { useState, useRef, useEffect } from 'react';
+import '../css/Step3.css'
 import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
 import cameraButton from '../images/button/camerabutton.png'

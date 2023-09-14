@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import '../css/Step1_SelectBackground.css'
+import React, { useState } from 'react'
+import '../css/Step1.css'
 import Navigation from './Navigation';
 
 export default function Step1_SelectBackground(props) {

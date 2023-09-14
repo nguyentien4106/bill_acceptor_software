@@ -5,7 +5,7 @@ import moment from 'moment';
 import QRCode from 'qrcode';
 import { useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
-import "../css/Step6_HandlePrint.css"
+import "../css/Step6.css"
 import black from "../images/background/black_cloud.jpg"
 import white from "../images/background/white.jpg"
 

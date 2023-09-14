@@ -2,7 +2,7 @@ import React, { useEffect} from 'react'
 import { useState } from 'react';
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
-import '../css/Step2_Payment.css'
+import '../css/Step2.css'
 
 function Step2_Payment(props) {
     const OneMinute = 60

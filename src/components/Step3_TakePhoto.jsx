@@ -15,6 +15,7 @@ const Step3_TakePhoto = (props) => {
   const [isTaking, setIsTaking] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
   const sound = document.getElementById("countdown")
+  const [localStream, setLocalStream] = useState(null)
 
   useEffect(() => {
     handleCapture();
@@ -22,6 +23,7 @@ const Step3_TakePhoto = (props) => {
 
   useEffect(() => {
     if(images.length === 6){
+      vidOff();
       setIsTaking(false)
       sound.pause();
       document.getElementById("timeup").play()
@@ -43,7 +45,7 @@ const Step3_TakePhoto = (props) => {
             height: 400
           }
         });
-
+      setLocalStream(stream)
       videoRef.current.srcObject = stream;
     } catch (err) {
       console.error('Error opening camera', err);
@@ -64,6 +66,12 @@ const Step3_TakePhoto = (props) => {
         resolve(dataURI);
       })
     });
+  }
+
+  function vidOff() {
+    videoRef.current.pause();
+    videoRef.current.src = "";
+    localStream.getTracks()[0].stop();
   }
   
   const start = () => {

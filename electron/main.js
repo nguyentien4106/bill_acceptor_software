@@ -20,12 +20,12 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    minimizable: false,
-    fullscreen: true,
-    skipTaskbar: true
+    // minimizable: false,
+    // fullscreen: true,
+    // skipTaskbar: true
   });
 
-  mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -49,6 +49,43 @@ function createWindow() {
   workerWindow.on('closed', function () {
     mainWindow = null;
   });
+
+
+  if(isDev){
+    mainWindow.webContents.openDevTools();
+    workerWindow.webContents.openDevTools();
+    mainWindow.focus()
+
+    var menu = Menu.buildFromTemplate([
+      {
+          label: 'Menu',
+          submenu: [
+              {
+                label:'Add 100',
+                click(){
+                  money += 100000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              },
+              {
+                label:'Add 10',
+                click(){
+                  money += 10000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              },
+              {
+                label:'Add 20',
+                click(){
+                  money += 20000;
+                  mainWindow.webContents.send('detectMoneyIn', money);
+                }
+              }
+          ]
+    }])
+
+    Menu.setApplicationMenu(menu); 
+  }
 }
 
 function readBill(result){

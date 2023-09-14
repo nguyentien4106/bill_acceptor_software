@@ -10,6 +10,7 @@ import backgroundWhite from '../images/background/whiteqr.jpg'
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
+import Step1_1_SelectCountPhoto from './Step1.1_SelectCountPhoto';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
@@ -48,7 +49,7 @@ export default function Progress(props) {
                                                 onSetBackground={setBackground}
                                                 background={background}
                                               />},
-
+                                              
       {name: 'Xác nhận thanh toán', component: <Step2_Payment
                                                   money={props.money} 
                                                   onSetLog={setLog}
@@ -96,7 +97,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3} 
+          // startAtStep={3} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

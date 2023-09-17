@@ -37,8 +37,8 @@
 
 .camera{
     position: absolute;
-    bottom: 14%;
-    right: 200px;
+    bottom: 5%;
+    right: 100px;
 }
 
 .image{
@@ -49,6 +49,7 @@
 .camera-source{
     height: 550px;
     width: 825px;
+    position: relative;
 }
 
 .take-button{

@@ -47,6 +47,7 @@ const closeBillAcceptor = () => {
 
 const disableBillAcceptor = (callback) => {
   tp.command("DISABLE").then(res =>{
+    closeBillAcceptor()
     callback()
     console.log(res)
   })

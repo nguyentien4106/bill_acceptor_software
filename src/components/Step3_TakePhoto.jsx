@@ -5,28 +5,88 @@ import Navigation from './Navigation';
 import cameraButton from '../images/button/camerabutton.png'
 import useCountDown from "react-countdown-hook";
 import moment from 'moment';
+import * as deepar from 'deepar';
+import BounceLoader from "react-spinners/BounceLoader";
+import '../css/FaceFilter.css'
+import Carousel from '../helpers/carousel'
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
+
+const effectList = [
+  "none",
+  "effects/ray-ban-wayfarer.deepar",
+  "effects/viking_helmet.deepar",
+  "effects/MakeupLook.deepar",
+  "effects/Split_View_Look.deepar",
+  "effects/flower_face.deepar",
+  "effects/Stallone.deepar",
+  "effects/galaxy_background_web.deepar",
+  "effects/Humanoid.deepar",
+  "effects/Neon_Devil_Horns.deepar",
+  "effects/Ping_Pong.deepar",
+  "effects/Pixel_Hearts.deepar",
+  "effects/Snail.deepar",
+  "effects/Hope.deepar",
+  "effects/Vendetta_Mask.deepar",
+  "effects/Fire_Effect.deepar",
+];
+
+const effectOptionsLabel = [
+  'none',
+  'ray-ban-wayfarer',
+  'viking',
+  'makeup',
+  'makeup-split',
+  'flower_face',
+  'stallone',
+  'galaxy',
+  'humanoid',
+  'devil_horns',
+  'ping_pong',
+  'pixel_hearts',
+  'snail',
+  'hope',
+  'vendetta',
+  'fire'
+]
+
+let deepAR;
 
 const Step3_TakePhoto = (props) => {
-  const videoRef = useRef(null);
-  const takeButton = useRef('take')
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
   const [isTaking, setIsTaking] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
-  const sound = document.getElementById("countdown")
-  const [localStream, setLocalStream] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [carousel, setCarousel] = useState(null)
+  const [currentEffect, setCurrentEffect] = useState(null)
 
   useEffect(() => {
-    handleCapture();
+    if(!deepAR){
+      deepar.initialize({
+        licenseKey: '0f80df803ffd1a58c1ccfb606615e3a429c55801750dd37b536270fc0d62bc95cef3fc376bf4dacb',
+        previewElement: document.querySelector('#deepar-div'),
+        canvas: document.querySelector('#deepar-canvas'),
+        deeparWasmPath: '../deepar-resources/wasm/deepar.wasm'
+      }).then(res => {
+        setIsLoading(false)
+        deepAR = res
+        init()
+      })
+    }
+   
   }, [])
 
   useEffect(() => {
     if(images.length === 6){
-      vidOff();
       setIsTaking(false)
-      sound.pause();
       document.getElementById("timeup").play()
+      deepAR.stopCamera()
 
       setTimeout(() => {
         props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
@@ -35,70 +95,46 @@ const Step3_TakePhoto = (props) => {
     }
   }, [images.length])
 
-  const handleCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia(
-        { 
-          video: {
-            facingMode: "user",
-            width: 600,
-            height: 400
-          }
-        });
-      setLocalStream(stream)
-      videoRef.current.srcObject = stream;
-    } catch (err) {
-      console.error('Error opening camera', err);
-    }
-  };
-
-  const capturePhoto = () => {
-    return new Promise((resolve, reject) => {
-      // Access the camera
-      takePhotoAudio.play().then(() => {
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  
-        const dataURI = canvas.toDataURL('image/jpg');
-        setIsTaking(prev => !prev)
-        resolve(dataURI);
-      })
-    });
-  }
-
-  function vidOff() {
-    videoRef.current.pause();
-    videoRef.current.src = "";
-    localStream.getTracks()[0].stop();
-  }
-  
-  const start = () => {
-    setIsTaking(true)
-    actions.reset()
-    actions.start() 
-  }
-
   const handleClickTakePhoto = async () => {
-    if(!isClicked){
-      setIsClicked(true)
-      sound.play()
-
-      start()
-      setIntervalX(() => {
-        capturePhoto().then(img => {
-          setImages(prev => [...prev, img])
-          props.onSetImagesTaken(prev => [...prev, img])
-          start()
-        })
-      }, 1000, 6)
-    }
+    deepAR.takeScreenshot().then(img => {
+      setImages(prev => [...prev, img])
+      props.onSetImagesTaken(prev => [...prev, img])
+    })
   }
 
-  useEffect(() => {
-    takeButton.current.addEventListener('click', handleClickTakePhoto)
-  }, [])
+  const generateEffectOptions = () => {
+    return effectOptionsLabel.map(item => {
+      return (
+          <div class="slide" onClick={() => handleSwitchFilter(item)}>
+              <img class="responsive-img" src={`thumbs/${item}.png`} />
+          </div>
+      )
+    })
+  }
+  
+  const handleSwitchFilter = filterName => {
+    console.log(filterName)
+  }
+
+  const init = () => {
+    const newCarousel = new Carousel("carousel")
+    newCarousel.onChange = async (value) => {
+      const loadingSpinner = document.getElementById("loading-spinner");
+      if(value === 0){
+        loadingSpinner.style.display = "block";
+        await deepAR.clearEffect();
+        setCurrentEffect(effectList[value])
+      }
+      else if (currentEffect !== effectList[value]) {
+        loadingSpinner.style.display = "block";
+        await deepAR.switchEffect(effectList[value]);
+        setCurrentEffect(effectList[value])
+      }
+      loadingSpinner.style.display = "none";
+    }
+
+    setCarousel(newCarousel)
+  }
 
   return (
       <>
@@ -114,13 +150,45 @@ const Step3_TakePhoto = (props) => {
             }
           </div>
           <div className='camera'>
-            <video className='justify-content-center camera-source' ref={videoRef} autoPlay={true}/>
+            <canvas className='camera-source' id='deepar-canvas'>
+            </canvas>
+            <div class="carousel" id="carousel">
+              <div class="carousel-center" id="carousel-center">
+                <div class="lds-ring" id="loading-spinner" style={{display: 'none'}}>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div class="carousel-slider">
+                {
+                  generateEffectOptions()
+                }
+              </div>
+            </div>
           </div>
-          <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} ref={takeButton}>
+          <img className={`take-button`} src={cameraButton} onClick={handleClickTakePhoto}>
           </img>
         </div>
         <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={false}/>
-        
+        {
+          isLoading && <div className='loading'>
+              <div className='loading__mask'></div>
+              <div className='loading__inner'>
+                  <h2>Đang xử lý...</h2>
+                  <br></br>
+                  <BounceLoader
+                      color={"#c96565"}
+                      loading={isLoading}
+                      cssOverride={override}
+                      size={150}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                  />
+              </div>
+            </div>
+          }
       </>
   );
 };

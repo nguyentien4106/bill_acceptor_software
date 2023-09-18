@@ -63,7 +63,6 @@ const Step3_TakePhoto = (props) => {
   const [isTaking, setIsTaking] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
   const [isLoading, setIsLoading] = useState(true)
-  const [carousel, setCarousel] = useState(null)
   const [currentEffect, setCurrentEffect] = useState(null)
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const Step3_TakePhoto = (props) => {
       }).then(res => {
         setIsLoading(false)
         deepAR = res
-        init()
+        initCarousel()
       })
     }
    
@@ -96,27 +95,21 @@ const Step3_TakePhoto = (props) => {
   }, [images.length])
 
   const handleClickTakePhoto = async () => {
-    deepAR.takeScreenshot().then(img => {
-      setImages(prev => [...prev, img])
-      props.onSetImagesTaken(prev => [...prev, img])
-    })
+    setIsTaking(true)
+
   }
 
   const generateEffectOptions = () => {
     return effectOptionsLabel.map(item => {
       return (
-          <div class="slide" onClick={() => handleSwitchFilter(item)}>
+          <div class="slide">
               <img class="responsive-img" src={`thumbs/${item}.png`} />
           </div>
       )
     })
   }
   
-  const handleSwitchFilter = filterName => {
-    console.log(filterName)
-  }
-
-  const init = () => {
+  const initCarousel = () => {
     const newCarousel = new Carousel("carousel")
     newCarousel.onChange = async (value) => {
       const loadingSpinner = document.getElementById("loading-spinner");
@@ -132,8 +125,6 @@ const Step3_TakePhoto = (props) => {
       }
       loadingSpinner.style.display = "none";
     }
-
-    setCarousel(newCarousel)
   }
 
   return (

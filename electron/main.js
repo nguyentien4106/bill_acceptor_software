@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, ipcRenderer } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const writeLog = require('../helpers/writeLog')
@@ -120,14 +120,13 @@ app.whenReady().then(() => {
         mainWindow.webContents.send("finish")
         writeLog(log + `\nPrint successfully at ${moment()}`)
       }
-      else{
-        console.log(reason)
+      else {
+        mainWindow.webContents.send('detectError', err)
         writeLog(log + `\nPrint failed at ${moment()}`)
       }
     })
   });
 
-  // data.image base64
   ipcMain.on("pushDrive", (event, params) => {
     const data = JSON.parse(params)
 
@@ -143,11 +142,15 @@ app.whenReady().then(() => {
         }
 
         mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
+      }).catch(err => {
+        mainWindow.webContents.send('detectError', err);
       })
+    }).catch(err => {
+      mainWindow.webContents.send('detectError', err)
     })
   })
 
-});
+}).catch(console.log);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {

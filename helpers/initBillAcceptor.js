@@ -50,7 +50,7 @@ const disableBillAcceptor = (callback) => {
     closeBillAcceptor()
     callback()
     console.log(res)
-  })
+  }).catch(console.log)
 }
 
 module.exports = {

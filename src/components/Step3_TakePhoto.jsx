@@ -96,14 +96,31 @@ const Step3_TakePhoto = (props) => {
 
   const handleClickTakePhoto = async () => {
     setIsTaking(true)
+    actions.start()
+    setIsClicked(true)
+    setTimeout(() => {
+      takePhotoAudio.play().then(() => {
+        capturePhoto()
+        actions.reset()
+        setIsClicked(false)
+        setIsTaking(false)
 
+      })
+    }, 5000)
+  }
+
+  const capturePhoto = () => {
+    deepAR.takeScreenshot().then(img => {
+      setImages(prev => [...prev, img])
+      props.onSetImagesTaken(prev => [...prev, img])
+    })
   }
 
   const generateEffectOptions = () => {
     return effectOptionsLabel.map(item => {
       return (
-          <div class="slide">
-              <img class="responsive-img" src={`thumbs/${item}.png`} />
+          <div key={item} className="slide">
+              <img className="responsive-img" src={`thumbs/${item}.png`} />
           </div>
       )
     })
@@ -143,23 +160,23 @@ const Step3_TakePhoto = (props) => {
           <div className='camera'>
             <canvas className='camera-source' id='deepar-canvas'>
             </canvas>
-            <div class="carousel" id="carousel">
-              <div class="carousel-center" id="carousel-center">
-                <div class="lds-ring" id="loading-spinner" style={{display: 'none'}}>
+            <div className="carousel" id="carousel">
+              <div className="carousel-center" id="carousel-center">
+                <div className="lds-ring" id="loading-spinner" style={{display: 'none'}}>
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
                 </div>
               </div>
-              <div class="carousel-slider">
+              <div className="carousel-slider">
                 {
                   generateEffectOptions()
                 }
               </div>
             </div>
           </div>
-          <img className={`take-button`} src={cameraButton} onClick={handleClickTakePhoto}>
+          <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto}>
           </img>
         </div>
         <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={false}/>

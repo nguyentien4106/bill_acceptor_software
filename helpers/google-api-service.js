@@ -79,6 +79,30 @@ function testUpload(){
 //     console.log(error.message);
 //   }
 // }
+function getFile(id){
+  return new Promise(async (resolve, reject) => {
+    try {
+      const fileId = id; //'YOUR FILE ID';
+      const file = await drive.files.get({
+        fileId: fileId
+      });
+
+      /* 
+      webViewLink: View the file in the browser
+      webContentLink: Direct download link 
+      */
+      // const result = await drive.files.get({
+      //   fileId: fileId,
+      //   fields: 'webViewLink, webContentLink',
+      // });
+      console.log(file)
+      resolve(file);
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+}
+getFile("18c2-jfJk0xHTEZRk_mxAiJxC8jbvVDuq")
 function generatePublicUrl(id) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -110,6 +134,7 @@ function generatePublicUrl(id) {
 module.exports = {
     uploadFile: uploadFile,
     testUpload: testUpload,
-    generatePublicUrl: generatePublicUrl
+    generatePublicUrl: generatePublicUrl,
+    getFile: getFile
 
 }

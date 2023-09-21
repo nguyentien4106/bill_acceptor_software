@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const writeLog = require('../helpers/writeLog')
@@ -65,6 +65,22 @@ function readBill(result){
 }
 
 app.whenReady().then(() => {
+  // link https://drive.google.com/file/d/18c2-jfJk0xHTEZRk_mxAiJxC8jbvVDuq/view?usp=drive_link
+  GoogleService.getFile("18c2-jfJk0xHTEZRk_mxAiJxC8jbvVDuq").then(res => console.log(res))
+  dialog.showMessageBox({
+      message: "Vui lòng nhập mật khẩu!",
+      type: "question",
+      checkboxLabel: "password"
+  }).then(res => {
+    console.log(res)
+
+    init()
+  })
+  
+
+});
+
+const init = () => {
   createWindow()
   BillAcceptor.initBillAcceptor(readBill)
 
@@ -109,8 +125,7 @@ app.whenReady().then(() => {
       })
     })
   })
-
-});
+}
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {

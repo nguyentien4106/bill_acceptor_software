@@ -1,10 +1,12 @@
 const { app, BrowserWindow, ipcMain, Menu, ipcRenderer } = require('electron');
 const path = require('path');
+const fs = require('fs')
 const isDev = require('electron-is-dev');
 const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const GoogleService = require("../helpers/google-api-service")
 const BillAcceptor = require("../helpers/initBillAcceptor")
+const {writePsdBuffer} = require("ag-psd")
 
 let mainWindow;
 let workerWindow;
@@ -147,6 +149,20 @@ app.whenReady().then(() => {
       })
     }).catch(err => {
       mainWindow.webContents.send('detectError', err)
+    })
+  })
+
+  ipcMain.on("readPsd", (event) => {
+    const buffer = fs.readFileSync("./test.psd")
+    mainWindow.webContents.send("getPsd", buffer)
+  })
+
+  ipcMain.on("writePsd", (event, data) => {
+    // const canvas = JSON.parse(data)
+    var base64Data = data.replace(/^data:image\/png;base64,/, "");
+
+    fs.writeFile("test.png", base64Data, "base64", function(err) {
+      console.log(err)
     })
   })
 

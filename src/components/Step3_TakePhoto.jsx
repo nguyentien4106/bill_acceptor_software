@@ -66,6 +66,17 @@ const Step3_TakePhoto = (props) => {
   const [currentEffect, setCurrentEffect] = useState(null)
 
   useEffect(() => {
+    const canvas = document.getElementById('deepar-canvas');
+
+    const scale = window.devicePixelRatio || 1;
+
+    const width = window.innerWidth > window.innerHeight ? Math.floor(window.innerHeight * 0.66) : window.innerWidth
+    canvas.width = Math.floor(width * scale);
+    canvas.height = Math.floor(window.innerHeight * scale);
+
+    canvas.style.maxHeight = window.innerHeight + "px";
+    canvas.style.maxWidth = width + "px";
+
     if(!deepAR){
       deepar.initialize({
         licenseKey: '0f80df803ffd1a58c1ccfb606615e3a429c55801750dd37b536270fc0d62bc95cef3fc376bf4dacb',
@@ -78,6 +89,7 @@ const Step3_TakePhoto = (props) => {
         initCarousel()
       })
     }
+    setIsLoading(false)
    
   }, [])
 

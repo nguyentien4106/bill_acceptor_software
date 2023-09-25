@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, Menu, ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs')
+const os = require("os")
 const isDev = require('electron-is-dev');
 const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
@@ -152,18 +153,18 @@ app.whenReady().then(() => {
     })
   })
 
-  ipcMain.on("readPsd", (event) => {
-    const buffer = fs.readFileSync("./test.psd")
-    mainWindow.webContents.send("getPsd", buffer)
-  })
-
-  ipcMain.on("writePsd", (event, data) => {
-    // const canvas = JSON.parse(data)
-    var base64Data = data.replace(/^data:image\/png;base64,/, "");
-
-    fs.writeFile("test.png", base64Data, "base64", function(err) {
-      console.log(err)
-    })
+  ipcMain.on("getPass", (event, data) => {
+    try {
+      const pass = fs.readFileSync(data, 'utf8');
+      mainWindow.webContents.send("receivePass", {
+        pass,
+        isSuccess: true
+      })
+    } catch (err) {
+      mainWindow.webContents.send("receivePass", {
+        isSuccess: false
+      })
+    }
   })
 
 }).catch(console.log);

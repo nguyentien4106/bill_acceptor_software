@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Progress from './components/Progress';
 import { ReactNotifications } from 'react-notifications-component'
 import { Store } from 'react-notifications-component';
-import { DeviceUUID } from 'device-uuid';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -16,7 +15,7 @@ ipcRenderer.on("receivePass", (event, data) => {
 
 function App() {
   const [money, setMoney] = useState(0)
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
   const [pass, setPass] = useState('')
 
   useEffect(() => {

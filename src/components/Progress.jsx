@@ -7,13 +7,15 @@ import Step4_SelectImages from './Step4_SelectImages';
 import Step5_SelectFilter from './Step5_SelectFilter';
 import backgroundBlack from '../images/background/blackqr.jpg'
 import backgroundWhite from '../images/background/whiteqr.jpg'
+import print_template_1 from '../images/templates/template1/image_print.png'
+
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
-  const backgroundsImage = [{ name: 'black', src: backgroundBlack}, { name: 'white', src: backgroundWhite}]
+  const backgroundsImage = [{ name: 'black', src: print_template_1}, { name: 'white', src: print_template_1}]
 
   const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
@@ -96,7 +98,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={0} 
+          startAtStep={3} 
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

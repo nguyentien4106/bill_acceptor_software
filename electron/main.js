@@ -15,8 +15,8 @@ let money = 0;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1500,
+    height: 1200,
     title: "Photo Box",
     webPreferences: {
       nodeIntegration: true,
@@ -24,7 +24,7 @@ function createWindow() {
       contextIsolation: false
     },
     // minimizable: false,
-    // fullscreen: true,
+    fullscreen: true,
     // skipTaskbar: true
   });
 
@@ -44,10 +44,10 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    show: false
+    // show: false
   });
 
-  workerWindow.loadFile(`build/worker.html`);
+  workerWindow.loadFile('build/worker.html');
 
   workerWindow.on('closed', function () {
     mainWindow = null;
@@ -132,7 +132,6 @@ app.whenReady().then(() => {
 
   ipcMain.on("pushDrive", (event, params) => {
     const data = JSON.parse(params)
-
     GoogleService.uploadFile(data.name, data.image).then(res => {
       GoogleService.generatePublicUrl(res.id).then(urlRes => {
         const jsonData = {
@@ -141,9 +140,10 @@ app.whenReady().then(() => {
           background: data.background,
           imagesChoosen: data.imagesChoosen,
           filter: data.filter,
-          log: data.log
+          log: data.log,
+          imageToPrint: data.imageToPrint
         }
-
+        
         mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
       }).catch(err => {
         mainWindow.webContents.send('detectError', err);

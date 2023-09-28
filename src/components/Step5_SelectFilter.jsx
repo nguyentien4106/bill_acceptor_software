@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import '../css/Step5.css'
 import { getFilters } from '../helpers/helper';
 import moment from 'moment';
-import {drawImagesOnCanvas1240WithQrCode, drawImagesOnCanvas1240 } from '../helpers/createPhotoStrip';
+import { drawImagesOnCanvas1240, cre } from '../helpers/createPhotoStrip';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
@@ -17,8 +17,9 @@ export default function Step5_SelectFilter(props) {
     props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
     props.onSetFilter(filterName)
     console.log(props)
-    const image = await drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, props.background.src, filterName, 'qr', false)
+    const image = await drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, props.background.src, filterName)
     setImageDemo(image)
+    props.setImageToPrint(image)
   }
 
   return (

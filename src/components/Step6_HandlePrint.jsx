@@ -1,6 +1,6 @@
 import React from 'react'
 import Navigation from './Navigation'
-import { drawImagesOnCanvas, drawImagesOnCanvas1240WithQrCode } from '../helpers/createPhotoStrip'
+import { drawImagesOnCanvas, drawImagesOnCanvas1240WithQrCode, drawQRCodeImage } from '../helpers/createPhotoStrip'
 import moment from 'moment';
 import QRCode from 'qrcode';
 import { useState } from "react";
@@ -8,6 +8,8 @@ import BounceLoader from "react-spinners/BounceLoader";
 import "../css/Step6.css"
 import black from "../images/background/black_cloud.jpg"
 import white from "../images/background/white.jpg"
+
+import cloud_template1 from "../images/templates/template1/image_cloud.png"
 
 const {ipcRenderer} = window.require('electron')
 
@@ -28,30 +30,29 @@ ipcRenderer.once("getLink", (event, data) => {
         margin: 0.5
     }
     const jsonData = JSON.parse(data)
-
     QRCode.toDataURL(jsonData.qrUrl, opts, async function (err, qrCodeImage) {
         if (err) throw err
-        const imagePrint = await drawImagesOnCanvas1240WithQrCode(jsonData.imagesChoosen, 1240, 1844, jsonData.background, jsonData.filter, qrCodeImage)
+        const imagePrint = await drawQRCodeImage(jsonData.imageToPrint, qrCodeImage)
         sendCommandToWorker(imagePrint, jsonData.log)
     })
 })
 
 export default function Step6_HandlePrint(props) {
     ipcRenderer.on("finish", event => {
-
         props.jumpToStep(0)
     })
     const [loading, setLoading] = useState(false)
 
     const pushDrive = log => {
-        drawImagesOnCanvas(props.imagesChoosen, 600, 1800, props.background.name === "white" ? white : black, props.filter).then(driveImg => {
+        drawImagesOnCanvas(props.imagesChoosen, 600, 1800, cloud_template1, props.filter).then(driveImg => {
             const data = {
                 name: moment().format("YYYY_MM_DD_h_mm_ss_a"),
                 image: driveImg,
                 imagesChoosen: props.imagesChoosen,
                 background: props.background.src,
                 filter: props.filter,
-                log: log
+                log: log,
+                imageToPrint: props.imageToPrint
             }
             
             ipcRenderer.send("pushDrive", JSON.stringify(data))
@@ -60,7 +61,6 @@ export default function Step6_HandlePrint(props) {
 
     const handlePrint = () => {
         setLoading(true)
-        
         pushDrive(`${props.log}\nPrinted at ${moment()}`)
     }
 

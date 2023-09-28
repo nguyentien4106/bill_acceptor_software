@@ -70,7 +70,7 @@ const Step3_TakePhoto = (props) => {
 
     const scale = window.devicePixelRatio || 1;
 
-    const width = window.innerWidth > window.innerHeight ? Math.floor(window.innerHeight * 0.66) : window.innerWidth
+    const width = window.innerWidth > window.innerHeight ? Math.floor(window.innerHeight * 3 / 2) : window.innerWidth
     canvas.width = Math.floor(width * scale);
     canvas.height = Math.floor(window.innerHeight * scale);
 
@@ -89,8 +89,6 @@ const Step3_TakePhoto = (props) => {
         initCarousel()
       })
     }
-    setIsLoading(false)
-   
   }, [])
 
   useEffect(() => {
@@ -98,11 +96,11 @@ const Step3_TakePhoto = (props) => {
       setIsTaking(false)
       document.getElementById("timeup").play()
       deepAR.stopCamera()
-
+      deepAR.shutdown()
       setTimeout(() => {
         props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
         props.jumpToStep(4);
-      }, 1000)
+      }, 200)
     }
   }, [images.length])
 
@@ -118,7 +116,7 @@ const Step3_TakePhoto = (props) => {
         setIsTaking(false)
 
       })
-    }, 5000)
+    }, 500)
   }
 
   const capturePhoto = () => {
@@ -142,6 +140,10 @@ const Step3_TakePhoto = (props) => {
     const newCarousel = new Carousel("carousel")
     newCarousel.onChange = async (value) => {
       const loadingSpinner = document.getElementById("loading-spinner");
+      if(!loadingSpinner){
+        return
+      }
+
       if(value === 0){
         loadingSpinner.style.display = "block";
         await deepAR.clearEffect();

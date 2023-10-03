@@ -22,6 +22,7 @@
 	height: 100px;
 	margin: 10px;
 }
+
 .image-background-demo-selected{
 	border: 5px solid #FFCCCC;
 	width: 100px;
@@ -70,9 +71,12 @@
 }
 
 #selectBackground{
-	background-image: url('../images/button/backgroundSelectbackground.jpg');
+	background-image: url('../images/screens/step1/background8000.png');
+	background-size: cover;
+	background-repeat: no-repeat;
 	height: 100vh;
-  }
+	position: relative;
+}
 
 .white{
 	background-image: url('../images/button/white.png');
@@ -88,4 +92,28 @@
 	background-repeat: no-repeat;
 	height: 500px;
 	width: 500px;
+}
+
+.option{
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 270px;
+	height: 300px;
+}
+
+.selecting{
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 270px;
+	height: 100px;
+}
+
+#options-panel{
+	position: absolute;
+	width: 1000px;
+	top: 15%;
+	right: 5%;
+	display: grid;
+	grid-template-columns: 270px 270px auto;
+	column-gap: 10px;
 }

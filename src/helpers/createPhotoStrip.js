@@ -216,39 +216,6 @@ function applyFiltersToImageSync(imageObject, filter) {
   return canvas;
 }
 
-
-// export function drawImagesOnCanvas1240WithQrCode1(thumbnails, canvasWidth, canvasHeight, backgroundUrl, filterName, qrCodeSrc) {
-//   const elementWidth = canvasWidth / 2;
-//   let filter;
-
-//   if(filterName){
-//     filter = filters.filter(item => item.name === filterName)[0].value;
-//   }
-
-//   return new Promise((resolve, reject) => {
-//       const c = document.createElement("canvas");
-//       c.width = canvasWidth;
-//       c.height = canvasHeight;
-//       const ctx = c.getContext("2d");
-    
-//       // Load the background image
-//       const background = new Image();
-//       const qrCode = new Image();
-//       qrCode.onload = () => {
-//         ctx.drawImage(qrCode, 520 - 38, 1844 - 150, 114, 114);
-//         ctx.drawImage(qrCode, 1240 - 158, 1844 - 150, 114, 114);
-//         resolve(c.toDataURL('image/png'));
-//       }
-
-//       background.onload = () => {
-//         ctx.drawImage(background, 0, 0, canvasWidth, canvasHeight);
-        
-//       };
-//       background.onerror = error => reject(error);
-//       background.src = backgroundUrl
-//   });
-// }
-
 function createImageFromBase64Data(base64s){
   return base64s.map(base64=> {
     const image = new Image()

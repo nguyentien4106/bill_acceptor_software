@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import back from '../images/button/back.png'
-import next from '../images/button/next.png'
+import back from '../images/screens/step1/back.png'
+import next from '../images/screens/step1/next.png'
 import '../css/Navigation.css'
 
 export default function Navigation(props) {
     const {currentStep, jumpToStep, maxStep, showBack, showNext, countdownTime} = props
     const audio = document.getElementById("click-audio");
     const [time, setTime] = useState(countdownTime)
-    
+
     const handlePrevClick = () => {
         audio.play().then(() => {
             jumpToStep(currentStep - 1 > 0 ? currentStep - 1 : 0)
@@ -22,6 +22,7 @@ export default function Navigation(props) {
     }
 
     useEffect(() => {
+        console.log(time)
         if(time === 0){
             jumpToStep(0)
         }

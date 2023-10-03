@@ -6,8 +6,8 @@ import QRCode from 'qrcode';
 import { useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import "../css/Step6.css"
-import black from "../images/background/black_cloud.jpg"
-import white from "../images/background/white.jpg"
+import black from "../images/background/basic_black/basic_black_left.jpg"
+import white from "../images/background/basic_white/basic_white_left.jpg"
 
 import cloud_template1 from "../images/templates/template1/image_cloud.png"
 

@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import '../css/Step1.css'
 import Navigation from './Navigation';
+import basic_black from '../images/screens/step1/basic_black.png';
+import select from '../images/screens/step1/select.png'
+import selected from '../images/screens/step1/selected.png'
+import { useEffect } from 'react';
 
 export default function Step1_SelectBackground(props) {
   const [backgroundChoose, setBackgroundChoose] = useState(props.background.name)
+  const {frameOptions} = props
+  const [frameSelected, setFrameSelected] = useState(frameOptions[0])
 
   const handleClickBackgroundImage = bg => {
     const audio = document.getElementById("click-audio");
@@ -12,22 +18,32 @@ export default function Step1_SelectBackground(props) {
       setBackgroundChoose(bg.name)
     })
   }
+  
+  document.addEventListener("DOMContentLoaded", (event) => {
+    console.log("DOM fully loaded and parsed");
+  });
+
+  const handleChooseFrame = frame => {
+    const audio = document.getElementById("click-audio");
+    audio.play().then(() => {
+      setFrameSelected(frame)
+    })
+  }
 
   return (
     <div id='selectBackground'>
-      <div className='d-flex justify-content-start align-items-center w-100'>
-          <div className={`white first ${backgroundChoose === "white" ? "" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[1])}>
-            {
-              backgroundChoose === "white" && <i className="bi bi-check-lg fa-10x h1" style={{fontSize: 200, color: 'pink'}}></i>
-            }
-          </div>
-          <div className={`black second ${backgroundChoose === "black" ? "" : ""}`} onClick={() => handleClickBackgroundImage(props.backgroundsImage[0])}>
-            {
-              backgroundChoose === "black" && <i className="bi bi-check-lg fa-10x h1" style={{fontSize: 200, color: 'pink'}}></i>
-            }
-          </div>
+      <div className='' id='options-panel'>
+          {
+            frameOptions.map((option, index) => {
+              return <div key={index} className='d-flex flex-column'>
+                        <div style={{backgroundImage: `url(${option})`}} className='option' onClick={() => handleChooseFrame(option)}></div>
+                        <div style={{backgroundImage: `url(${frameSelected === option ? selected : select})`}} className='selecting'></div>
+                      </div>
+            })
+          }
+          
       </div>
-      <Navigation currentStep={1} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true} countdownTime={60}/>
+      <Navigation currentStep={1} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={true}/>
     </div>
   )
 }

@@ -7,7 +7,6 @@ const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const GoogleService = require("../helpers/google-api-service")
 const BillAcceptor = require("../helpers/initBillAcceptor")
-const {writePsdBuffer} = require("ag-psd")
 
 let mainWindow;
 let workerWindow;
@@ -24,7 +23,7 @@ function createWindow() {
       contextIsolation: false
     },
     // minimizable: false,
-    fullscreen: true,
+    // fullscreen: true,
     // skipTaskbar: true
   });
 
@@ -44,7 +43,7 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    // show: false
+    show: false
   });
 
   workerWindow.loadFile('build/worker.html');
@@ -110,7 +109,7 @@ app.whenReady().then(() => {
 
   ipcMain.on('resetMoney', (event) => {
     money = 0;
-    mainWindow.webContents.send('detectMoneyIn', money);
+    mainWindow?.webContents.send('detectMoneyIn', money);
   })
     
   ipcMain.on("print", (event, data) => {
@@ -135,11 +134,7 @@ app.whenReady().then(() => {
     GoogleService.uploadFile(data.name, data.image).then(res => {
       GoogleService.generatePublicUrl(res.id).then(urlRes => {
         const jsonData = {
-          image: data.image,
           qrUrl: urlRes.webViewLink,
-          background: data.background,
-          imagesChoosen: data.imagesChoosen,
-          filter: data.filter,
           log: data.log,
           imageToPrint: data.imageToPrint
         }

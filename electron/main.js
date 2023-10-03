@@ -129,23 +129,35 @@ app.whenReady().then(() => {
     })
   });
 
-  ipcMain.on("pushDrive", (event, params) => {
+  ipcMain.on("pushDrive", async (event, params) => {
     const data = JSON.parse(params)
-    GoogleService.uploadFile(data.name, data.image).then(res => {
-      GoogleService.generatePublicUrl(res.id).then(urlRes => {
-        const jsonData = {
-          qrUrl: urlRes.webViewLink,
-          log: data.log,
-          imageToPrint: data.imageToPrint
-        }
+    const resId_cloud_left = await GoogleService.uploadFile(data.name + "_left", data.cloud_left)
+    const resId_cloud_right = await GoogleService.uploadFile(data.name + "_right", data.cloud_right)
+    const links_cloud_left = await GoogleService.generatePublicUrl(resId_cloud_left.id)
+    const links_cloud_right = await GoogleService.generatePublicUrl(resId_cloud_right.id)
+
+    const jsonData = {
+      // qrUrl: urlRes.webViewLink,
+      qrUrl_cloud_left: links_cloud_left.webViewLink,
+      qrUrl_cloud_right: links_cloud_right.webViewLink,
+      log: data.log,
+      imageToPrint: data.imageToPrint
+    }
+    mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
+
+    // GoogleService.uploadFile(data.name, data.image).then(res => {
+    //   GoogleService.generatePublicUrl(res.id).then(urlRes => {
+    //     const jsonData = {
+    //       qrUrl: urlRes.webViewLink,
+    //       log: data.log,
+    //       imageToPrint: data.imageToPrint
+    //     }
         
-        mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
-      }).catch(err => {
-        mainWindow.webContents.send('detectError', err);
-      })
-    }).catch(err => {
-      mainWindow.webContents.send('detectError', err)
-    })
+    //     mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
+    //   })
+    // }).catch(err => {
+    //   mainWindow.webContents.send('detectError', err)
+    // })
   })
 
   ipcMain.on("getPass", (event, data) => {

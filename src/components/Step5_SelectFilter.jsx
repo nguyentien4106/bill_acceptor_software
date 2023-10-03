@@ -19,7 +19,7 @@ export default function Step5_SelectFilter(props) {
     console.log(props)
     const image = await drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, props.background.src, filterName)
     setImageDemo(image)
-    props.setImageToPrint(image)
+    props.onSetImageToPrint(image)
   }
 
   return (

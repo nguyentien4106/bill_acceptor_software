@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 import '../css/Step4.css'
 
 export default function Step4_SelectImages(props) {
-  const {imagesTaken} = props
+  const {imagesTaken, dataSelected} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [showNext, setShowNext] = useState(false)
 
@@ -44,7 +44,7 @@ export default function Step4_SelectImages(props) {
   useEffect(() => {
     if(imagesChoosen.length === 4){
       setShowNext(true)
-      drawImagesOnCanvas1240(imagesChoosen, 1240, 1844, props.background.src).then(photo => {
+      drawImagesOnCanvas1240(imagesChoosen, 1240, 1844, dataSelected.frame).then(photo => {
         props.onSetImageToPrint(photo)
       })
     }

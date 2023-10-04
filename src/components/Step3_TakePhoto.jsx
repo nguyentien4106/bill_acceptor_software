@@ -87,6 +87,8 @@ const Step3_TakePhoto = (props) => {
         setIsLoading(false)
         deepAR = res
         initCarousel()
+      }).catch(err => {
+        props.jumpToStep(7)
       })
     }
   }, [])

@@ -30,6 +30,7 @@ import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
 
 import demo from '../images/demo.jpg'
+import ErrorPage from './ErrorPage';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -142,14 +143,17 @@ export default function Progress(props) {
                                   filter={filter}
                                   onSetLog={setLog}
                                   log={log}
-                                />},                           
+                                />},   
+      {
+        name: "error", component: <ErrorPage />
+      }                       
     ]
     
   return (
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={5}
+          startAtStep={3}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

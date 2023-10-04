@@ -16,8 +16,8 @@ export default function Step5_SelectFilter(props) {
   useEffect(() => {
     drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, dataSelected.frame, '').then(img => {
       setImageDemo(img)
+      props.onSetImageForPrint(img)
     })
-
   }, [])
 
   const handleOnClickChooseFilter = filterName => {

@@ -8,7 +8,7 @@ const {ipcRenderer} = window.require('electron')
 
 function App() {
   const [money, setMoney] = useState(0)
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
   const [user, setUser] = useState('')
   const [users, setUsers] = useState([])
 

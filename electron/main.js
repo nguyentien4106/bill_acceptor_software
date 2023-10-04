@@ -120,36 +120,45 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("readyPrint", (event, log) => {
+    mainWindow.webContents.send("getNotice", "Ảnh đang được in.")
     workerWindow.webContents.print({silent: true}, (success, reason) => {
       if(success){
-        mainWindow.webContents.send("finish")
         writeLog(log + `\nPrint successfully at ${moment()}`)
+        setTimeout(() => {
+          mainWindow.webContents.send("getNotice", "Ảnh đã được in thành công. Vui lòng nhận ảnh ở ô dưới.")
+          mainWindow.webContents.send("finish")
+        }, 3000)
       }
       else {
         mainWindow.webContents.send('detectError', err)
         writeLog(log + `\nPrint failed at ${moment()}`)
       }
     })
+
+    
   });
 
   ipcMain.on("pushDrive", async (event, params) => {
     const data = JSON.parse(params)
     const resId_cloud_left = await GoogleService.uploadFile(data.name + "_left", data.cloud_left)
     const resId_cloud_right = await GoogleService.uploadFile(data.name + "_right", data.cloud_right)
-    mainWindow.webContents.send("getNotice", "Upload ảnh lên Cloud thành công !")
+    mainWindow.webContents.send("getNotice", "Upload ảnh tới Cloud thành công.")
 
     const links_cloud_left = await GoogleService.generatePublicUrl(resId_cloud_left.id)
     const links_cloud_right = await GoogleService.generatePublicUrl(resId_cloud_right.id)
 
-    mainWindow.webContents.send("getNotice", "Chuẩn bị tạo QR Code !")
+    mainWindow.webContents.send("getNotice", "Đang tạo QR Code.")
     const jsonData = {
-      // qrUrl: urlRes.webViewLink,
       qrUrl_cloud_left: links_cloud_left.webViewLink,
       qrUrl_cloud_right: links_cloud_right.webViewLink,
       log: data.log,
       imageForPrint: data.imageForPrint
     }
     mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
+  })
+
+  ipcMain.on("receiveNotice", (event, notice) => {
+    mainWindow.webContents.send("getNotice", notice)
   })
 }).catch(console.log);
 

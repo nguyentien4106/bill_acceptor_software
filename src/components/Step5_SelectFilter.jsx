@@ -1,25 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation';
 import '../css/Step5.css'
 import { getFilters } from '../helpers/helper';
 import moment from 'moment';
-import { drawImagesOnCanvas1240, cre } from '../helpers/createPhotoStrip';
+import { drawImagesOnCanvas1240 } from '../helpers/createPhotoStrip';
 
 export default function Step5_SelectFilter(props) {
   const [filter, setFilter] = useState('origin')
   const filters = getFilters()
   const filterFirstCol = filters.slice(0, 4);
   const filterSecondCol = filters.slice(4)
-  const [imageDemo, setImageDemo] = useState(props.imageToPrint)
+  const [imageDemo, setImageDemo] = useState(null)
+  const {dataSelected} = props
 
-  const handleOnClickChooseFilter = async filterName => {
+  useEffect(() => {
+    drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, dataSelected.frame, '').then(img => {
+      setImageDemo(img)
+    })
+
+  }, [])
+
+  const handleOnClickChooseFilter = filterName => {
     setFilter(filterName)
+
     props.onSetLog(prev => prev + `\nSelect Filter ${filterName} at ${moment()}`)
     props.onSetFilter(filterName)
-    console.log(props)
-    const image = await drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, props.background.src, filterName)
-    setImageDemo(image)
-    props.onSetImageToPrint(image)
+
+    drawImagesOnCanvas1240(props.imagesChoosen, 1240, 1844, dataSelected.frame, filterName).then(image => {
+      setImageDemo(image)
+      props.onSetImageForPrint(image)
+    })
   }
 
   return (

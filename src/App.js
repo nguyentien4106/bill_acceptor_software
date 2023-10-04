@@ -6,17 +6,16 @@ import { Store } from 'react-notifications-component';
 
 const {ipcRenderer} = window.require('electron')
 
-let licensee;
-
-ipcRenderer.send("getPass", "C:/pass/licensee.txt")
-ipcRenderer.on("receivePass", (event, data) => {
-  licensee = data
-})
-
 function App() {
   const [money, setMoney] = useState(0)
-  const [isAuth, setIsAuth] = useState(true)
-  const [pass, setPass] = useState('')
+  const [isAuth, setIsAuth] = useState(false)
+  const [user, setUser] = useState('')
+  const [users, setUsers] = useState([])
+
+  ipcRenderer.on("authorize", (event, data) => {
+    console.log(JSON.stringify(data).split(","))
+    setUsers(JSON.stringify(data).split(","))
+  })
 
   useEffect(() => {
     ipcRenderer.on('detectMoneyIn', function (event, data) {
@@ -39,8 +38,6 @@ function App() {
     });
   }, [])
 
-
-
   useEffect(() => {
     if(isAuth){
         const audio = document.getElementById("click-audio")
@@ -58,7 +55,7 @@ function App() {
   }, [isAuth])
 
   const handleSubmit = () => {  
-    const auth = pass === licensee.pass
+    const auth = users.some(item => JSON.stringify(item) === JSON.stringify(user))
     if(!auth){
       Store.addNotification({
         title: "",
@@ -88,7 +85,7 @@ function App() {
                   : <div >
                       <label>
                         Xin hãy nhập mã đăng ký của bạn 
-                        <input style={{"width": 500}} type="text" value={pass} onChange={(e) => setPass(e.target.value)}/>
+                        <input style={{"width": 500}} type="text" value={user} onChange={(e) => setUser(e.target.value)}/>
                       </label>
                       <input type="submit" value="Submit" onClick={handleSubmit}/>
                     </div>                    

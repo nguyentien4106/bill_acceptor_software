@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import {drawImagesOnCanvas1240} from '../helpers/createPhotoStrip';
 import Navigation from './Navigation';
 import '../css/Step4.css'
 
@@ -42,15 +41,7 @@ export default function Step4_SelectImages(props) {
   }
 
   useEffect(() => {
-    if(imagesChoosen.length === 4){
-      setShowNext(true)
-      drawImagesOnCanvas1240(imagesChoosen, 1240, 1844, dataSelected.frame).then(photo => {
-        props.onSetImageToPrint(photo)
-      })
-    }
-    else {
-      setShowNext(false)
-    }
+    setShowNext(imagesChoosen.length === 4)
   }, [imagesChoosen.length])
 
   return (
@@ -61,7 +52,7 @@ export default function Step4_SelectImages(props) {
             const index = imagesChoosen.indexOf(item) + 1
 
             return (
-              <div className="container-image">
+              <div key={index} className="container-image">
                 <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""} `} src={item} onClick={() => handleChooseImage(item)}></img>
                 {
                   index != 0 && <div class="top-right">{index}</div>

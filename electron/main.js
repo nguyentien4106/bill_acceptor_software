@@ -29,10 +29,9 @@ function createWindow() {
 
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-    BillAcceptor.disableBillAcceptor(() => app.quit())
-    BillAcceptor.closeBillAcceptor()
+  mainWindow.on('closed', async function () {
+    await BillAcceptor.disableBillAcceptor()
+    app.quit()
   });
 
   workerWindow = new BrowserWindow({
@@ -107,6 +106,10 @@ app.whenReady().then(() => {
   createWindow()
   BillAcceptor.initBillAcceptor(readBill)
 
+  GoogleService.getUsers().then(users => {
+    mainWindow.webContents.send("authorize", users)
+  })
+
   ipcMain.on('resetMoney', (event) => {
     money = 0;
     mainWindow?.webContents.send('detectMoneyIn', money);
@@ -133,53 +136,27 @@ app.whenReady().then(() => {
     const data = JSON.parse(params)
     const resId_cloud_left = await GoogleService.uploadFile(data.name + "_left", data.cloud_left)
     const resId_cloud_right = await GoogleService.uploadFile(data.name + "_right", data.cloud_right)
+    mainWindow.webContents.send("getNotice", "Upload ảnh lên Cloud thành công !")
+
     const links_cloud_left = await GoogleService.generatePublicUrl(resId_cloud_left.id)
     const links_cloud_right = await GoogleService.generatePublicUrl(resId_cloud_right.id)
 
+    mainWindow.webContents.send("getNotice", "Chuẩn bị tạo QR Code !")
     const jsonData = {
       // qrUrl: urlRes.webViewLink,
       qrUrl_cloud_left: links_cloud_left.webViewLink,
       qrUrl_cloud_right: links_cloud_right.webViewLink,
       log: data.log,
-      imageToPrint: data.imageToPrint
+      imageForPrint: data.imageForPrint
     }
     mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
-
-    // GoogleService.uploadFile(data.name, data.image).then(res => {
-    //   GoogleService.generatePublicUrl(res.id).then(urlRes => {
-    //     const jsonData = {
-    //       qrUrl: urlRes.webViewLink,
-    //       log: data.log,
-    //       imageToPrint: data.imageToPrint
-    //     }
-        
-    //     mainWindow.webContents.send("getLink", JSON.stringify(jsonData))
-    //   })
-    // }).catch(err => {
-    //   mainWindow.webContents.send('detectError', err)
-    // })
   })
-
-  ipcMain.on("getPass", (event, data) => {
-    try {
-      const pass = fs.readFileSync(data, 'utf8');
-      mainWindow.webContents.send("receivePass", {
-        pass,
-        isSuccess: true
-      })
-    } catch (err) {
-      mainWindow.webContents.send("receivePass", {
-        isSuccess: false
-      })
-    }
-  })
-
 }).catch(console.log);
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', async function () {
   if (process.platform !== 'darwin') {
-    BillAcceptor.disableBillAcceptor(() => app.quit())
-    BillAcceptor.closeBillAcceptor()
+    await BillAcceptor.disableBillAcceptor()
+    app.quit()
   }
 });
 

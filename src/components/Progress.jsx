@@ -5,7 +5,6 @@ import Step2_Payment from './Step2_Payment';
 import Step3_TakePhoto from './Step3_TakePhoto';
 import Step4_SelectImages from './Step4_SelectImages';
 import Step5_SelectFilter from './Step5_SelectFilter';
-import print_template_1 from '../images/templates/template1/image_print.png'
 
 import basic_white_option from '../images/screens/step1/basic_white.png';
 import basic_black_option  from '../images/screens/step1/basic_black.png';
@@ -29,11 +28,13 @@ import sticker_orange_right  from "../images/background/sticker_orange/sticker_o
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
+
+import demo from '../images/demo.jpg'
+
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
-  const backgroundsImage = [{ name: 'black', src: print_template_1}, { name: 'white', src: print_template_1}]
-  const frameOptions = [basic_black_option, basic_white_option, sticker_green_option, sticker_orange_option, sticker_pink_option, sticker_purple_option];
+  // const frameOptions = [basic_black_option, basic_white_option, sticker_green_option, sticker_orange_option, sticker_pink_option, sticker_purple_option];
   const dataFrames = [
     {
       name: "basic_black",
@@ -80,14 +81,11 @@ export default function Progress(props) {
   ]
   
   const [dataSelected, setDataSelected] = useState(dataFrames[3])
-  const [background, setBackground] = useState(backgroundsImage[0])
   const [imagesTaken, setImagesTaken] = useState([])
-  const [imagesChoosen, setImagesChoosen] = useState([])
-  const [imageToPrint, setImageToPrint] = useState(null)
-  const [imageToDrive, setImageToDrive] = useState(null)
-  const [imageToDemo, setImageToDemo] = useState(null)
+  const [imagesChoosen, setImagesChoosen] = useState([demo, demo, demo, demo]) //useState([])
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
+  const [imageForPrint, setImageForPrint] = useState(null)
 
   const handleOnStepChange = stepIndex => {
     Store.removeAllNotifications()
@@ -95,11 +93,8 @@ export default function Progress(props) {
     if(stepIndex === 0){
       ipcRenderer.send("resetMoney")
       setFilter('origin')
-      setImageToPrint(null)
       setImagesTaken([])
       setImagesChoosen([])
-      setImageToDemo(null)
-      setImageToDrive(null)
     }
     
   }
@@ -128,26 +123,21 @@ export default function Progress(props) {
                                           imagesTaken={imagesTaken} 
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
-                                          onSetImageToPrint={setImageToPrint}
                                           onSetLog={setLog}
                                           dataSelected={dataSelected}
                                         />},
 
       {name: '', component: <Step5_SelectFilter
                                       onSetFilter={setFilter}
-                                      imageToPrint={imageToPrint}
                                       imagesChoosen={imagesChoosen}
-                                      background={background}
-                                      onSetImageToPrint={setImageToPrint}
-                                      onSetImageToDrive={setImageToDrive}
                                       onSetLog={setLog}
-                                      imageToDemo={imageToDemo}
                                       dataSelected={dataSelected}
+                                      onSetImageForPrint={setImageForPrint}
                                     />},
 
       {name: '', component: <Step6_HandlePrint 
-                                  imageToPrint={imageToPrint}
                                   imagesChoosen={imagesChoosen}
+                                  imageForPrint={imageForPrint}
                                   dataSelected={dataSelected}
                                   filter={filter}
                                   onSetLog={setLog}
@@ -159,7 +149,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          startAtStep={3}
+          // startAtStep={5}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

@@ -45,16 +45,13 @@ const closeBillAcceptor = () => {
   tp.close()
 }
 
-const disableBillAcceptor = (callback) => {
+const disableBillAcceptor = () => {
   tp.command("DISABLE").then(res =>{
     closeBillAcceptor()
-    callback()
-    console.log(res)
-  }).catch(console.log)
+  }).catch(console.error)
 }
 
 module.exports = {
   initBillAcceptor: initBillAcceptor,
-  closeBillAcceptor: closeBillAcceptor,
   disableBillAcceptor: disableBillAcceptor
 }

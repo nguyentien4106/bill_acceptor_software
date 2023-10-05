@@ -38,20 +38,19 @@ function Step2_Payment(props) {
     }
 
     return (
-        <div className='d-flex justify-content-center commonBackground' id='payment'>
-            <div className='payment d-flex flex-column justify-content-center align-items-center align-self-center'>
-                <h1>Vui lòng nạp số tiền theo yêu cầu</h1>
-                <br/>
-                <div className='payment_elements d-flex align-content-around justify-content-between mt-10'>
+        <div className='d-flex justify-content-center' id='payment'>
+            <div className='require-money'>
+                <div className='payment_elements d-flex align-content-around justify-content-between'>
                     <CashStack size={70} className='p-2'></CashStack>
-                    <h2 className='p-2'>Số tiền cần thanh toán là </h2>
-                    <h2 className='p-2 ms-auto'>{displayMoney(50000)} VND</h2>
+                    <h3 className='p-2 text'>Số tiền cần thanh toán là </h3>
+                    <h3 className='p-2 ms-auto text'>{displayMoney(50000)} VND</h3>
                 </div>
-                <br/>
-                <div className='payment_elements d-flex align-content-around justify-content-between mt-4'>
+            </div>
+            <div className='active-money'>
+                <div className='payment_elements d-flex align-content-around justify-content-between'>
                     <CashStack  size={70} className='p-2'></CashStack>
-                    <h2 className='p-2'>Bạn đã nạp </h2>
-                    <h2 className='ms-auto p-2'>{displayMoney(props.money)} VND</h2>
+                    <h3 className='p-2 text'>Bạn đã nạp </h3>
+                    <h3 className='ms-auto p-2 text'>{displayMoney(props.money)} VND</h3>
                 </div>
             </div>
             <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdownTime={300}/>

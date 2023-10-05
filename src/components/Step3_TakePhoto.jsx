@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../css/Step3.css'
 import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
-import cameraButton from '../images/button/camerabutton.png'
+import cameraButton from '../images/screens/step3/camera.png'
 import useCountDown from "react-countdown-hook";
 import moment from 'moment';
 import * as deepar from 'deepar';
@@ -21,7 +21,6 @@ const effectList = [
   "effects/ray-ban-wayfarer.deepar",
   "effects/viking_helmet.deepar",
   "effects/MakeupLook.deepar",
-  "effects/Split_View_Look.deepar",
   "effects/flower_face.deepar",
   "effects/Stallone.deepar",
   "effects/galaxy_background_web.deepar",
@@ -32,7 +31,6 @@ const effectList = [
   "effects/Snail.deepar",
   "effects/Hope.deepar",
   "effects/Vendetta_Mask.deepar",
-  "effects/Fire_Effect.deepar",
 ];
 
 const effectOptionsLabel = [
@@ -40,7 +38,6 @@ const effectOptionsLabel = [
   'ray-ban-wayfarer',
   'viking',
   'makeup',
-  'makeup-split',
   'flower_face',
   'stallone',
   'galaxy',
@@ -51,7 +48,6 @@ const effectOptionsLabel = [
   'snail',
   'hope',
   'vendetta',
-  'fire'
 ]
 
 let deepAR;
@@ -200,7 +196,7 @@ const Step3_TakePhoto = (props) => {
           isLoading && <div className='loading'>
               <div className='loading__mask'></div>
               <div className='loading__inner'>
-                  <h2>Đang xử lý...</h2>
+                  <h2 className='text'>Vui lòng đợi...</h2>
                   <br></br>
                   <BounceLoader
                       color={"#c96565"}

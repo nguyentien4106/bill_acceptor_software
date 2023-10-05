@@ -157,3 +157,12 @@ code {
   font-size: 50px;
   -webkit-text-stroke: 1px black; /* width and color */
 }
+
+@font-face {
+  font-family: myfont;
+  src: url('../public/font/font.otf');
+}
+
+.text {
+  font-family: myfont;
+}

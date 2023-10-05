@@ -83,7 +83,7 @@ export default function Progress(props) {
   
   const [dataSelected, setDataSelected] = useState(dataFrames[3])
   const [imagesTaken, setImagesTaken] = useState([])
-  const [imagesChoosen, setImagesChoosen] = useState([demo, demo, demo, demo]) //useState([])
+  const [imagesChoosen, setImagesChoosen] =  useState([]) //useState([demo, demo, demo, demo])
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
   const [imageForPrint, setImageForPrint] = useState(null)

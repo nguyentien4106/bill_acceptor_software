@@ -1,5 +1,5 @@
 .take-photo-background{
-    background-image: url('../images/button/takephoto.jpg');
+    background-image: url('../images/screens/step3/background.png');
     height: 100vh;
 }
 
@@ -52,15 +52,17 @@
     position: relative;
 }
 
+
 .take-button{
     height: 200px;
     width: 200px;
     position: absolute;
     top: 50%;
-    right: 550px;
+    right: 400px;
     animation: zoom-in-zoom-out 2.5s ease infinite;
     z-index: 1;
 }
+
 
 @keyframes zoom-in-zoom-out {
     0% {

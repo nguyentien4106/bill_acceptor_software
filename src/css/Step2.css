@@ -5,3 +5,23 @@
 .payment_elements{
     width: 100%;
 }
+
+#payment{
+    background-image: url('../images/screens/step2/background.png');
+    height: 100vh;
+    position: relative;
+}
+
+.require-money{
+    position: absolute;
+    left: 52%;
+    top: 55%;
+    width: 600px;
+}
+
+.active-money{
+    position: absolute;
+    left: 52%;
+    top: 80%;
+    width: 600px;
+}

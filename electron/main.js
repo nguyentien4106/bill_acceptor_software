@@ -22,8 +22,8 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    // minimizable: false,
-    // fullscreen: true,
+    minimizable: false,
+    fullscreen: true,
     // skipTaskbar: true
   });
 

@@ -1,15 +1,17 @@
 .selectImagesBackground{
-    background-image: url('../images/button/selectImagesBackground.png');
+    background-image: url('../images/screens/step4/background.png');
     height: 100vh;
+    position: relative;
+    background-size: cover;
+	background-repeat: no-repeat;
 }
 
 .images-taken{
     height: 600px;
-    width: 100px;
+    width: 600px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
     position: absolute;
     top: 35%;
     left: 20%;

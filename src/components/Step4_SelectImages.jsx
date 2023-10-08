@@ -5,7 +5,7 @@ import Navigation from './Navigation';
 import '../css/Step4.css'
 
 export default function Step4_SelectImages(props) {
-  const {imagesTaken, dataSelected} = props
+  const {imagesTaken} = props
   const [imagesChoosen, setImageChoosen] = useState([])
   const [showNext, setShowNext] = useState(false)
 
@@ -44,18 +44,19 @@ export default function Step4_SelectImages(props) {
     setShowNext(imagesChoosen.length === 4)
   }, [imagesChoosen.length])
 
+  console.log(imagesTaken.length)
   return (
     <div className='selectImagesBackground'>
       <div className='images-taken'>
         {
-          imagesTaken.map(item => {
+          imagesTaken.map((item, key) => {
             const index = imagesChoosen.indexOf(item) + 1
 
             return (
-              <div key={index} className="container-image">
+              <div key={key} className="container-image">
                 <img className={`image m-2 ${imagesChoosen.includes(item) ? "checked" : ""} `} src={item} onClick={() => handleChooseImage(item)}></img>
                 {
-                  index != 0 && <div class="top-right">{index}</div>
+                  index != 0 && <div className="top-right">{index}</div>
                 }
               </div>
             )

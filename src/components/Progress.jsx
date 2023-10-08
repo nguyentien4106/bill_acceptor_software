@@ -25,6 +25,18 @@ import sticker_orange_print from "../images/background/sticker_orange/sticker_or
 import sticker_orange_left from "../images/background/sticker_orange/sticker_orange_left.png"
 import sticker_orange_right  from "../images/background/sticker_orange/sticker_orange_right.png"
 
+import sticker_pink_print from "../images/background/sticker_pink/sticker_pink.png"
+import sticker_pink_left from "../images/background/sticker_pink/sticker_pink_left.png"
+import sticker_pink_right  from "../images/background/sticker_pink/sticker_pink_right.png"
+
+import sticker_green_print from "../images/background/sticker_green/sticker_green.png"
+import sticker_green_left from "../images/background/sticker_green/sticker_green_left.png"
+import sticker_green_right  from "../images/background/sticker_green/sticker_green_right.png"
+
+import sticker_purple_print from "../images/background/sticker_purple/sticker_purple.png"
+import sticker_purple_left from "../images/background/sticker_purple/sticker_purple_left.png"
+import sticker_purple_right  from "../images/background/sticker_purple/sticker_purple_right.png"
+
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
@@ -53,9 +65,9 @@ export default function Progress(props) {
     },
     {
       name: "sticker_green",
-      // frame: sticker_green_print,
-      // cloud_left: sticker_green_left,
-      // cloud_right: sticker_green_right,
+      frame: sticker_green_print,
+      cloud_left: sticker_green_left,
+      cloud_right: sticker_green_right,
       option: sticker_green_option
     },
     {
@@ -67,22 +79,22 @@ export default function Progress(props) {
     },
     {
       name: "sticker_pink",
-      // frame: sticker_pink_print,
-      // cloud_left: basic_white_left,
-      // cloud_right: basic_white_right,
+      frame: sticker_pink_print,
+      cloud_left: sticker_pink_left,
+      cloud_right: sticker_pink_right,
       option: sticker_pink_option
     },
     {
       name: "sticker_purple",
-      // frame: basic_white,
-      // cloud_left: basic_white_left,
-      // cloud_right: basic_white_right,
+      frame: sticker_purple_print,
+      cloud_left: sticker_purple_left,
+      cloud_right: sticker_purple_right,
       option: sticker_purple_option
     }
   ]
   
   const [dataSelected, setDataSelected] = useState(dataFrames[3])
-  const [imagesTaken, setImagesTaken] = useState([])
+  const [imagesTaken, setImagesTaken] = useState([]) //useState([demo, demo, demo, demo, demo, demo])
   const [imagesChoosen, setImagesChoosen] =  useState([]) //useState([demo, demo, demo, demo])
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
@@ -125,7 +137,6 @@ export default function Progress(props) {
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
                                           onSetLog={setLog}
-                                          dataSelected={dataSelected}
                                         />},
 
       {name: '', component: <Step5_SelectFilter

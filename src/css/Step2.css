@@ -8,7 +8,9 @@
 
 #payment{
     background-image: url('../images/screens/step2/background.png');
-    height: 100vh;
+    height: 100vh;	
+    background-size: cover;
+	background-repeat: no-repeat;
     position: relative;
 }
 

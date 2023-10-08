@@ -94,3 +94,10 @@ span.filter-name-text{
     width: 200px;
     height: 600px;
 }
+
+#select-filter{
+    background-image: url("../images/screens/step5/background.png");
+    background-size: cover;
+	background-repeat: no-repeat;
+    height: 100vh;
+}

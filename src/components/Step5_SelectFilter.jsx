@@ -33,7 +33,7 @@ export default function Step5_SelectFilter(props) {
   }
 
   return (
-    <div className='d-flex justify-content-around commonBackground'>
+    <div className='d-flex justify-content-around' id='select-filter'>
       <div className='image-demo'>
         <img src={imageDemo} className={`image-show-demo`}></img>
       </div>

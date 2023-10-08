@@ -1,6 +1,8 @@
 .take-photo-background{
     background-image: url('../images/screens/step3/background.png');
     height: 100vh;
+    background-size: cover;
+	background-repeat: no-repeat;
 }
 
 .images{

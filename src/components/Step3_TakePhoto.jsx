@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Step3.css'
-import { setIntervalX } from '../helpers/helper';
 import Navigation from './Navigation';
 import cameraButton from '../images/screens/step3/camera.png'
 import useCountDown from "react-countdown-hook";

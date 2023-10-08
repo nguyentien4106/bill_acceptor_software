@@ -38,17 +38,16 @@ export default function Step5_SelectFilter(props) {
         <img src={imageDemo} className={`image-show-demo`}></img>
       </div>
       <div>
-        <h2 className='text-h2'>Bạn hãy chọn filter cho tấm hình để in nhé.</h2>
         <div className='first-col-filter'>
           {filterFirstCol.map((item) => {
-            return <div key={item.name} className={`image-filter-${item.text} ${filter === item.name ? "checked" : ""}`}  onClick={() => handleOnClickChooseFilter(item.name)}>
+            return <div key={item.name} className={`filter-selection image-filter-${item.text}${filter === item.name ? "-select" : ""}`}  onClick={() => handleOnClickChooseFilter(item.name)}>
             </div>
           })}
         </div>
-        <div className='second-col-filter mt-4'>
+        <div className='second-col-filter'>
           {filterSecondCol.map((item) => {
             return (
-              <div key={item.name} className={`image-filter-${item.text} ${filter === item.name ? "checked" : ""}`} onClick={() => handleOnClickChooseFilter(item.name)}>
+              <div key={item.name} className={`filter-selection image-filter-${item.text}${filter === item.name ? "-select" : ""}`} onClick={() => handleOnClickChooseFilter(item.name)}>
               </div>
             )
           })}

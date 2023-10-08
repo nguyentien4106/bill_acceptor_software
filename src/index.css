@@ -132,20 +132,8 @@ code {
   object-fit: fill;
 }
 
-#handlePrint{
-  background-image: url('./images/button/print.jpg');
-  height: 100vh;
-}
-
 #video{
   height: 80%;
-}
-
-
-
-.commonBackground{
-  background-image: url('./images/button/commonbackground.jpg');
-  height: 100vh;
 }
 
 .footer-buttons{

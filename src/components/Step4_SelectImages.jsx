@@ -6,7 +6,7 @@ import '../css/Step4.css'
 
 export default function Step4_SelectImages(props) {
   const {imagesTaken} = props
-  const [imagesChoosen, setImageChoosen] = useState([])
+  const [imagesChoosen, setImageChoosen] = useState(props.imagesChoosen)
   const [showNext, setShowNext] = useState(false)
 
   const handleChooseImage = image => {
@@ -44,7 +44,6 @@ export default function Step4_SelectImages(props) {
     setShowNext(imagesChoosen.length === 4)
   }, [imagesChoosen.length])
 
-  console.log(imagesTaken.length)
   return (
     <div className='selectImagesBackground'>
       <div className='images-taken'>

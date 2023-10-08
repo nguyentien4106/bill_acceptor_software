@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import StepZilla from "react-stepzilla";
 import Step1_SelectBackground from './Step1_SelectBackground';
 import Step2_Payment from './Step2_Payment';
@@ -47,7 +47,6 @@ import ErrorPage from './ErrorPage';
 const {ipcRenderer} = window.require('electron')
 
 export default function Progress(props) {
-  // const frameOptions = [basic_black_option, basic_white_option, sticker_green_option, sticker_orange_option, sticker_pink_option, sticker_purple_option];
   const dataFrames = [
     {
       name: "basic_black",
@@ -95,7 +94,7 @@ export default function Progress(props) {
   
   const [dataSelected, setDataSelected] = useState(dataFrames[3])
   const [imagesTaken, setImagesTaken] = useState([]) //useState([demo, demo, demo, demo, demo, demo])
-  const [imagesChoosen, setImagesChoosen] =  useState([]) //useState([demo, demo, demo, demo])
+  const [imagesChoosen, setImagesChoosen] =  useState([demo, demo, demo, demo]) //useState([demo, demo, demo, demo])
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
   const [imageForPrint, setImageForPrint] = useState(null)
@@ -113,7 +112,7 @@ export default function Progress(props) {
   }
   
   const steps =
-    [
+  [
       {name: "Screen Saver", component: <Step0_WaitingScreen />},
 
       {name: 'Chọn phông nền ảnh', component: <Step1_SelectBackground 
@@ -158,13 +157,14 @@ export default function Progress(props) {
       {
         name: "error", component: <ErrorPage />
       }                       
-    ]
-    
+  ]
+
   return (
     <div className='step-progress'>
+        <ErrorPage></ErrorPage>
         <StepZilla 
-          steps={steps}
-          startAtStep={3}
+          steps={[]}
+          // startAtStep={5}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

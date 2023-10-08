@@ -16,14 +16,14 @@
 
 .require-money{
     position: absolute;
-    left: 52%;
-    top: 55%;
+    left: 51%;
+    top: 50%;
     width: 600px;
 }
 
 .active-money{
     position: absolute;
-    left: 52%;
-    top: 80%;
+    left: 51%;
+    top: 74%;
     width: 600px;
 }

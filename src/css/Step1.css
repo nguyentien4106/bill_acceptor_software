@@ -78,22 +78,6 @@
 	position: relative;
 }
 
-.white{
-	background-image: url('../images/button/white.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	height: 500px;
-	width: 500px;
-}
-
-.black{
-	background-image: url('../images/button/black.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	height: 500px;
-	width: 500px;
-}
-
 .option{
 	background-size: contain;
 	background-repeat: no-repeat;

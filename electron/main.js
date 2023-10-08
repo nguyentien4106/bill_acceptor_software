@@ -1,7 +1,5 @@
-const { app, BrowserWindow, ipcMain, Menu, ipcRenderer } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
-const fs = require('fs')
-const os = require("os")
 const isDev = require('electron-is-dev');
 const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
@@ -24,7 +22,6 @@ function createWindow() {
     },
     minimizable: false,
     fullscreen: true,
-    // skipTaskbar: true
   });
 
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
@@ -52,41 +49,53 @@ function createWindow() {
   });
 
 
-  if(isDev){
-    mainWindow.webContents.openDevTools();
-    workerWindow.webContents.openDevTools();
-    mainWindow.focus()
+  // if(isDev){
+  //   mainWindow.webContents.openDevTools();
+  //   workerWindow.webContents.openDevTools();
+  //   mainWindow.focus()
 
-    var menu = Menu.buildFromTemplate([
-      {
-          label: 'Menu',
-          submenu: [
-              {
-                label:'Add 100',
-                click(){
-                  money += 100000;
-                  mainWindow.webContents.send('detectMoneyIn', money);
-                }
-              },
-              {
-                label:'Add 10',
-                click(){
-                  money += 10000;
-                  mainWindow.webContents.send('detectMoneyIn', money);
-                }
-              },
-              {
-                label:'Add 20',
-                click(){
-                  money += 20000;
-                  mainWindow.webContents.send('detectMoneyIn', money);
-                }
-              }
-          ]
-    }])
+  //   var menu = Menu.buildFromTemplate([
+  //     {
+  //         label: 'Menu',
+  //         submenu: [
+  //             {
+  //               label:'Add 100',
+  //               click(){
+  //                 money += 100000;
+  //                 mainWindow.webContents.send('detectMoneyIn', money);
+  //               }
+  //             },
+  //             {
+  //               label:'Add 10',
+  //               click(){
+  //                 money += 10000;
+  //                 mainWindow.webContents.send('detectMoneyIn', money);
+  //               }
+  //             },
+  //             {
+  //               label:'Add 20',
+  //               click(){
+  //                 money += 20000;
+  //                 mainWindow.webContents.send('detectMoneyIn', money);
+  //               }
+  //             }, 
+  //             {
+  //               label:'open devtool',
+  //               click(){
+  //                 mainWindow.webContents.openDevTools();
+  //               }
+  //             }, 
+  //             {
+  //               label:'close devtool',
+  //               click(){
+  //                 mainWindow.webContents.closeDevTools();
+  //               }
+  //             }
+  //         ]
+  //   }])
 
-    Menu.setApplicationMenu(menu); 
-  }
+  //   Menu.setApplicationMenu(menu); 
+  // }
 }
 
 function readBill(result){

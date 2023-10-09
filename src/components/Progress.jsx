@@ -43,6 +43,7 @@ import Step0_WaitingScreen from './Step0_WaitingScreen';
 
 import demo from '../images/demo.jpg'
 import ErrorPage from './ErrorPage';
+import Navigation from './Navigation';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -156,15 +157,13 @@ export default function Progress(props) {
                                 />},   
       {
         name: "error", component: <ErrorPage />
-      }                       
+      }                
   ]
 
   return (
     <div className='step-progress'>
-        <ErrorPage></ErrorPage>
         <StepZilla 
-          steps={[]}
-          // startAtStep={5}
+          steps={steps}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

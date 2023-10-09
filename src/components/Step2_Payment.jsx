@@ -53,7 +53,7 @@ function Step2_Payment(props) {
                     <h3 className='ms-auto p-2 text'>{displayMoney(props.money)} VND</h3>
                 </div>
             </div>
-            <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdownTime={300}/>
+            <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdownTime={250}/>
         </div>
     )
 }

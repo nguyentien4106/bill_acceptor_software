@@ -23,7 +23,7 @@ export default function Navigation(props) {
 
     useEffect(() => {
         console.log(time)
-        if(time === 0){
+        if(time <= 0){
             jumpToStep(0)
         }
 

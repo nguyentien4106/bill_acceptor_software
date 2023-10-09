@@ -1,15 +1,15 @@
 import React from 'react'
 import { useEffect } from 'react'
-import video from '../images/button/backgroundVideo.mp4'
+import video from '../images/screens/step0/waiting.mp4'
 import '../css/Step0.css'
 
 function Step0_WaitingScreen({jumpToStep}) {
     const music = document.getElementById("screen_saver_sound");
 
-    useEffect(() => {
-        music.loop = true;
-        music.play()
-    }, [])
+    // useEffect(() => {
+    //     music.loop = true;
+    //     music.play()
+    // }, [])
 
     const handleClick = () => {
         const audio = document.getElementById("click-audio");
@@ -22,7 +22,7 @@ function Step0_WaitingScreen({jumpToStep}) {
 
     return (
         <div id="video-container">
-            <video id="video-background" src={video} autoPlay loop muted onClick={handleClick}></video>
+            <video id="video-background" src={video} autoPlay loop onClick={handleClick}></video>
         </div>
     )
 }

@@ -13,13 +13,13 @@ import sticker_orange_option  from '../images/screens/step1/sticker_orange.png';
 import sticker_purple_option  from '../images/screens/step1/sticker_purple.png';
 import sticker_pink_option  from '../images/screens/step1/sticker_pink.png';
 
-import basic_white_print from '../images/background/basic_white/basic_white.jpg'
-import basic_white_left from '../images/background/basic_white/basic_white_left.jpg'
-import basic_white_right from '../images/background/basic_white/basic_white_right.jpg'
+import basic_white_print from '../images/background/basic_white/basic_white.png'
+import basic_white_left from '../images/background/basic_white/basic_white_left.png'
+import basic_white_right from '../images/background/basic_white/basic_white_right.png'
 
-import basic_black_print from '../images/background/basic_black/basic_black.jpg'
-import basic_black_left from '../images/background/basic_black/basic_black_left.jpg'
-import basic_black_right from '../images/background/basic_black/basic_black_right.jpg'
+import basic_black_print from '../images/background/basic_black/basic_black.png'
+import basic_black_left from '../images/background/basic_black/basic_black_left.png'
+import basic_black_right from '../images/background/basic_black/basic_black_right.png'
 
 import sticker_orange_print from "../images/background/sticker_orange/sticker_orange.png"
 import sticker_orange_left from "../images/background/sticker_orange/sticker_orange_left.png"
@@ -95,7 +95,7 @@ export default function Progress(props) {
   
   const [dataSelected, setDataSelected] = useState(dataFrames[3])
   const [imagesTaken, setImagesTaken] = useState([]) //useState([demo, demo, demo, demo, demo, demo])
-  const [imagesChoosen, setImagesChoosen] =  useState([demo, demo, demo, demo]) //useState([demo, demo, demo, demo])
+  const [imagesChoosen, setImagesChoosen] =  useState([]) //useState([demo, demo, demo, demo])
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
   const [imageForPrint, setImageForPrint] = useState(null)
@@ -130,6 +130,7 @@ export default function Progress(props) {
       {name: '', component: <Step3_TakePhoto 
                                         onSetLog={setLog}
                                         onSetImagesTaken={setImagesTaken}
+                                        deepAR={props.deepAR}
                                     />},
 
       {name: '', component: <Step4_SelectImages

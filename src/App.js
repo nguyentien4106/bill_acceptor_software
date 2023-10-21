@@ -11,7 +11,6 @@ function App() {
   const [isAuth, setIsAuth] = useState(true)
   const [user, setUser] = useState('')
   const [users, setUsers] = useState([])
-
   ipcRenderer.on("authorize", (event, data) => {
     console.log(JSON.stringify(data).split(","))
     setUsers(JSON.stringify(data).split(","))
@@ -51,6 +50,8 @@ function App() {
         next.addEventListener("click", () =>{
           audio.play()
         })
+
+       
     }
   }, [isAuth])
 

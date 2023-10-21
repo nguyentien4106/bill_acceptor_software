@@ -19,34 +19,20 @@ const effectList = [
   "none",
   "effects/ray-ban-wayfarer.deepar",
   "effects/viking_helmet.deepar",
-  "effects/MakeupLook.deepar",
   "effects/flower_face.deepar",
-  "effects/Stallone.deepar",
   "effects/galaxy_background_web.deepar",
-  "effects/Humanoid.deepar",
   "effects/Neon_Devil_Horns.deepar",
-  "effects/Ping_Pong.deepar",
   "effects/Pixel_Hearts.deepar",
-  "effects/Snail.deepar",
-  "effects/Hope.deepar",
-  "effects/Vendetta_Mask.deepar",
 ];
 
 const effectOptionsLabel = [
   'none',
   'ray-ban-wayfarer',
   'viking',
-  'makeup',
   'flower_face',
-  'stallone',
   'galaxy',
-  'humanoid',
   'devil_horns',
-  'ping_pong',
   'pixel_hearts',
-  'snail',
-  'hope',
-  'vendetta',
 ]
 
 let deepAR;
@@ -94,10 +80,9 @@ const Step3_TakePhoto = (props) => {
       document.getElementById("timeup").play()
       deepAR.stopCamera()
       deepAR.shutdown()
-      setTimeout(() => {
-        props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
-        props.jumpToStep(4);
-      }, 200)
+
+      props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
+      props.jumpToStep(4);
     }
   }, [images.length])
 
@@ -111,7 +96,6 @@ const Step3_TakePhoto = (props) => {
         actions.reset()
         setIsClicked(false)
         setIsTaking(false)
-
       })
     }, 500)
   }

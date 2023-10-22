@@ -3,6 +3,7 @@ import './App.css';
 import Progress from './components/Progress';
 import { ReactNotifications } from 'react-notifications-component'
 import { Store } from 'react-notifications-component';
+import * as deepar from 'deepar';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -11,8 +12,9 @@ function App() {
   const [isAuth, setIsAuth] = useState(true)
   const [user, setUser] = useState('')
   const [users, setUsers] = useState([])
+  const [deepAR, setDeepAR] = useState(null)
+
   ipcRenderer.on("authorize", (event, data) => {
-    console.log(JSON.stringify(data).split(","))
     setUsers(JSON.stringify(data).split(","))
   })
 
@@ -35,6 +37,31 @@ function App() {
           }
         })
     });
+    const canvas = document.createElement('canvas');
+
+    const scale = window.devicePixelRatio || 1;
+
+    const width = window.innerWidth > window.innerHeight ? 825 : window.innerWidth
+    canvas.width = Math.floor(width * scale);
+    canvas.height = Math.floor(825 * 2 / 3);
+
+    canvas.style.maxHeight = 550 + "px";
+    canvas.style.maxWidth = width + "px";
+    
+    deepar.initialize({
+      licenseKey: '0f80df803ffd1a58c1ccfb606615e3a429c55801750dd37b536270fc0d62bc95cef3fc376bf4dacb',
+      canvas: canvas,
+      deeparWasmPath: './deepar-resources/wasm/deepar.wasm',
+      additionalOptions: {
+        cameraConfig: {
+            disableDefaultCamera: true
+        }
+    }
+    }).then(res => {
+      setDeepAR(res)
+    }).catch(err => {
+      console.log('error')
+    })
   }, [])
 
   useEffect(() => {
@@ -82,8 +109,9 @@ function App() {
       {
         isAuth ? <Progress 
                     money={money}
+                    deepAR={deepAR}
                   />
-                  : <div >
+                  : <div>
                       <label>
                         Xin hãy nhập mã đăng ký của bạn 
                         <input style={{"width": 500}} type="text" value={user} onChange={(e) => setUser(e.target.value)}/>
@@ -91,6 +119,7 @@ function App() {
                       <input type="submit" value="Submit" onClick={handleSubmit}/>
                     </div>                    
       }
+
     </div>
   );
 }

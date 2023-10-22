@@ -40,10 +40,7 @@ import sticker_purple_right  from "../images/background/sticker_purple/sticker_p
 import { Store } from 'react-notifications-component';
 import Step6_HandlePrint from './Step6_HandlePrint';
 import Step0_WaitingScreen from './Step0_WaitingScreen';
-
-import demo from '../images/demo.jpg'
 import ErrorPage from './ErrorPage';
-import Navigation from './Navigation';
 
 const {ipcRenderer} = window.require('electron')
 
@@ -165,6 +162,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
+          // startAtStep={3}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

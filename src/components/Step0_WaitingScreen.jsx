@@ -1,15 +1,9 @@
 import React from 'react'
-import { useEffect } from 'react'
 import video from '../images/screens/step0/waiting.mp4'
 import '../css/Step0.css'
 
 function Step0_WaitingScreen({jumpToStep}) {
     const music = document.getElementById("screen_saver_sound");
-
-    // useEffect(() => {
-    //     music.loop = true;
-    //     music.play()
-    // }, [])
 
     const handleClick = () => {
         const audio = document.getElementById("click-audio");

@@ -17,12 +17,10 @@ export default function Navigation(props) {
     const handleNextClick = () => {
         audio.play().then(() => {
             jumpToStep(currentStep + 1 < maxStep ? currentStep + 1 : maxStep)
-
         })
     }
 
     useEffect(() => {
-        console.log(time)
         if(time <= 0){
             jumpToStep(0)
         }

@@ -1,34 +1,15 @@
 import React, { useEffect} from 'react'
-import { useState } from 'react';
 import { CashStack } from "react-bootstrap-icons";
 import Navigation from './Navigation';
 import '../css/Step2.css'
 
 function Step2_Payment(props) {
-    const OneMinute = 60
-    const [timer, setTimer] = useState(0)
 
     useEffect(() => {
-        setTimer(prev => 0)
         if(props.money >= 50000){
             props.jumpToStep(3)
         }
     }, [props.money])
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-          setTimer(prevTime => prevTime + 1); 
-        }, 1000); 
-
-
-        return () => clearInterval(intervalId); 
-    }, []);
-
-    useEffect(() => {
-        if(timer >= OneMinute){
-            props.jumpToStep(0)
-        }
-    }, [timer])
 
     const displayMoney = (money)=> {
         return money.toLocaleString('en-US', {
@@ -53,7 +34,7 @@ function Step2_Payment(props) {
                     <h3 className='ms-auto p-2 text'>{displayMoney(props.money)} VND</h3>
                 </div>
             </div>
-            <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdownTime={250}/>
+            <Navigation currentStep={2} jumpToStep={props.jumpToStep} maxStep={6} showBack={true} showNext={false} countdownTime={120}/>
         </div>
     )
 }

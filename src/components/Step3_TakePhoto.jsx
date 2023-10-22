@@ -39,8 +39,10 @@ const Step3_TakePhoto = (props) => {
   const [isClicked, setIsClicked] = useState(false)
   const [isTaking, setIsTaking] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
-  // const [currentEffect, setCurrentEffect] = useState("none")
+  const [currentEffect, setCurrentEffect] = useState("none")
+  const [idx, setIdx] = useState(0)
   const {deepAR} = props
+  // const [isLoadingEffect, setIsLoadingEffect] = useState(true)
 
   useEffect(() => {
     startCamera()    
@@ -62,7 +64,6 @@ const Step3_TakePhoto = (props) => {
     const div = document.getElementById("div")
     div.prepend(canvas)
     deepAR.startCamera()
-    initCarousel()
   }
 
   const handleClickTakePhoto = async () => {
@@ -86,36 +87,29 @@ const Step3_TakePhoto = (props) => {
     })
   }
 
+  const handleEffect = async index => {
+    setIdx(index)
+    if(!index){
+      await deepAR.clearEffect()
+    }
+    else if(idx != index){
+      await deepAR.switchEffect(effectList[index])
+    }
+
+  }
+
   const generateEffectOptions = () => {
-    return effectOptionsLabel.map(item => {
+    return effectOptionsLabel.map((item, index) => {
       return (
           <div key={item} className="slide">
-              <img className="responsive-img" src={`thumbs/${item}.png`} />
+              <img 
+                className={`responsive-img ${index === idx ? "selected" : ""}`}
+                src={`thumbs/${item}.png`} 
+                onClick={() => handleEffect(index)}
+              />
           </div>
       )
     })
-  }
-  
-  const initCarousel = () => {
-    // const newCarousel = new Carousel("carousel")
-    // newCarousel.onChange = async (value) => {
-    //   const loadingSpinner = document.getElementById("loading-spinner");
-    //   if(!loadingSpinner){
-    //     return
-    //   }
-
-    //   if(value === 0){
-    //     loadingSpinner.style.display = "block";
-    //     await deepAR.clearEffect();
-    //     setCurrentEffect(prev => effectList[value])
-    //   }
-    //   else if (currentEffect !== effectList[value]) {
-    //     loadingSpinner.style.display = "block";
-    //     await deepAR.switchEffect(effectList[value]);
-    //     setCurrentEffect(prev => effectList[value])
-    //   }
-    //   loadingSpinner.style.display = "none";
-    // }
   }
 
   return (
@@ -133,14 +127,7 @@ const Step3_TakePhoto = (props) => {
           </div>
           <div className='camera' id='div'>
             <div className="carousel" id="carousel">
-              <div className="carousel-center" id="carousel-center">
-                <div className="lds-ring" id="loading-spinner" style={{display: 'none'}}>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
+              <div></div>
               <div className="carousel-slider">
                 {
                   generateEffectOptions()

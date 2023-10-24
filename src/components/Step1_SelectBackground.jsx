@@ -12,7 +12,6 @@ export default function Step1_SelectBackground(props) {
     const audio = document.getElementById("click-audio");
     audio.play().then(() => {
       setFrameSelected(itemName)
-      console.log(dataFrames.filter(item => item.name === itemName)[0])
       props.onSetDataSelected(dataFrames.filter(item => item.name === itemName)[0])
     })
   }

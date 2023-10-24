@@ -5,13 +5,6 @@ import cameraButton from '../images/screens/step3/camera.png'
 import useCountDown from "react-countdown-hook";
 import moment from 'moment';
 import '../css/FaceFilter.css'
-import Carousel from '../helpers/carousel'
-
-const override = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
 
 const effectList = [
   "none",

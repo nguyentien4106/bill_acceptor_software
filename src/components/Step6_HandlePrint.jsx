@@ -78,9 +78,9 @@ export default function Step6_HandlePrint(props) {
                     {
                         !isPrint 
                         ? <div className='button-print align-position' onClick={async () => await handlePrint()}></div>
-                        : <div>
-                            <h2>{progress}</h2>
-                            <progress className="progress is-success is-large align-position" value={currentProgress} max={70}>{currentProgress * 100 / 70}%</progress>
+                        : <div className=''>
+                            <h2 className='detail-progress'>{progress}</h2>
+                            <progress className="position-progress progress is-success is-large align-position" value={currentProgress} max={70}>{currentProgress * 100 / 70}%</progress>
                           </div>
                     }
                 </div>

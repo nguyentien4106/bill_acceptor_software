@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../css/Step3.css'
 import Navigation from './Navigation';
 import cameraButton from '../images/screens/step3/camera.png'
 import useCountDown from "react-countdown-hook";
 import moment from 'moment';
 import '../css/FaceFilter.css'
+import { setIntervalX } from '../helpers/helper';
 
 const effectList = [
   "none",
@@ -32,77 +33,66 @@ const Step3_TakePhoto = (props) => {
   const [isClicked, setIsClicked] = useState(false)
   const [isTaking, setIsTaking] = useState(false)
   const [timeLeft, actions] = useCountDown(5000)
-  const [currentEffect, setCurrentEffect] = useState("none")
-  const [idx, setIdx] = useState(0)
-  const {deepAR} = props
-  // const [isLoadingEffect, setIsLoadingEffect] = useState(true)
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    startCamera()    
-  }, [])
+    const startCamera = async () => {
+      try {
+        const constraints = {
+          video: true,
+          height: 400,
+          width: 600
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoRef.current.srcObject = stream;
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+      }
+    };
+
+    startCamera();
+  }, []);
 
   useEffect(() => {
     if(images.length === 6){
       setIsTaking(false)
       document.getElementById("timeup").play()
-      deepAR.stopCamera()
-      
+      props.onSetImagesTaken(images)
       props.onSetLog(prev => prev + `\nDone Step 3 at ${moment()}`)
       props.jumpToStep(4);
     }
   }, [images.length])
 
-  const startCamera = () => {
-    const canvas = deepAR.getCanvas()
-    const div = document.getElementById("div")
-    div.prepend(canvas)
-    deepAR.startCamera()
-  }
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    const canvas = document.createElement("canvas");
+    
+    // Set canvas dimensions to match the video stream
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Draw the current video frame onto the canvas
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Get the base64-encoded image data from the canvas
+    const photo = canvas.toDataURL('image/png');
+
+    setImages(prev => [...prev, photo]);
+  };
 
   const handleClickTakePhoto = async () => {
     setIsTaking(true)
     actions.start()
     setIsClicked(true)
-    setTimeout(() => {
+
+    setIntervalX(() => {
+      actions.reset()
+      actions.start()
       takePhotoAudio.play().then(() => {
         capturePhoto()
-        actions.reset()
-        setIsClicked(false)
-        setIsTaking(false)
       })
-    }, 5000)
-  }
-
-  const capturePhoto = () => {
-    deepAR.takeScreenshot().then(img => {
-      setImages(prev => [...prev, img])
-      props.onSetImagesTaken(prev => [...prev, img])
-    })
-  }
-
-  const handleEffect = async index => {
-    setIdx(index)
-    if(!index){
-      await deepAR.clearEffect()
-    }
-    else if(idx != index){
-      await deepAR.switchEffect(effectList[index])
-    }
-
-  }
-
-  const generateEffectOptions = () => {
-    return effectOptionsLabel.map((item, index) => {
-      return (
-          <div key={item} className="slide">
-              <img 
-                className={`responsive-img ${index === idx ? "selected" : ""}`}
-                src={`thumbs/${item}.png`} 
-                onClick={() => handleEffect(index)}
-              />
-          </div>
-      )
-    })
+    }, 5000, 6)
   }
 
   return (
@@ -118,15 +108,8 @@ const Step3_TakePhoto = (props) => {
               })
             }
           </div>
-          <div className='camera' id='div'>
-            <div className="carousel" id="carousel">
-              <div></div>
-              <div className="carousel-slider">
-                {
-                  generateEffectOptions()
-                }
-              </div>
-            </div>
+          <div className='camera'>
+            <video ref={videoRef} autoPlay height={720} width={1080}/>;
           </div>
           <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto}>
           </img>

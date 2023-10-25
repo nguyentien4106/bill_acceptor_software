@@ -59,8 +59,8 @@
     height: 200px;
     width: 200px;
     position: absolute;
-    top: 50%;
-    right: 400px;
+    top: 65%;
+    right: 480px;
     animation: zoom-in-zoom-out 2.5s ease infinite;
     z-index: 1;
 }
@@ -80,8 +80,8 @@
 
 .countdown-timer{
     position: absolute;
-    top: 50%;
-    right: 450px;
+    top: 65%;
+    right: 480px;
     z-index: 2;
     font-size: 200px;
     color: white;

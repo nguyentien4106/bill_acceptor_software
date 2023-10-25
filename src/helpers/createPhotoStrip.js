@@ -62,6 +62,17 @@ export function drawImagesOnCanvas1240(dataBase64s, canvasWidth, canvasHeight, b
         
             y += imageHeight + margin_bot; // Update the y position for the next image
         }
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 50, 50, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 650, 50, imageWidth, imageHeight)
+
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 440, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 440, imageWidth, imageHeight)
+
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 50, 840, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 650, 840, imageWidth, imageHeight)
+
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 1240, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 1240, imageWidth, imageHeight)
       }
 
       const background = new Image();
@@ -109,7 +120,8 @@ export function drawQRCodeImage(image, qrCodeLeftSrc, qrCodeRightSrc){
 export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
   let filter;
   const thumbnails = createImageFromBase64Data(imageUrls)
-
+  console.log(thumbnails[0].width)
+  console.log(thumbnails[0].height)
   if(filterName){
     filter = filters.filter(item => item.name === filterName)[0].value;
   }

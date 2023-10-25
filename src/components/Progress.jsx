@@ -127,7 +127,6 @@ export default function Progress(props) {
       {name: '', component: <Step3_TakePhoto 
                                         onSetLog={setLog}
                                         onSetImagesTaken={setImagesTaken}
-                                        deepAR={props.deepAR}
                                     />},
 
       {name: '', component: <Step4_SelectImages
@@ -162,7 +161,7 @@ export default function Progress(props) {
     <div className='step-progress'>
         <StepZilla 
           steps={steps}
-          // startAtStep={3}
+          startAtStep={3}
           showSteps={false}
           backButtonCls={"back-button"} 
           backButtonText={""} 

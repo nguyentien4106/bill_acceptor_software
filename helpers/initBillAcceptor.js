@@ -26,7 +26,7 @@ const initBillAcceptor = (readBill) => {
     }
   });
 
-  tp.open('COM14', serialPortConfig)
+  tp.open('COM9', serialPortConfig)
     .then(() => {
       console.log('GO!!!');
   

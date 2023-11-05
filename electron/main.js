@@ -21,6 +21,7 @@ function createWindow() {
     },
     minimizable: false,
     fullscreen: true,
+    autoHideMenuBar: true
   });
 
   mainWindow.loadURL(!app.isPackaged ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
@@ -138,8 +139,8 @@ app.whenReady().then(() => {
         }, 3000)
       }
       else {
-        mainWindow.webContents.send('detectError', err)
-        writeLog(log + `\nPrint failed at ${moment()}`)
+        mainWindow.webContents.send('detectError', reason)
+        writeLog(log + `\nPrint failed at ${moment()} because ${reason}`)
       }
     })
 

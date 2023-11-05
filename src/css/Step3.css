@@ -40,7 +40,7 @@
 .camera{
     position: absolute;
     bottom: 5%;
-    right: 100px;
+    right: 50px;
 }
 
 .image{
@@ -80,8 +80,8 @@
 
 .countdown-timer{
     position: absolute;
-    top: 65%;
-    right: 480px;
+    top: 55%;
+    right: 520px;
     z-index: 2;
     font-size: 200px;
     color: white;

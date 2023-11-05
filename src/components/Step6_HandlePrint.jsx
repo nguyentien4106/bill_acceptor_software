@@ -12,25 +12,6 @@ const sendCommandToWorker = (image, log) => {
     ipcRenderer.send("print", {image: image, log: log});
 }
 
-ipcRenderer.once("getLink", async (event, data) => {
-    const opts = {
-        errorCorrectionLevel: 'H',
-        width: 114,
-        margin: 0.5
-    }
-    const jsonData = JSON.parse(data)
-    
-    const qr_left = await QRCode.toDataURL(jsonData.qrUrl_cloud_left, opts)
-    const qr_right = await QRCode.toDataURL(jsonData.qrUrl_cloud_right, opts)
-
-    ipcRenderer.send("receiveNotice", "Đang tạo ảnh để in.")
-
-    drawQRCodeImage(jsonData.imageForPrint, qr_left, qr_right).then(img => {
-        sendCommandToWorker(img, jsonData.log)
-    })
-
-})
-
 export default function Step6_HandlePrint(props) {
     const {dataSelected} = props
     const [progress, setProgress] = useState("Đang xử lý...")
@@ -46,6 +27,26 @@ export default function Step6_HandlePrint(props) {
             setProgress(notice)
             setCurrentProgress(prev => prev + 10)
         })
+
+        ipcRenderer.on("getLink", async (event, data) => {
+            const opts = {
+                errorCorrectionLevel: 'H',
+                width: 125,
+                margin: 0.5
+            }
+            const jsonData = JSON.parse(data)
+            
+            const qr_left = await QRCode.toDataURL(jsonData.qrUrl_cloud_left, opts)
+            const qr_right = await QRCode.toDataURL(jsonData.qrUrl_cloud_right, opts)
+
+            ipcRenderer.send("receiveNotice", "Đang tạo ảnh để in.")
+
+            drawQRCodeImage(jsonData.imageForPrint, qr_left, qr_right).then(img => {
+                sendCommandToWorker(img, jsonData.log)
+            })
+
+        })
+
     }, [])
 
     const pushDrive = async log => {

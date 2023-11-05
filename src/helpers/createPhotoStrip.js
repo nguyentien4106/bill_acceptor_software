@@ -65,8 +65,8 @@ export function drawImagesOnCanvas1240(dataBase64s, canvasWidth, canvasHeight, b
         ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 50, 50, imageWidth, imageHeight)
         ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 650, 50, imageWidth, imageHeight)
 
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 440, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 440, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 445, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 445, imageWidth, imageHeight)
 
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 50, 840, imageWidth, imageHeight)
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 650, 840, imageWidth, imageHeight)
@@ -96,12 +96,12 @@ export function drawQRCodeImage(image, qrCodeLeftSrc, qrCodeRightSrc){
     canvas.width = 1240;
     canvas.height = 1844;
     const ctx = canvas.getContext("2d");
-    const qrWidth = 114
-    const qrHeight = 114
+    const qrWidth = 125
+    const qrHeight = 125
 
     const drawQRCodes = () => {
-      ctx.drawImage(qrCodeLeft, 460, 1650, qrWidth, qrHeight)
-      ctx.drawImage(qrCodeRight, 1076, 1650, qrWidth, qrHeight)
+      ctx.drawImage(qrCodeLeft, 455, 1650, qrWidth, qrHeight)
+      ctx.drawImage(qrCodeRight, 1070, 1650, qrWidth, qrHeight)
     }
 
     const qrCodeLeft = new Image()

@@ -19,16 +19,21 @@ export default function Step6_HandlePrint(props) {
     const [isPrint, setIsPrint] = useState(false)
 
     useState(() => {
-        ipcRenderer.on("finish", event => {
+        const finishEvent =event => {
+            setIsPrint(false)
             props.jumpToStep(0)
-        })
+        }
 
-        ipcRenderer.on("getNotice", (event, notice) => {
+        ipcRenderer.on("finish", finishEvent)
+
+        const getNoticeEvent = (event, notice) => {
             setProgress(notice)
             setCurrentProgress(prev => prev + 10)
-        })
+        }
 
-        ipcRenderer.on("getLink", async (event, data) => {
+        ipcRenderer.on("getNotice", getNoticeEvent)
+
+        const getLinkEvent = async (event, data) => {
             const opts = {
                 errorCorrectionLevel: 'H',
                 width: 125,
@@ -45,7 +50,15 @@ export default function Step6_HandlePrint(props) {
                 sendCommandToWorker(img, jsonData.log)
             })
 
-        })
+        };
+
+        ipcRenderer.on("getLink", getLinkEvent)
+
+        return () => {
+            ipcRenderer.off("finish", finishEvent)
+            ipcRenderer.off("getNotice", getNoticeEvent)
+            ipcRenderer.off("getLink",  getLinkEvent)
+        }
 
     }, [])
 
@@ -68,6 +81,7 @@ export default function Step6_HandlePrint(props) {
     }
 
     const handlePrint = async () => {
+        console.log("click handle print")
         setIsPrint(true)
         await pushDrive(`${props.log}\nPrinted at ${moment()}`)
     }

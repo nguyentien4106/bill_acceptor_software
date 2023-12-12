@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ErrorPage(props) {
 
-  console.log(props)
   return (
     <div className="error-page">
       <div className="container d-flex">

@@ -7,26 +7,6 @@ import moment from 'moment';
 import '../css/FaceFilter.css'
 import { setIntervalX } from '../helpers/helper';
 
-const effectList = [
-  "none",
-  "effects/ray-ban-wayfarer.deepar",
-  "effects/viking_helmet.deepar",
-  "effects/flower_face.deepar",
-  "effects/galaxy_background_web.deepar",
-  "effects/Neon_Devil_Horns.deepar",
-  "effects/Pixel_Hearts.deepar",
-];
-
-const effectOptionsLabel = [
-  'none',
-  'ray-ban-wayfarer',
-  'viking',
-  'flower_face',
-  'galaxy',
-  'devil_horns',
-  'pixel_hearts',
-]
-
 const Step3_TakePhoto = (props) => {
   const [images, setImages] = useState([])
   const takePhotoAudio = document.getElementById("take_photo");

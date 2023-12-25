@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navigation from './Navigation'
 import { drawImagesOnCanvas, drawQRCodeImage } from '../helpers/createPhotoStrip'
 import moment from 'moment';
@@ -18,8 +18,8 @@ export default function Step6_HandlePrint(props) {
     const [currentProgress, setCurrentProgress] = useState(0)
     const [isPrint, setIsPrint] = useState(false)
 
-    useState(() => {
-        const finishEvent =event => {
+    useEffect(() => {
+        const finishEvent = event => {
             setIsPrint(false)
             props.jumpToStep(0)
         }
@@ -55,9 +55,9 @@ export default function Step6_HandlePrint(props) {
         ipcRenderer.on("getLink", getLinkEvent)
 
         return () => {
-            ipcRenderer.off("finish", finishEvent)
-            ipcRenderer.off("getNotice", getNoticeEvent)
-            ipcRenderer.off("getLink",  getLinkEvent)
+            ipcRenderer.removeAllListeners("finish")
+            ipcRenderer.removeAllListeners("getNotice")
+            ipcRenderer.removeAllListeners("getLink")
         }
 
     }, [])

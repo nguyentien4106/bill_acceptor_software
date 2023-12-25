@@ -56,12 +56,6 @@ export function drawImagesOnCanvas1240(dataBase64s, canvasWidth, canvasHeight, b
       const margin_bot = 30
 
       const drawThumbails = () => {
-        for(let i = 0; i < 4; i++){
-            ctx.drawImage(applyFiltersToImageSync(thumbnails[i], filter), 50, y, imageWidth, imageHeight)
-            ctx.drawImage(applyFiltersToImageSync(thumbnails[i], filter), 650, y, imageWidth, imageHeight)
-        
-            y += imageHeight + margin_bot; // Update the y position for the next image
-        }
         ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 50, 50, imageWidth, imageHeight)
         ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), 650, 50, imageWidth, imageHeight)
 
@@ -71,8 +65,8 @@ export function drawImagesOnCanvas1240(dataBase64s, canvasWidth, canvasHeight, b
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 50, 840, imageWidth, imageHeight)
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 650, 840, imageWidth, imageHeight)
 
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 1240, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 1240, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 1230, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 1230, imageWidth, imageHeight)
       }
 
       const background = new Image();
@@ -136,10 +130,10 @@ export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgro
       const margin = 30
 
       const drawThumbails = () => {
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), margin, imageHeight * 0 + margin * 1, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), margin, imageHeight * 1 + margin * 2, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), margin, imageHeight * 2 + margin * 3, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[3], filter), margin, imageHeight * 3 + margin * 4, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[0], filter), margin, 50, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), margin, 435, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), margin, 820, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[3], filter), margin, 1205, imageWidth, imageHeight)
       }
       // Load the background image
       const background = new Image();

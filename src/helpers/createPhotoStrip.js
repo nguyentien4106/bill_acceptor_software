@@ -65,8 +65,8 @@ export function drawImagesOnCanvas1240(dataBase64s, canvasWidth, canvasHeight, b
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 50, 840, imageWidth, imageHeight)
         ctx.drawImage(applyFiltersToImageSync(thumbnails[2], filter), 650, 840, imageWidth, imageHeight)
 
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 50, 1230, imageWidth, imageHeight)
-        ctx.drawImage(applyFiltersToImageSync(thumbnails[1], filter), 650, 1230, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[3], filter), 50, 1230, imageWidth, imageHeight)
+        ctx.drawImage(applyFiltersToImageSync(thumbnails[3], filter), 650, 1230, imageWidth, imageHeight)
       }
 
       const background = new Image();

@@ -1,9 +1,8 @@
 const TpSeries = require('tp-rs232')
 const serialPort = require('serialport')
+const manufacturer = 'wch.cn'
 
-serialPort.list()
-.then((data) => console.log(data))
-.catch(err => console.log(err));
+
 
 let serialPortConfig = {
   baudrate: 9600,
@@ -31,19 +30,29 @@ const initBillAcceptor = (readBill) => {
     }
   });
 
-  tp.open('COM3', serialPortConfig)
-    .then(() => {
-      console.log('GO!!!');
-  
-      tp.command('POWER_UP')
-        .then(() => tp.command('ENABLE'))
-        .then((result) => {
-          console.log(result);
-        });
+
+  serialPort.list()
+    .then(ports => {
+        const port = ports.filter(item => item.manufacturer === manufacturer)[0]
+        tp.open(port.path, serialPortConfig)
+            .then(() => {
+            console.log('GO!!!');
+tp.command("DISABLE").then(res => console.log)
+        
+            tp.command('POWER_UP')
+                .then(() => tp.command('ENABLE'))
+                .then((result) => {
+                console.log(result);
+                });
+            })
+            .catch((error) => {
+            console.log(error);
+            });
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(err => console.log(err));
+
+
+  
 }
 
 const closeBillAcceptor = () => {
@@ -56,7 +65,4 @@ const disableBillAcceptor = () => {
   }).catch(console.error)
 }
 
-module.exports = {
-  initBillAcceptor: initBillAcceptor,
-  disableBillAcceptor: disableBillAcceptor
-}
+initBillAcceptor(() => {})

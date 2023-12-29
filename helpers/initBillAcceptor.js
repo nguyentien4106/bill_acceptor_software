@@ -1,9 +1,6 @@
 const TpSeries = require('tp-rs232')
 const serialPort = require('serialport')
-
-serialPort.list()
-.then((data) => console.log(data))
-.catch(err => console.log(err));
+const billAcceptorManufacturer = "wch.cn"
 
 let serialPortConfig = {
   baudrate: 9600,
@@ -30,8 +27,11 @@ const initBillAcceptor = (readBill) => {
       readBill(result)
     }
   });
+  serialPort.list()
+  .then(ports => {
+    const port = ports.filter(port => port.manufacturer === billAcceptorManufacturer)[0];
 
-  tp.open('COM3', serialPortConfig)
+    tp.open(port.path, serialPortConfig)
     .then(() => {
       console.log('GO!!!');
   
@@ -44,6 +44,8 @@ const initBillAcceptor = (readBill) => {
     .catch((error) => {
       console.log(error);
     });
+  })
+  .catch(err => console.log(err));
 }
 
 const closeBillAcceptor = () => {

@@ -39,7 +39,8 @@
     "serialport": "^9.0.7",
     "stream": "0.0.2",
     "tp-rs232": "0.0.5",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "electron . --trace-warnings",
@@ -50,7 +51,7 @@
     "eject": "react-scripts eject",
     "build-webpack": "webpack --mode production",
     "start-webpack": "webpack-dev-server --mode development",
-    "package" : "electron-packager . PhotoBoxApp --platform=win32 --asar --overwrite"
+    "package": "electron-packager . PhotoBoxApp --platform=win32 --asar --overwrite"
   },
   "eslintConfig": {
     "extends": [

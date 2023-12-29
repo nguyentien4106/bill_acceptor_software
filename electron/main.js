@@ -4,10 +4,40 @@ const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const GoogleService = require("../helpers/google-api-service")
 const BillAcceptor = require("../helpers/initBillAcceptor")
+const scheduleTask = require("../helpers/cronJob")
 
 let mainWindow;
 let workerWindow;
 let money = 0;
+let countOfPrint = 0;
+let reportData = []
+const hours = 23
+const minutes = 15
+
+function createReportRow(isSuccess, isTotal = false) {
+  if(isTotal){
+    let total = countOfPrint;
+    countOfPrint = 0
+    return {
+      "Number": "Total",
+      "Date": moment().format("DD/MM/YYYY"),
+      "Time": moment().format("HH:mm:ss"),
+      "Status": "",
+      "Money": total * 50000,
+      "Count": total
+    }
+  }
+  
+  return {
+    "Number": countOfPrint++,
+    "Date": moment().format("DD/MM/YYYY"),
+    "Time": moment().format("HH:mm:ss"),
+    "Status": isSuccess ? "Success" : "Fail",
+    "Money": 50000,
+    "Count": 1
+  }
+                    
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -111,10 +141,19 @@ function readBill(result){
   mainWindow.webContents.send('detectMoneyIn', money);
 }
 
+function sendReport() {
+  reportData.push(createReportRow(true, true))
+  GoogleService.uploadTextFile(reportData, `Report_${moment().format("YYYY-MM-DD")}.xlsx`).then(res => {
+    writeLog(`send report to drive successfully at ${moment()} with ${res}`)
+    reportData = []
+  })
+}
+
 app.whenReady().then(() => {
   createWindow()
   BillAcceptor.initBillAcceptor(readBill)
-
+  scheduleTask(hours, minutes, sendReport)
+  
   GoogleService.getUsers().then(users => {
     mainWindow.webContents.send("authorize", users)
   })
@@ -142,9 +181,8 @@ app.whenReady().then(() => {
         mainWindow.webContents.send('detectError', reason)
         writeLog(log + `\nPrint failed at ${moment()} because ${reason}`)
       }
+      reportData.push(createReportRow(success))
     })
-
-    
   });
 
   ipcMain.on("pushDrive", async (event, params) => {
@@ -169,6 +207,7 @@ app.whenReady().then(() => {
   ipcMain.on("receiveNotice", (event, notice) => {
     mainWindow.webContents.send("getNotice", notice)
   })
+
 }).catch(console.log);
 
 app.on('window-all-closed', async function () {

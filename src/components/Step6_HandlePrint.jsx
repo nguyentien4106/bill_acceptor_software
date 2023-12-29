@@ -8,8 +8,13 @@ import "../css/Step6.css"
 
 const {ipcRenderer} = window.require('electron')
 
-const sendCommandToWorker = (image, log) => {
-    ipcRenderer.send("print", {image: image, log: log});
+const sendCommandToWorker = (image, log, qr_left, qr_right) => {
+    ipcRenderer.send("print", {
+        image: image, 
+        log: log, 
+        url_left: qr_left, 
+        url_right: qr_right
+    });
 }
 
 export default function Step6_HandlePrint(props) {
@@ -47,7 +52,7 @@ export default function Step6_HandlePrint(props) {
             ipcRenderer.send("receiveNotice", "Đang tạo ảnh để in.")
 
             drawQRCodeImage(jsonData.imageForPrint, qr_left, qr_right).then(img => {
-                sendCommandToWorker(img, jsonData.log)
+                sendCommandToWorker(img, jsonData.log, qr_left, qr_right)
             })
 
         };

@@ -45,7 +45,7 @@
   "scripts": {
     "start": "electron . --trace-warnings",
     "start-react": "react-scripts start",
-    "build": "react-scripts build && electron-builder",
+    "build": "react-scripts build",
     "build-react": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

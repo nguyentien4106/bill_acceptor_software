@@ -14,7 +14,7 @@ let reportData = []
 const hours = 23
 const minutes = 15
 
-function createReportRow(isSuccess, isTotal = false) {
+function createReportRow(urlLeft, urlRight, isSuccess, isTotal = false) {
   if(isTotal){
     let total = countOfPrint;
     countOfPrint = 0
@@ -22,6 +22,8 @@ function createReportRow(isSuccess, isTotal = false) {
       "Number": "Total",
       "Date": moment().format("DD/MM/YYYY"),
       "Time": moment().format("HH:mm:ss"),
+      "URL Image Left": "",
+      "URL Image Right": "",
       "Status": "",
       "Money": total * 50000,
       "Count": total
@@ -32,6 +34,8 @@ function createReportRow(isSuccess, isTotal = false) {
     "Number": countOfPrint++,
     "Date": moment().format("DD/MM/YYYY"),
     "Time": moment().format("HH:mm:ss"),
+    "URL Image Left": urlLeft,
+    "URL Image Right": urlRight,
     "Status": isSuccess ? "Success" : "Fail",
     "Money": 50000,
     "Count": 1
@@ -167,11 +171,11 @@ app.whenReady().then(() => {
     workerWindow.webContents.send("sendImage", data);
   });
 
-  ipcMain.on("readyPrint", (event, log) => {
+  ipcMain.on("readyPrint", (event, data) => {
     mainWindow.webContents.send("getNotice", "Ảnh đang được in.")
     workerWindow.webContents.print({silent: true}, (success, reason) => {
       if(success){
-        writeLog(log + `\nPrint successfully at ${moment()}`)
+        writeLog(data.log + `\nPrint successfully at ${moment()}`)
         setTimeout(() => {
           mainWindow.webContents.send("getNotice", "Ảnh đã được in thành công. Vui lòng nhận ảnh ở ô dưới.")
           mainWindow.webContents.send("finish")
@@ -179,9 +183,9 @@ app.whenReady().then(() => {
       }
       else {
         mainWindow.webContents.send('detectError', reason)
-        writeLog(log + `\nPrint failed at ${moment()} because ${reason}`)
+        writeLog(data.log + `\nPrint failed at ${moment()} because ${reason}`)
       }
-      reportData.push(createReportRow(success))
+      reportData.push(createReportRow(data.url_left, data.url_right, success))
     })
   });
 

@@ -27,6 +27,7 @@ export default function Step6_HandlePrint(props) {
     useEffect(() => {
         const finishEvent = event => {
             setIsPrint(false)
+            props.onSetCanRetake(true)
             props.jumpToStep(0)
         }
 

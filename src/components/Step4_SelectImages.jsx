@@ -3,6 +3,7 @@ import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
 import Navigation from './Navigation';
 import '../css/Step4.css'
+import undo from '../images/screens/step4/undo.png'
 
 export default function Step4_SelectImages(props) {
   const {imagesTaken} = props
@@ -44,8 +45,23 @@ export default function Step4_SelectImages(props) {
     setShowNext(imagesChoosen.length === 4)
   }, [imagesChoosen.length])
 
+  const handleRetake = () => {
+    console.log('retake')
+    props.onSetCanRetake(false)
+    props.onSetImagesChoosen(prev => [])
+    props.jumpToStep(3)
+  }
+
   return (
     <div className='selectImagesBackground'>
+      <div>
+        {
+          props.canRetake && <div className='undo' onClick={handleRetake}>
+                        <img src={undo} width={100}></img>
+                        <h1 className='text'>Chụp lại ?</h1>
+                      </div>
+        }
+      </div>
       <div className='images-taken'>
         {
           imagesTaken.map((item, key) => {

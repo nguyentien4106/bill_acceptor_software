@@ -63,3 +63,16 @@
     color: white;
     background-color: pink;
 }
+
+.undo{
+    display: flex;
+    width: 350px;
+    justify-content: space-around;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+.undo h1{
+    margin-top: 20px;
+}

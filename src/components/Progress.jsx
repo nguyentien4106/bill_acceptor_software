@@ -96,6 +96,7 @@ export default function Progress(props) {
   const [filter, setFilter] = useState('origin')
   const [log, setLog] = useState("")
   const [imageForPrint, setImageForPrint] = useState(null)
+  const [canRetake, setCanRetake] = useState(true)
 
   const handleOnStepChange = stepIndex => {
     Store.removeAllNotifications()
@@ -134,6 +135,8 @@ export default function Progress(props) {
                                           onSetImagesChoosen={setImagesChoosen}
                                           imagesChoosen={imagesChoosen}
                                           onSetLog={setLog}
+                                          canRetake={canRetake}
+                                          onSetCanRetake={setCanRetake}
                                         />},
 
       {name: '', component: <Step5_SelectFilter
@@ -151,6 +154,7 @@ export default function Progress(props) {
                                   filter={filter}
                                   onSetLog={setLog}
                                   log={log}
+                                  onSetCanRetake={setCanRetake}
                                 />},   
       {
         name: "error", component: <ErrorPage />

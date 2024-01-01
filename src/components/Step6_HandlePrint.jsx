@@ -8,12 +8,13 @@ import "../css/Step6.css"
 
 const {ipcRenderer} = window.require('electron')
 
-const sendCommandToWorker = (image, log, qr_left, qr_right) => {
+const sendCommandToWorker = (image, log, qr_left, qr_right, background) => {
     ipcRenderer.send("print", {
         image: image, 
         log: log, 
         url_left: qr_left, 
-        url_right: qr_right
+        url_right: qr_right,
+        background: background
     });
 }
 
@@ -52,7 +53,7 @@ export default function Step6_HandlePrint(props) {
             ipcRenderer.send("receiveNotice", "Đang tạo ảnh để in.")
 
             drawQRCodeImage(jsonData.imageForPrint, qr_left, qr_right).then(img => {
-                sendCommandToWorker(img, jsonData.log, qr_left, qr_right)
+                sendCommandToWorker(img, jsonData.log, jsonData.qrUrl_cloud_left, jsonData.qrUrl_cloud_right, dataSelected.name)
             })
 
         };
@@ -86,7 +87,6 @@ export default function Step6_HandlePrint(props) {
     }
 
     const handlePrint = async () => {
-        console.log("click handle print")
         setIsPrint(true)
         await pushDrive(`${props.log}\nPrinted at ${moment()}`)
     }

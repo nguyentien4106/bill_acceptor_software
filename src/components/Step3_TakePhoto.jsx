@@ -12,8 +12,11 @@ const Step3_TakePhoto = (props) => {
   const takePhotoAudio = document.getElementById("take_photo");
   const [isClicked, setIsClicked] = useState(false)
   const [isTaking, setIsTaking] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+
   const [timeLeft, actions] = useCountDown(5000)
   const videoRef = useRef(null);
+  const timePerShot = 5000
 
   useEffect(() => {
     const startCamera = async () => {
@@ -30,7 +33,9 @@ const Step3_TakePhoto = (props) => {
       }
     };
 
-    startCamera();
+    startCamera().then(() => {
+      setIsLoaded(true)
+    });
   }, []);
 
   useEffect(() => {
@@ -72,7 +77,7 @@ const Step3_TakePhoto = (props) => {
       takePhotoAudio.play().then(() => {
         capturePhoto()
       })
-    }, 5000, 6)
+    }, timePerShot, 6)
   }
 
   return (
@@ -91,8 +96,9 @@ const Step3_TakePhoto = (props) => {
           <div className='camera'>
             <video ref={videoRef} autoPlay height={720} width={1080}/>;
           </div>
-          <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto}>
-          </img>
+          {
+            isLoaded && <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto} />
+          }
         </div>
         <Navigation currentStep={3} jumpToStep={props.jumpToStep} maxStep={6} showBack={false} showNext={false}/>
       </>

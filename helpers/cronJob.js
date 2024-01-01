@@ -14,9 +14,9 @@ function scheduleTask(hours, minutes, callBackFunc) {
     }
   
     setTimeout(() => {
-        callBackFunc();
-        // Schedule the task for the next day
-        scheduleTask();
+      callBackFunc();
+      // Schedule the task for the next day
+      scheduleTask(hours, minutes, callBackFunc);
     }, timeToWait);
 }
 

@@ -10,7 +10,7 @@
       ipcRenderer.on("sendImage", (event, data) => {
           const img = document.getElementById("image")
           img.src = data.image
-          ipcRenderer.send("readyPrint", data.log)
+          ipcRenderer.send("readyPrint", data)
       });
     </script>
     <style>

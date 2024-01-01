@@ -14,7 +14,7 @@ let reportData = []
 const hours = 23
 const minutes = 15
 
-function createReportRow(urlLeft, urlRight, isSuccess, isTotal = false) {
+function createReportRow(urlLeft, urlRight, background, isSuccess, isTotal = false) {
   if(isTotal){
     let total = countOfPrint;
     countOfPrint = 0
@@ -24,18 +24,21 @@ function createReportRow(urlLeft, urlRight, isSuccess, isTotal = false) {
       "Time": moment().format("HH:mm:ss"),
       "URL Image Left": "",
       "URL Image Right": "",
+      "Background": "",
       "Status": "",
       "Money": total * 50000,
       "Count": total
     }
   }
-  
+  countOfPrint += 1
+
   return {
-    "Number": countOfPrint++,
+    "Number": countOfPrint,
     "Date": moment().format("DD/MM/YYYY"),
     "Time": moment().format("HH:mm:ss"),
     "URL Image Left": urlLeft,
     "URL Image Right": urlRight,
+    "Background": background,
     "Status": isSuccess ? "Success" : "Fail",
     "Money": 50000,
     "Count": 1
@@ -124,6 +127,12 @@ function createWindow() {
                 click(){
                   mainWindow.webContents.closeDevTools();
                 }
+              }, 
+              {
+                label:'set send report',
+                click(){
+                  sendReport(true, true)
+                }
               }
           ]
     }])
@@ -146,7 +155,7 @@ function readBill(result){
 }
 
 function sendReport() {
-  reportData.push(createReportRow(true, true))
+  reportData.push(createReportRow("", "", "", true, true))
   GoogleService.uploadTextFile(reportData, `Report_${moment().format("YYYY-MM-DD")}.xlsx`).then(res => {
     writeLog(`send report to drive successfully at ${moment()} with ${res}`)
     reportData = []
@@ -156,7 +165,7 @@ function sendReport() {
 app.whenReady().then(() => {
   createWindow()
   BillAcceptor.initBillAcceptor(readBill)
-  scheduleTask(hours, minutes, sendReport)
+  scheduleTask(hours, minutes, () => sendReport())
   
   GoogleService.getUsers().then(users => {
     mainWindow.webContents.send("authorize", users)
@@ -176,6 +185,7 @@ app.whenReady().then(() => {
     workerWindow.webContents.print({silent: true}, (success, reason) => {
       if(success){
         writeLog(data.log + `\nPrint successfully at ${moment()}`)
+
         setTimeout(() => {
           mainWindow.webContents.send("getNotice", "Ảnh đã được in thành công. Vui lòng nhận ảnh ở ô dưới.")
           mainWindow.webContents.send("finish")
@@ -185,7 +195,8 @@ app.whenReady().then(() => {
         mainWindow.webContents.send('detectError', reason)
         writeLog(data.log + `\nPrint failed at ${moment()} because ${reason}`)
       }
-      reportData.push(createReportRow(data.url_left, data.url_right, success))
+
+      reportData.push(createReportRow(data.url_left, data.url_right, data.background, success, false))
     })
   });
 
@@ -212,7 +223,9 @@ app.whenReady().then(() => {
     mainWindow.webContents.send("getNotice", notice)
   })
 
-}).catch(console.log);
+}).catch(ex => {
+  console.error(ex)
+});
 
 app.on('window-all-closed', async function () {
   if (process.platform !== 'darwin') {

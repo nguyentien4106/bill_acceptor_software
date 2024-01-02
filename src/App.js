@@ -3,7 +3,7 @@ import './App.css';
 import Progress from './components/Progress';
 import { ReactNotifications } from 'react-notifications-component'
 import { Store } from 'react-notifications-component';
-
+import Banuba from './components/Banuba';
 const {ipcRenderer} = window.require('electron')
 
 function App() {
@@ -92,7 +92,7 @@ function App() {
                       <input type="submit" value="Submit" onClick={handleSubmit}/>
                     </div>                    
       }
-
+      <Banuba></Banuba>
     </div>
   );
 }

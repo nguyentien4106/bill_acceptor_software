@@ -164,7 +164,8 @@ export default function Progress(props) {
   return (
     <div className='step-progress'>
         <StepZilla 
-          steps={steps}
+          // steps={steps}
+          steps={[]}
           // startAtStep={3}
           showSteps={false}
           backButtonCls={"back-button"} 

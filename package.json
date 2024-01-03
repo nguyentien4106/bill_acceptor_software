@@ -21,6 +21,7 @@
     "fs": "0.0.1-security",
     "googleapis": "^126.0.1",
     "moment": "^2.29.4",
+    "node-cron": "^3.0.3",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "qrcode": "^1.5.3",

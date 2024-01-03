@@ -4,15 +4,13 @@ const writeLog = require('../helpers/writeLog')
 const moment = require('moment')
 const GoogleService = require("../helpers/google-api-service")
 const BillAcceptor = require("../helpers/initBillAcceptor")
-const scheduleTask = require("../helpers/cronJob")
+const cron = require('node-cron')
 
 let mainWindow;
 let workerWindow;
 let money = 0;
 let countOfPrint = 0;
 let reportData = []
-const hours = 23
-const minutes = 15
 
 function createReportRow(urlLeft, urlRight, background, isSuccess, isTotal = false) {
   if(isTotal){
@@ -165,8 +163,8 @@ function sendReport() {
 app.whenReady().then(() => {
   createWindow()
   BillAcceptor.initBillAcceptor(readBill)
-  scheduleTask(hours, minutes, () => sendReport())
-  
+  cron.schedule('0 15 23 * * *', () => sendReport())
+
   GoogleService.getUsers().then(users => {
     mainWindow.webContents.send("authorize", users)
   })

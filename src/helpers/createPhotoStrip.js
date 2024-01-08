@@ -114,8 +114,7 @@ export function drawQRCodeImage(image, qrCodeLeftSrc, qrCodeRightSrc){
 export function drawImagesOnCanvas(imageUrls, canvasWidth, canvasHeight, backgroundUrl, filterName) {
   let filter;
   const thumbnails = createImageFromBase64Data(imageUrls)
-  console.log(thumbnails[0].width)
-  console.log(thumbnails[0].height)
+
   if(filterName){
     filter = filters.filter(item => item.name === filterName)[0].value;
   }
@@ -156,7 +155,8 @@ function applyFiltersToImageSync(imageObject, filter) {
   // apply css filters here
   ctx.filter = filter;
   ctx.drawImage(imageObject, 0, 0, canvas.width, canvas.height);
-  
+  ctx.setTransform(-1, 0, 0, 1, canvas.width, 0);
+
   return canvas;
 }
 

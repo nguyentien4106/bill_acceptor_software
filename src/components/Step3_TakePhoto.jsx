@@ -17,14 +17,16 @@ const Step3_TakePhoto = (props) => {
   const [timeLeft, actions] = useCountDown(5000)
   const videoRef = useRef(null);
   const timePerShot = 5000
+  const imageHeight = 360
+  const imageWidth = 540
 
   useEffect(() => {
     const startCamera = async () => {
       try {
         const constraints = {
           video: true,
-          height: 400,
-          width: 600
+          height: imageHeight,
+          width: imageWidth
         };
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoRef.current.srcObject = stream;
@@ -94,7 +96,7 @@ const Step3_TakePhoto = (props) => {
             }
           </div>
           <div className='camera'>
-            <video ref={videoRef} autoPlay height={720} width={1080}/>;
+            <video ref={videoRef} autoPlay height={imageHeight * 2} width={ imageWidth * 2}/>;
           </div>
           {
             isLoaded && <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto} />

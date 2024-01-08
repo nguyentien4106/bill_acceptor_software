@@ -54,13 +54,20 @@ const Step3_TakePhoto = (props) => {
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = document.createElement("canvas");
-    
+
+    video.addEventListener('loadedmetadata', function() {
+      ctx.translate(video.videoWidth, 0);
+      ctx.scale(-1, 1);
+    });
+
     // Set canvas dimensions to match the video stream
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
     // Draw the current video frame onto the canvas
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext('2d')
+    ctx.setTransform(-1, 0, 0, 1, canvas.width, 0);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Get the base64-encoded image data from the canvas
     const photo = canvas.toDataURL('image/png');
@@ -96,7 +103,7 @@ const Step3_TakePhoto = (props) => {
             }
           </div>
           <div className='camera'>
-            <video ref={videoRef} autoPlay height={imageHeight * 2} width={ imageWidth * 2}/>;
+            <video id="video-take-photo" ref={videoRef} autoPlay height={imageHeight * 2} width={ imageWidth * 2}/>;
           </div>
           {
             isLoaded && <img className={`take-button ${isClicked ? "d-none" : ""}`} src={cameraButton} onClick={handleClickTakePhoto} />

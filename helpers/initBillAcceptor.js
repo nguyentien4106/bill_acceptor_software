@@ -16,7 +16,12 @@ let tp = new TpSeries({
 
 const initBillAcceptor = (readBill) => {
   tp.on("READ_NOTE", result => {
-      tp.command('ACCEPT_BANKNOTE');
+      if(result.channel > 3) {
+        tp.command('REJECT_BANKNOTE')
+      }
+      else {
+        tp.command('ACCEPT_BANKNOTE');
+      }
   });
 
   tp.on('STACKING', result => {

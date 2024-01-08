@@ -155,7 +155,6 @@ function applyFiltersToImageSync(imageObject, filter) {
   // apply css filters here
   ctx.filter = filter;
   ctx.drawImage(imageObject, 0, 0, canvas.width, canvas.height);
-  ctx.setTransform(-1, 0, 0, 1, canvas.width, 0);
 
   return canvas;
 }

@@ -99,3 +99,8 @@
 .effects-selection{
     width: 500px;
 }
+
+#video-take-photo {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
